@@ -577,24 +577,34 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
 
                         let inventarioPersonaje1 = mapaParaObjeto(personaje1.inventario);
                         let estadosPersonaje1 = mapaParaObjeto(personaje1.estado);
-                        botonesPersonaje1.addEventListener("click", function() {
-                            fetch("updatePersonajes.php", {
-                                method: "POST",
-                                credentials: "include",
-                                headers: {
-                                    "Content-Type": "application/json"
-                                },
-                                body: JSON.stringify({
-                                    personaje1,
-                                    inventarioPersonaje1,
-                                    estadosPersonaje1
+                        divPersonaje1.addEventListener("click", function(event) {
+                            // Recalcular después de la acción
+                            let evento = event.target;
+                            if (evento instanceof HTMLButtonElement) {
+                                inventarioPersonaje1 = mapaParaObjeto(personaje1.inventario);
+                                estadosPersonaje1 = mapaParaObjeto(personaje1.estado);
+                                console.log(JSON.stringify(inventarioPersonaje1));
+                                console.log(JSON.stringify(estadosPersonaje1));
+                                console.log(JSON.stringify(personaje1));
+                                fetch("updatePersonajes.php", {
+                                    method: "POST",
+                                    credentials: "include",
+                                    headers: {
+                                        "Content-Type": "application/json"
+                                    },
+                                    body: JSON.stringify({
+                                        personaje1,
+                                        inventarioPersonaje1,
+                                        estadosPersonaje1
+                                    })
                                 })
-                            })
-                            // .then(response => response.text())
-                            // .then(data => console.log(data))
-                            // .catch(error => {
-                            //     console.error("Error en fetch:", error);
-                            // });
+                                .then(response => response.text())
+                                .then(data => location.reload(), console.log("recargo"), console.log(data))
+                                .catch(error => {
+                                    console.error("Error en fetch:", error);
+                                });
+                            }
+
                         });
 
 
