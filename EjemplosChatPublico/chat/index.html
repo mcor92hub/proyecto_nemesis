@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<style>
+
+#historial{
+border:1px solid gray;
+width:325px;
+height:400px;
+overflow:auto;
+}
+
+fieldset{
+width:300px;
+}
+
+</style>
+
+<script src="ajax.js"></script>
+<script>
+
+function mostrar()
+{
+loadDoc(null,"mensajes.php",function()
+{
+if (xmlhttp.readyState==4 && xmlhttp.status==200)
+{
+document.getElementById("historial").innerHTML=xmlhttp.responseText;
+}
+});
+}
+
+setInterval(mostrar,1000);
+
+function agregar()
+{
+var u=document.getElementById('nombre').value;
+var c=document.getElementById('contenido').value;
+
+if(u!="" && c!=""){
+loadDoc("usuario="+u+"&cont="+c,"proceso.php",function()
+{
+if (xmlhttp.readyState==4 && xmlhttp.status==200)
+{
+document.getElementById("historial").innerHTML=xmlhttp.responseText;
+}
+});
+
+}else{ alert("No deje campos vacios"); }
+
+}
+</script>
+</head>
+
+<body>
+
+<h1>CHAT-AJAX</h1>
+
+<hr />
+
+<div id="historial"><img src="ajax-loader.gif" /></div>
+<fieldset>
+<legend>Chat:</legend>
+<input type="text" id="nombre" placeholder="usuario" /><br />
+<textarea id="contenido" placeholder="mensaje"></textarea><br />
+<button onclick="agregar()">Ok</button>
+</fieldset>
+
+<hr />
+
+Creado por: http://codigojerry.blogspot.com/
+
+</body>
+
+</html>

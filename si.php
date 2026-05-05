@@ -1,0 +1,16 @@
+"UPDATE personaje pe JOIN partida pa ON pe.id_personaje = pa.personaje1_id
+                            JOIN arquero a ON a.id_personaje = pa.personaje1_id
+                            SET fuerza = ".$caracteristicasPersonaje1['personaje1']['fuerza'].",
+                            armadura = ".$caracteristicasPersonaje1['personaje1']['armadura'].",
+                            vidaActual = ".$caracteristicasPersonaje1['personaje1']['vidaActual'].",
+                            vidaMaxima = ".$caracteristicasPersonaje1['personaje1']['vidaMaxima'].",
+                            estaminaActual = ".$caracteristicasPersonaje1['personaje1']['estaminaActual'].",
+                            estaminaMaxima = ".$caracteristicasPersonaje1['personaje1']['estaminaMaxima'].",
+                            nivel = ".$caracteristicasPersonaje1['personaje1']['nivel'].",
+                            puntosExperiencia = ".$caracteristicasPersonaje1['personaje1']['puntosExperiencia'].",
+                            envenenado = ".$caracteristicasPersonaje1['personaje1']['envenenado'].",
+                            quemado = ".$caracteristicasPersonaje1['personaje1']['quemado'].",
+                            heridoLeve = ".$caracteristicasPersonaje1['personaje1']['heridoLeve'].",
+                            heridoGrave = ".$caracteristicasPersonaje1['personaje1']['heridoGrave'].";
+                            confundido = ".$caracteristicasPersonaje1['personaje1']['confundido']."
+                            WHERE pa.id_partida = " . $_SESSION['partida'] . "";

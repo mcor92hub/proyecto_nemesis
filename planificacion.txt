@@ -1,0 +1,47 @@
+Vamos a empezar a organizar un poco:
+-IMAGENES:
+falta ponerle el arma correcta al druida y revisar al Caballero
+
+PARTE DE JS:
+-EN EL CONSTRUCTOR DE PERSONAJES DEBERÁ MIRAR A LA BASE DE DATOS PARA HACER EL PERSONAJE CON EL NOMBRE, EL NIVEL, LA VIDA, LA ESTAMINA Y DEMÁS 
+
+-Buscar una manera mejor de organizar los objetos de tipo arma IGUAL es mejor ponerle a cada personaje su arma y si el desgaste llega a 0 no pueden hacer ataques que requieran esa arma (las transformaciones del druida no les afectaría el desgaste) y con esto habría que poner otro objeto que restaure las armas 
+
+-Necesito hacer que las habilidades que sean un boost de algun campo las vuelvan a dejar como estaban al acabar el combate o al pasar unos cuantos turnos
+
+-Darle afectación a los estados que sean "true" y definir cuantos turnos durán cada uno
+
+-Objetos:
+Necesito alguna manera (¿mapa dentro del mapa inventario al que se acceda por la clave "tipo"?) de guardar los objetos en el inventario para acceder a ellos segun el tipo, así al usar el turno para usar objetos puedo desplegar todos menos las armas
+
+-Personaje:
+Revisar el método subirNivel cuando acabe de crear todos los personajes para subir los atributos correctos
+
+-Mago:
+Como clase de la que heredan druida y hechicero será para establecer el manaActual y el manaMaximo, la inteligencia será parte del hechicero y en el druida será un atributo que potencie sus ataques que sea una reminiscencia a la naturaleza
+Le quito el comprobante de la clase guerrero al ataque simple como prueba porque le he puesto armadura a todos los personajes, QUEDA PENDIENTE QUITAR ESTA COMPROBACIÓN AL RESTO DE PERSONAJES Y SUS ATAQUES
+
+-Hechicero:
+
+-Druida:
+Usará transformaciones y según la transformación en la que se encuentre alterará sus ataques y estadísticas
+
+PARTE DE HTML Y CSS:
+De momento lo que tengo pensado es hacer una pantalla inicial que pida usuario o registro y a partir de ahi entres en una web en la que puedas acceder a una tienda para comprar objetos, a una visualización del estado de tus personajes, a un combate en el que elegiremos el personaje con el que queremos pelear
+
+En la parte del combate se establecerán un turno que pasará de "true" a "false" tapando o oscureciendo la mitad de la pantalla en la que está el jugador con el turno en "false"
+
+Opción de compras, Opción de combate, Opción de visualizar tus personajes, Perfil de usuario
+
+Página de personaje: opción de personalizar teniendo diferentes opciones, como por ejemplo el tipo de armadura del caballero o el color de la túnica del mago (SOLO ESTÉTICO no más funcionalidades)
+
+Página de usuario: poner las estadísticas de partidas ganadas y perdidas experiencia ganada personaje mas usado  y con un ranking que se calcule con las partidas ganadas y perdidas que sea algo así como un pergamino viejo
+
+PARTE DE PHP:
+
+PARTE DE BASE DE DATOS:
+atributos de las tablas
+una vez que tenga todos los atributos ponerlos en el entidad-relación
+borrados y actualizaciones en el relacional
+script de creación (claves foráneas en los alter table)
+

@@ -1,0 +1,85 @@
+ATRIBUTOS PERSONAJE:
+- id_personaje
+- nombre
+- fuerza
+- armadura
+- vidaActual
+- vidaMaxima
+- nivel
+- puntosExperiencia
+- envenenado
+- quemado
+- heridoLeve
+- heridoGrave
+- confundido
+(los estados se guardan con booleanos)
+
+ATRIBUTOS ARQUERO:
+- aguanteActual
+- aguanteMaximo
+- precisión
+- nunchakus
+- arco
+- flechas
+
+ATRIBUTOS CABALLERO:
+- aguanteActual
+- aguanteMaximo
+- espada
+- mazo
+
+ATRIBUTOS HECHICERO:
+- manaActual
+- manaMaximo
+- inteligencia
+- aura
+- vara
+
+ATRIBUTOS DRUIDA:
+- manaActual
+- manaMaximo
+- inteligencia
+- transformación
+- daga
+
+ATRIBUTOS INVENTARIO:
+- personaje_id
+
+ATRIBUTOS ITEMS:
+- id_item
+- tipo
+- nombre
+
+ATRIBUTOS USUARIO:
+- id_usuario
+- nick
+- contraseña
+- dinero
+
+ATRIBUTOS PARTIDA:
+- id_partida
+- usuario1_id
+- usuario2_id
+
+ATRIBUTOS MENSAJE:
+- id_mensaje
+- contenido
+- usuario_id
+- partida_id
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

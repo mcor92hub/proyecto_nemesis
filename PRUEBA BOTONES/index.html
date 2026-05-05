@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="estilos.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="menu">
+        <button id="mainBtn" class="main-btn">⚔</button>
+
+        <div class="options">
+            <button class="option">Ataque</button>
+            <button class="option">Objeto</button>
+            <button class="option">Pokémon</button>
+            <button class="option">Huir</button>
+        </div>
+    </div>
+    <script>
+        const mainBtn = document.getElementById("mainBtn");
+        const menu = document.querySelector(".menu");
+
+        mainBtn.addEventListener("click", () => {
+            menu.classList.toggle("active");
+        });
+    </script>
+</body>
+
+</html>

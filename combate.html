@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="estilos/estilosCombate.css">
+    <link rel="shortcut icon" href="imgs/favicon-nemesis.png" type="image/x-icon">
+    <title>Proyecto Némesis</title>
+</head>
+
+<body>
+    <script src="objetos.js"></script>
+    <script src="personaje.js"></script>
+    <script src="guerrero.js"></script>
+    <script src="caballero.js"></script>
+    <script src="arquero.js"></script>
+    <script src="mago.js"></script>
+    <script src="hechicero.js"></script>
+    <script src="druida.js"></script>
+    <script>
+        let tiraMoneda = Math.floor((Math.random() * 2) + 1);
+        console.log(tiraMoneda);
+        let turno;
+        if (tiraMoneda == 1) {
+            turno = true;
+        } else {
+            turno = false;
+        }
+        let claseBotonesPersonaje1 = document.getElementsByClassName("botonesPersonaje1");
+        let claseBotonesPersonaje2 = document.getElementsByClassName("botonesPersonaje2");
+        setInterval(function () {
+            for (const element of claseBotonesPersonaje1) {
+                element.addEventListener("click", function () {
+                    turno = false;
+                });
+            }
+            if (turno == false) {
+                    for (const element of claseBotonesPersonaje1) {
+                        element.setAttribute("disabled", "");
+                    }
+                    for (const element of claseBotonesPersonaje2) {
+                        element.removeAttribute("disabled");
+                    }
+                }
+            for (const element of claseBotonesPersonaje2) {
+                element.addEventListener("click", function () {
+                    turno = true;
+                });
+            }
+            if (turno == true) {
+                    for (const element of claseBotonesPersonaje2) {
+                        element.setAttribute("disabled", "");
+                    }
+                    for (const element of claseBotonesPersonaje1) {
+                        element.removeAttribute("disabled");
+                    }
+                }
+        }, 1000);
+    </script>
+
+
+    <div id="campoBatalla">
+        <script>
+            let personaje1 = new Druida("arquero");
+            let personaje2 = new Hechicero("caballero");
+        </script>
+        <div id="personaje1">
+            <div id="estadosPersonaje1">
+                <img src="imgs/iconos-estado/confundido.png" alt="" id="confundidoPersonaje1">
+                <img src="imgs/iconos-estado/fuego.png" alt="" id="quemadoPersonaje1">
+                <img src="imgs/iconos-estado/heridaGrave.png" alt="" id="heridoGravePersonaje1">
+                <img src="imgs/iconos-estado/heridaLeve.png" alt="" id="heridoLevePersonaje1">
+                <img src="imgs/iconos-estado/veneno.png" alt="" id="envenenadoPersonaje1">
+                <!-- El siguiente script mira los ids de los estados y cada segundo comprueba si el mapa de estado de personaje tiene algún elemento a true enseña el icono de estado -->
+                <script>
+                    let confundidoPersonaje1 = document.getElementById("confundidoPersonaje1");
+                    let quemadoPersonaje1 = document.getElementById("quemadoPersonaje1");
+                    let heridoGravePersonaje1 = document.getElementById("heridoGravePersonaje1");
+                    let heridoLevePersonaje1 = document.getElementById("heridoLevePersonaje1");
+                    let envenenadoPersonaje1 = document.getElementById("envenenadoPersonaje1");
+                    setInterval(function () {
+                        if (personaje1.estado.get("confundido") == true) {
+                            confundidoPersonaje1.style.opacity = "1";
+                        }
+                        if (personaje1.estado.get("quemado")) {
+                            quemadoPersonaje1.style.opacity = "1";
+                        }
+                        if (personaje1.estado.get("heridoGrave")) {
+                            heridoGravePersonaje1.style.opacity = "1";
+                        }
+                        if (personaje1.estado.get("heridoLeve")) {
+                            heridoLevePersonaje1.style.opacity = "1";
+                        }
+                        if (personaje1.estado.get("envenenado") == true) {
+                            envenenadoPersonaje1.style.opacity = "1";
+                        }
+                    }, 1000);
+                </script>
+            </div>
+
+            <div id="barraVidaPersonaje1">
+                <div id="vidaRealPersonaje1">Vida</div>
+            </div>
+            <div id="barraEstaminaPersonaje1">
+                <div id="estaminaRealPersonaje1"></div>
+            </div>
+
+            <script>
+                //script que comprueba cada 100ms si ha variado tanto la vida como la estamina del personaje1
+                let barraVidaPersonaje1 = document.getElementById("vidaRealPersonaje1");
+                setInterval(function () {
+                    barraVidaPersonaje1.style.width = personaje1.vidaActual + "%";
+                    barraVidaPersonaje1.textContent = `Vida ${personaje1.vidaActual}`;
+                }, 100);
+                if (personaje1 instanceof Guerrero) {
+                    let estaminaRealPersonaje1 = document.getElementById("estaminaRealPersonaje1");
+                    setInterval(function () {
+                        estaminaRealPersonaje1.style.width = personaje1.aguanteActual + "%";
+                        estaminaRealPersonaje1.textContent = `Aguante ${personaje1.aguanteActual}`;
+                    }, 100);
+                } else if (personaje1 instanceof Mago) {
+                    let estaminaRealPersonaje1 = document.getElementById("estaminaRealPersonaje1");
+                    setInterval(function () {
+                        estaminaRealPersonaje1.style.width = personaje1.manaActual + "%";
+                        estaminaRealPersonaje1.textContent = `Maná ${personaje1.manaActual}`;
+                    }, 100);
+                }
+            </script>
+            <img src="" alt="" id="imgPersonaje1">
+            <div id="cuadroBotones1">
+                <script>
+                    let botonesPersonaje1 = document.getElementById("cuadroBotones1");
+                    switch (true) {
+                        case (personaje1 instanceof Arquero):
+                            console.log("es un arquero");
+                            document.getElementById("imgPersonaje1").src = "imgs/arqueroDerecha.png";
+                            for (let i = 0; i < 4; i++) {
+                                let boton = document.createElement("button");
+                                boton.textContent = personaje1.listaBotones[i];
+                                boton.setAttribute("class", "botonesPersonaje1");
+                                let accion = personaje1.listaFunciones[i];
+                                if (i > 1) {
+                                    boton.setAttribute("onclick", "personaje1." + accion + "()");
+                                    botonesPersonaje1.appendChild(boton);
+                                } else {
+                                    boton.setAttribute("onclick", "personaje1." + accion + "(personaje2)");
+                                    botonesPersonaje1.appendChild(boton);
+                                }
+                            }
+                            break;
+
+                        case (personaje1 instanceof Caballero):
+                            console.log("Es un caballero");
+                            document.getElementById("imgPersonaje1").src = "imgs/caballeroDerecha.png";
+                            for (let i = 0; i < 4; i++) {
+                                let boton = document.createElement("button");
+                                boton.textContent = personaje1.listaBotones[i];
+                                boton.setAttribute("class", "botonesPersonaje1");
+                                let accion = personaje1.listaFunciones[i];
+                                if (i == 2) {
+                                    boton.setAttribute("onclick", "personaje1." + accion + "()");
+                                    botonesPersonaje1.appendChild(boton);
+                                } else {
+                                    boton.setAttribute("onclick", "personaje1." + accion + "(personaje2)");
+                                    botonesPersonaje1.appendChild(boton);
+                                }
+                            }
+                            break;
+
+                        case (personaje1 instanceof Druida):
+                            console.log("Es un Druida");
+                            document.getElementById("imgPersonaje1").src = "imgs/druidaDerecha.png";
+                            //Funcion que se llama al hacer la transformacion para cambiar la imagen segun la transformacion
+                            function cambiarImagenDruida1() {
+                                let transformaciones;
+                                personaje1.transformacion();
+                                switch (true) {
+                                    case (personaje1.posiblesTransformaciones.get("oso") == true):
+                                        transformaciones = document.getElementById("imgPersonaje1");
+                                        transformaciones.removeAttribute("src");
+                                        transformaciones.setAttribute("src", "imgs/Transformaciones-druida/osoDerecha.png");
+                                        break;
+                                    case (personaje1.posiblesTransformaciones.get("serpiente") == true):
+                                        transformaciones = document.getElementById("imgPersonaje1");
+                                        transformaciones.removeAttribute("src");
+                                        transformaciones.setAttribute("src", "imgs/Transformaciones-druida/serpienteDerecha.png");
+                                        break;
+                                    case (personaje1.posiblesTransformaciones.get("zorro") == true):
+                                        transformaciones = document.getElementById("imgPersonaje1");
+                                        transformaciones.removeAttribute("src");
+                                        transformaciones.setAttribute("src", "imgs/Transformaciones-druida/zorroDerecha.png");
+                                        break;
+                                    case (personaje1.posiblesTransformaciones.get("águila") == true):
+                                        transformaciones = document.getElementById("imgPersonaje1");
+                                        transformaciones.removeAttribute("src");
+                                        transformaciones.setAttribute("src", "imgs/Transformaciones-druida/aguilaDerecha.png");
+                                        break;
+                                    default:
+                                        document.getElementById("imgPersonaje1").src = "imgs/druida.png";
+                                        break;
+                                }
+                            }
+
+                            for (let i = 0; i < 4; i++) {
+                                let boton = document.createElement("button");
+                                boton.textContent = personaje1.listaBotones[i];
+                                boton.setAttribute("class", "botonesPersonaje1");
+                                let accion = personaje1.listaFunciones[i];
+                                if (i == 1) {
+                                    boton.setAttribute("onclick", "cambiarImagenDruida1()");
+                                    botonesPersonaje1.appendChild(boton);
+                                } else if (i == 2) {
+                                    boton.setAttribute("onclick", "personaje1." + accion + "()");
+                                    botonesPersonaje1.appendChild(boton);
+                                } else {
+                                    boton.setAttribute("onclick", "personaje1." + accion + "(personaje2)");
+                                    botonesPersonaje1.appendChild(boton);
+                                }
+                            }
+                            break;
+
+                        case (personaje1 instanceof Hechicero):
+                            console.log("Es un hechicero");
+                            document.getElementById("imgPersonaje1").src = "imgs/hechiceroDerecha.png";
+                            function cambiarImagenHechicero1() {
+                                let manto;
+                                personaje1.farmearAura();
+                                switch (true) {
+                                    case (personaje1.aura.get("fuego")):
+                                        manto = document.getElementById("imgPersonaje1");
+                                        manto.removeAttribute("src");
+                                        manto.setAttribute("src", "imgs/Estados-hechicero/hechiceroFuegoDerecha.png");
+                                        break;
+                                    case (personaje1.aura.get("pantanoso")):
+                                        manto = document.getElementById("imgPersonaje1");
+                                        manto.removeAttribute("src");
+                                        manto.setAttribute("src", "imgs/Estados-hechicero/hechiceroVenenoDerecha.png");
+                                        break;
+                                    case (personaje1.aura.get("enigma")):
+                                        manto = document.getElementById("imgPersonaje1");
+                                        manto.removeAttribute("src");
+                                        manto.setAttribute("src", "imgs/Estados-hechicero/hechiceroEnigmaDerecha.png");
+                                        break;
+                                    case (personaje1.aura.get("pinchos")):
+                                        manto = document.getElementById("imgPersonaje1");
+                                        manto.removeAttribute("src");
+                                        manto.setAttribute("src", "imgs/Estados-hechicero/hechiceroPinchosDerecha.png");
+                                        break;
+                                    case (personaje1.aura.get("sombra")):
+                                        manto = document.getElementById("imgPersonaje1");
+                                        manto.removeAttribute("src");
+                                        manto.setAttribute("src", "imgs/Estados-hechicero/hechiceroSombrioDerecha.png");
+                                        break;
+                                    default:
+                                        document.getElementById("imgPersonaje1").src = "imgs/hechiceroDerecha.png";
+                                        break;
+                                }
+                            }
+                            for (let i = 0; i < 4; i++) {
+                                let boton = document.createElement("button");
+                                boton.textContent = personaje1.listaBotones[i];
+                                boton.setAttribute("class", "botonesPersonaje1");
+                                let accion = personaje1.listaFunciones[i];
+                                if (i == 1) {
+                                    boton.setAttribute("onclick", "cambiarImagenHechicero1()");
+                                    botonesPersonaje1.appendChild(boton);
+                                } else if (i == 2) {
+                                    boton.setAttribute("onclick", "personaje1." + accion + "()");
+                                    botonesPersonaje1.appendChild(boton);
+                                } else {
+                                    boton.setAttribute("onclick", "personaje1." + accion + "(personaje2)");
+                                    botonesPersonaje1.appendChild(boton);
+                                }
+                            }
+                            break;
+
+                        default:
+                            console.log("personaje1 no válido");
+                            break;
+                    }
+                    setInterval(function () {
+                        if (personaje1.estado.get("confundido")==true) {
+                            for (const element of claseBotonesPersonaje1) {
+                                element.textContent="????"
+                            }
+                        }
+                    })
+                </script>
+            </div>
+            <!-- PRUEBA -->
+            <!-- <label for=""></label>
+            <select name="curacionPersonaje1" id="curacionPersonaje1">
+                <script>
+                    let curacionPersonaje1 = document.getElementById("curacionPersonaje1");
+                    let clavesCuracion = personaje1.inventario.get("curacion");
+                    for (const element of clavesCuracion) {
+                        let valorCuracionPersonaje1 = document.createElement("option");
+                        valorCuracionPersonaje1.textContent=element;
+                        curacionPersonaje1.appendChild(valorCuracionPersonaje1);
+                    }
+                </script>
+            </select> -->
+        </div>
+        <div id="personaje2">
+            <div id="estadosPersonaje2">
+                <img src="imgs/iconos-estado/confundido.png" alt="" id="confundidoPersonaje2">
+                <img src="imgs/iconos-estado/fuego.png" alt="" id="quemadoPersonaje2">
+                <img src="imgs/iconos-estado/heridaGrave.png" alt="" id="heridoGravePersonaje2">
+                <img src="imgs/iconos-estado/heridaLeve.png" alt="" id="heridoLevePersonaje2">
+                <img src="imgs/iconos-estado/veneno.png" alt="" id="envenenadoPersonaje2">
+                <!-- El siguiente script mira los ids de los estados y cada segundo comprueba si el mapa de estado de personaje tiene algún elemento a true enseña el icono de estado -->
+                <script>
+                    let confundidoPersonaje2 = document.getElementById("confundidoPersonaje2");
+                    let quemadoPersonaje2 = document.getElementById("quemadoPersonaje2");
+                    let heridoGravePersonaje2 = document.getElementById("heridoGravePersonaje2");
+                    let heridoLevePersonaje2 = document.getElementById("heridoLevePersonaje2");
+                    let envenenadoPersonaje2 = document.getElementById("envenenadoPersonaje2");
+                    setInterval(function () {
+                        if (personaje2.estado.get("confundido") == true) {
+                            confundidoPersonaje2.style.opacity = "1";
+                        }
+                        if (personaje2.estado.get("quemado")) {
+                            quemadoPersonaje2.style.opacity = "1";
+                        }
+                        if (personaje2.estado.get("heridoGrave")) {
+                            heridoGravePersonaje2.style.opacity = "1";
+                        }
+                        if (personaje2.estado.get("heridoLeve")) {
+                            heridoLevePersonaje2.style.opacity = "1";
+                        }
+                        if (personaje2.estado.get("envenenado") == true) {
+                            envenenadoPersonaje2.style.opacity = "1";
+                        }
+                    }, 1000);
+                </script>
+            </div>
+            <div id="barraVidaPersonaje2">
+                <div id="vidaRealPersonaje2"></div>
+            </div>
+            <div id="barraEstaminaPersonaje2">
+                <div id="estaminaRealPersonaje2"></div>
+            </div>
+            <script>
+                //script que comprueba cada 100ms si ha variado tanto la vida como la estamina del personaje1
+                let barraVidaPersonaje2 = document.getElementById("vidaRealPersonaje2");
+                setInterval(function () {
+                    barraVidaPersonaje2.style.width = personaje2.vidaActual + "%";
+                    barraVidaPersonaje2.textContent=`Vida: ${personaje2.vidaActual}`;
+                }, 100);
+                if (personaje2 instanceof Guerrero) {
+                    let estaminaRealPersonaje2 = document.getElementById("estaminaRealPersonaje2");
+                    setInterval(function () {
+                        estaminaRealPersonaje2.style.width = personaje2.aguanteActual + "%";
+                        estaminaRealPersonaje2.textContent=`Aguante: ${personaje2.aguanteActual}`;
+                    }, 100);
+                } else if (personaje2 instanceof Mago) {
+                    let estaminaRealPersonaje2 = document.getElementById("estaminaRealPersonaje2");
+                    setInterval(function () {
+                        estaminaRealPersonaje2.style.width = personaje2.manaActual + "%";
+                        estaminaRealPersonaje2.textContent=`Maná: ${personaje2.manaActual}`;
+                    }, 100);
+                }
+            </script>
+            <img src="" alt="" id="imgPersonaje2">
+            <div id="cuadroBotones2">
+                <script>
+                    let botonesPersonaje2 = document.getElementById("cuadroBotones2");
+                    switch (true) {
+                        case (personaje2 instanceof Arquero):
+                            console.log("es un arquero");
+                            document.getElementById("imgPersonaje2").src = "imgs/arqueroIzquierda.png";
+                            for (let i = 0; i < 4; i++) {
+                                let boton = document.createElement("button");
+                                boton.textContent = personaje2.listaBotones[i];
+                                boton.setAttribute("class", "botonesPersonaje2");
+                                let accion = personaje2.listaFunciones[i];
+                                if (i > 1) {
+                                    boton.setAttribute("onclick", "personaje2." + accion + "()");
+                                    botonesPersonaje2.appendChild(boton);
+                                } else {
+                                    boton.setAttribute("onclick", "personaje2." + accion + "(personaje1)");
+                                    botonesPersonaje2.appendChild(boton);
+                                }
+                            }
+                            break;
+
+                        case (personaje2 instanceof Caballero):
+                            console.log("es un caballero");
+                            document.getElementById("imgPersonaje2").src = "imgs/caballeroIzquierda.png";
+                            for (let i = 0; i < 4; i++) {
+                                let boton = document.createElement("button");
+                                boton.textContent = personaje2.listaBotones[i];
+                                boton.setAttribute("class", "botonesPersonaje2");
+                                let accion = personaje2.listaFunciones[i];
+                                if (i == 2) {
+                                    boton.setAttribute("onclick", "personaje2." + accion + "()");
+                                    botonesPersonaje2.appendChild(boton);
+                                } else {
+                                    boton.setAttribute("onclick", "personaje2." + accion + "(personaje1)");
+                                    botonesPersonaje2.appendChild(boton);
+                                }
+                            }
+                            break;
+
+                        case (personaje2 instanceof Druida):
+                            console.log("Es un Druida");
+                            document.getElementById("imgPersonaje2").src = "imgs/druidaIzquierda.png";
+                            //Funcion que se llama al hacer la transformacion para cambiar la imagen segun la transformacion
+                            function cambiarImagenDruida2() {
+                                let transformaciones;
+                                personaje1.transformacion();
+                                switch (true) {
+                                    case (personaje2.posiblesTransformaciones.get("oso") == true):
+                                        transformaciones = document.getElementById("imgPersonaje1");
+                                        transformaciones.removeAttribute("src");
+                                        transformaciones.setAttribute("src", "imgs/Transformaciones-druida/osoDerecha.png");
+                                        break;
+                                    case (personaje1.posiblesTransformaciones.get("serpiente") == true):
+                                        transformaciones = document.getElementById("imgPersonaje1");
+                                        transformaciones.removeAttribute("src");
+                                        transformaciones.setAttribute("src", "imgs/Transformaciones-druida/serpienteIzquierda.png");
+                                        break;
+                                    case (personaje1.posiblesTransformaciones.get("zorro") == true):
+                                        transformaciones = document.getElementById("imgPersonaje1");
+                                        transformaciones.removeAttribute("src");
+                                        transformaciones.setAttribute("src", "imgs/Transformaciones-druida/zorroIzquierda.png");
+                                        break;
+                                    case (personaje1.posiblesTransformaciones.get("águila") == true):
+                                        transformaciones = document.getElementById("imgPersonaje1");
+                                        transformaciones.removeAttribute("src");
+                                        transformaciones.setAttribute("src", "imgs/Transformaciones-druida/aguilaIzquierda.png");
+                                        break;
+                                    default:
+                                        document.getElementById("imgPersonaje1").src = "imgs/druida.png";
+                                        break;
+                                }
+                            }
+
+                            for (let i = 0; i < 4; i++) {
+                                let boton = document.createElement("button");
+                                boton.textContent = personaje1.listaBotones[i];
+                                boton.setAttribute("class", "botonesPersonaje2");
+                                let accion = personaje1.listaFunciones[i];
+                                if (i == 1) {
+                                    boton.setAttribute("onclick", "cambiarImagenDruida2()");
+                                    botonesPersonaje2.appendChild(boton);
+                                } else if (i == 2) {
+                                    boton.setAttribute("onclick", "personaje2." + accion + "()");
+                                    botonesPersonaje2.appendChild(boton);
+                                } else {
+                                    boton.setAttribute("onclick", "personaje2." + accion + "(personaje1)");
+                                    botonesPersonaje2.appendChild(boton);
+                                }
+                            }
+                            break;
+
+                        case (personaje2 instanceof Hechicero):
+                            console.log("Es un hechicero");
+                            document.getElementById("imgPersonaje2").src = "imgs/hechiceroIzquierda.png";
+                            function cambiarImagenHechicero2() {
+                                let manto;
+                                personaje2.farmearAura();
+                                switch (true) {
+                                    case (personaje2.aura.get("fuego")):
+                                        manto = document.getElementById("imgPersonaje2");
+                                        manto.removeAttribute("src");
+                                        manto.setAttribute("src", "imgs/Estados-hechicero/hechiceroFuegoIzquierda.png");
+                                        break;
+                                    case (personaje2.aura.get("pantanoso")):
+                                        manto = document.getElementById("imgPersonaje2");
+                                        manto.removeAttribute("src");
+                                        manto.setAttribute("src", "imgs/Estados-hechicero/hechiceroVenenoIzquierda.png");
+                                        break;
+                                    case (personaje2.aura.get("enigma")):
+                                        manto = document.getElementById("imgPersonaje2");
+                                        manto.removeAttribute("src");
+                                        manto.setAttribute("src", "imgs/Estados-hechicero/hechiceroEnigmaIzquierda.png");
+                                        break;
+                                    case (personaje2.aura.get("pinchos")):
+                                        manto = document.getElementById("imgPersonaje2");
+                                        manto.removeAttribute("src");
+                                        manto.setAttribute("src", "imgs/Estados-hechicero/hechiceroPinchosIzquierda.png");
+                                        break;
+                                    case (personaje2.aura.get("sombra")):
+                                        manto = document.getElementById("imgPersonaje2");
+                                        manto.removeAttribute("src");
+                                        manto.setAttribute("src", "imgs/Estados-hechicero/hechiceroSombrioIzquierda.png");
+                                        break;
+                                    default:
+                                        document.getElementById("imgPersonaje2").src = "imgs/hechiceroIzquierda.png";
+                                        break;
+                                }
+                            }
+                            for (let i = 0; i < 4; i++) {
+                                let boton = document.createElement("button");
+                                boton.textContent = personaje2.listaBotones[i];
+                                boton.setAttribute("class", "botonesPersonaje2");
+                                let accion = personaje2.listaFunciones[i];
+                                if (i == 1) {
+                                    boton.setAttribute("onclick", "cambiarImagenHechicero2()");
+                                    botonesPersonaje2.appendChild(boton);
+                                } else if (i == 2) {
+                                    boton.setAttribute("onclick", "personaje2." + accion + "()");
+                                    botonesPersonaje2.appendChild(boton);
+                                } else {
+                                    boton.setAttribute("onclick", "personaje2." + accion + "(personaje1)");
+                                    botonesPersonaje2.appendChild(boton);
+                                }
+                            }
+                            break;
+
+                        default:
+                            console.log("personaje2 no válido");
+                            break;
+                    }
+                    setInterval(function () {
+                        if (personaje2.estado.get("confundido")==true) {
+                            for (const element of claseBotonesPersonaje2) {
+                                element.textContent="????"
+                            }
+                        }
+                    })
+                </script>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+
+</html>

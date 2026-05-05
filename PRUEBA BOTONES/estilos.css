@@ -1,0 +1,60 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #222;
+}
+
+.menu {
+    position: relative;
+}
+
+.main-btn {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: none;
+    background: orange;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.options {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.option {
+    position: absolute;
+    width: 100px;
+    height: 40px;
+    border: none;
+    background: white;
+    cursor: pointer;
+    opacity: 0;
+    transform: scale(0);
+    transition: 0.3s ease;
+}
+
+/* Posiciones cuando está activo */
+.menu.active .option:nth-child(1) {
+    transform: translate(-120px, -60px) scale(1);
+    opacity: 1;
+}
+
+.menu.active .option:nth-child(2) {
+    transform: translate(120px, -60px) scale(1);
+    opacity: 1;
+}
+
+.menu.active .option:nth-child(3) {
+    transform: translate(-120px, 60px) scale(1);
+    opacity: 1;
+}
+
+.menu.active .option:nth-child(4) {
+    transform: translate(120px, 60px) scale(1);
+    opacity: 1;
+}
