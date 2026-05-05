@@ -59,7 +59,7 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
         $turno = $fila['turno'];
     }
     //NO VA AQUÍ
-    
+
     ?>
     <script>
         let tiraMoneda = <?php echo json_encode($turno, JSON_UNESCAPED_UNICODE) ?>;
@@ -320,21 +320,21 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                 let personaje1;
                 switch (caracteristicasPersonaje1["tipo"]) {
                     case "Arquero":
-                        personaje1 = new Arquero(caracteristicasPersonaje1[0]['nombre'], parseInt(caracteristicasPersonaje1[0]['fuerza']), parseInt(caracteristicasPersonaje1[0]['armadura']), parseInt(caracteristicasPersonaje1[0]['nivel']), parseInt(caracteristicasPersonaje1[0]['vidaActual']), parseInt(caracteristicasPersonaje1[0]['vidaMaxima']), parseInt(caracteristicasPersonaje1[0]['estaminaActual']), parseInt(caracteristicasPersonaje1[0]['estaminaMaxima']), parseInt(caracteristicasPersonaje1[0]['puntosExperiencia']), parseInt(caracteristicasPersonaje1[0]['punteria']));
+                        personaje1 = new Arquero(caracteristicasPersonaje1[0]['nombre'], parseInt(caracteristicasPersonaje1[0]['fuerza']), parseInt(caracteristicasPersonaje1[0]['armadura']), parseInt(caracteristicasPersonaje1[0]['nivel']), parseInt(caracteristicasPersonaje1[0]['vidaActual']), parseInt(caracteristicasPersonaje1[0]['vidaMaxima']), parseInt(caracteristicasPersonaje1[0]['estaminaActual']), parseInt(caracteristicasPersonaje1[0]['estaminaMaxima']), parseInt(caracteristicasPersonaje1[0]['puntosExperiencia']), parseInt(caracteristicasPersonaje1[0]['quemado']), parseInt(caracteristicasPersonaje1[0]['envenenado']), parseInt(caracteristicasPersonaje1[0]['confundido']), parseInt(caracteristicasPersonaje1[0]['heridoLeve']), parseInt(caracteristicasPersonaje1[0]['heridoGrave']), parseInt(caracteristicasPersonaje1[0]['punteria']));
 
                         personaje1.asignarObjetos(caracteristicasPersonaje1['arma']['arco']['desgaste'], caracteristicasPersonaje1['arma']['flecha']['cantidad'], caracteristicasPersonaje1['arma']['nunchakus']['desgaste'], caracteristicasPersonaje1['curacion']['curacionSimple']['cantidad'], caracteristicasPersonaje1['curacion']['superCuracion']['cantidad'], caracteristicasPersonaje1['curacion']['curacionCompleta']['cantidad'], caracteristicasPersonaje1['estamina']['restaurarEstamina']['cantidad'], caracteristicasPersonaje1['estamina']['restaurarMuchaEstamina']['cantidad'], caracteristicasPersonaje1['estamina']['restaurarTodaEstamina']['cantidad']);
                         imgPersonaje1.setAttribute("src", "imgs/arqueroDerecha.gif");
                         imgPersonaje1.setAttribute("id", "imgPersonaje1");
                         break;
                     case "Caballero":
-                        personaje1 = new Caballero(caracteristicasPersonaje1[0]['nombre'], parseInt(caracteristicasPersonaje1[0]['fuerza']), parseInt(caracteristicasPersonaje1[0]['armadura']), parseInt(caracteristicasPersonaje1[0]['nivel']), parseInt(caracteristicasPersonaje1[0]['vidaActual']), parseInt(caracteristicasPersonaje1[0]['vidaMaxima']), parseInt(caracteristicasPersonaje1[0]['estaminaActual']), parseInt(caracteristicasPersonaje1[0]['estaminaMaxima']), parseInt(caracteristicasPersonaje1[0]['puntosExperiencia']));
+                        personaje1 = new Caballero(caracteristicasPersonaje1[0]['nombre'], parseInt(caracteristicasPersonaje1[0]['fuerza']), parseInt(caracteristicasPersonaje1[0]['armadura']), parseInt(caracteristicasPersonaje1[0]['nivel']), parseInt(caracteristicasPersonaje1[0]['vidaActual']), parseInt(caracteristicasPersonaje1[0]['vidaMaxima']), parseInt(caracteristicasPersonaje1[0]['estaminaActual']), parseInt(caracteristicasPersonaje1[0]['estaminaMaxima']), parseInt(caracteristicasPersonaje1[0]['puntosExperiencia']), parseInt(caracteristicasPersonaje1[0]['quemado']), parseInt(caracteristicasPersonaje1[0]['envenenado']), parseInt(caracteristicasPersonaje1[0]['confundido']), parseInt(caracteristicasPersonaje1[0]['heridoLeve']), parseInt(caracteristicasPersonaje1[0]['heridoGrave']));
 
                         personaje1.asignarObjetos(caracteristicasPersonaje1['arma']['espada']['desgaste'], caracteristicasPersonaje1['arma']['mazo']['desgaste'], caracteristicasPersonaje1['curacion']['curacionSimple']['cantidad'], caracteristicasPersonaje1['curacion']['superCuracion']['cantidad'], caracteristicasPersonaje1['curacion']['curacionCompleta']['cantidad'], caracteristicasPersonaje1['estamina']['restaurarEstamina']['cantidad'], caracteristicasPersonaje1['estamina']['restaurarMuchaEstamina']['cantidad'], caracteristicasPersonaje1['estamina']['restaurarTodaEstamina']['cantidad']);
                         imgPersonaje1.setAttribute("src", "imgs/caballeroDerecha.gif");
                         imgPersonaje1.setAttribute("id", "imgPersonaje1");
                         break;
                     case "Hechicero":
-                        personaje1 = new Hechicero(caracteristicasPersonaje1[0]['nombre'], parseInt(caracteristicasPersonaje1[0]['fuerza']), parseInt(caracteristicasPersonaje1[0]['armadura']), parseInt(caracteristicasPersonaje1[0]['nivel']), parseInt(caracteristicasPersonaje1[0]['vidaActual']), parseInt(caracteristicasPersonaje1[0]['vidaMaxima']), parseInt(caracteristicasPersonaje1[0]['estaminaActual']), parseInt(caracteristicasPersonaje1[0]['estaminaMaxima']), parseInt(caracteristicasPersonaje1[0]['puntosExperiencia']), parseInt(caracteristicasPersonaje1[0]['inteligencia']));
+                        personaje1 = new Hechicero(caracteristicasPersonaje1[0]['nombre'], parseInt(caracteristicasPersonaje1[0]['fuerza']), parseInt(caracteristicasPersonaje1[0]['armadura']), parseInt(caracteristicasPersonaje1[0]['nivel']), parseInt(caracteristicasPersonaje1[0]['vidaActual']), parseInt(caracteristicasPersonaje1[0]['vidaMaxima']), parseInt(caracteristicasPersonaje1[0]['estaminaActual']), parseInt(caracteristicasPersonaje1[0]['estaminaMaxima']), parseInt(caracteristicasPersonaje1[0]['puntosExperiencia']), parseInt(caracteristicasPersonaje1[0]['quemado']), parseInt(caracteristicasPersonaje1[0]['envenenado']), parseInt(caracteristicasPersonaje1[0]['confundido']), parseInt(caracteristicasPersonaje1[0]['heridoLeve']), parseInt(caracteristicasPersonaje1[0]['heridoGrave']), parseInt(caracteristicasPersonaje1[0]['inteligencia']));
 
                         personaje1.asignarObjetos(caracteristicasPersonaje1['arma']['vara']['desgaste'], caracteristicasPersonaje1['curacion']['curacionSimple']['cantidad'], caracteristicasPersonaje1['curacion']['superCuracion']['cantidad'], caracteristicasPersonaje1['curacion']['curacionCompleta']['cantidad'], caracteristicasPersonaje1['estamina']['restaurarEstamina']['cantidad'], caracteristicasPersonaje1['estamina']['restaurarMuchaEstamina']['cantidad'], caracteristicasPersonaje1['estamina']['restaurarTodaEstamina']['cantidad']);
                         imgPersonaje1.setAttribute("src", "imgs/caballeroDerecha.gif");
@@ -343,7 +343,7 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                         imgPersonaje1.setAttribute("id", "imgPersonaje1");
                         break;
                     case "Druida":
-                        personaje1 = new Druida(caracteristicasPersonaje1[0]['nombre'], parseInt(caracteristicasPersonaje1[0]['fuerza']), parseInt(caracteristicasPersonaje1[0]['armadura']), parseInt(caracteristicasPersonaje1[0]['nivel']), parseInt(caracteristicasPersonaje1[0]['vidaActual']), parseInt(caracteristicasPersonaje1[0]['vidaMaxima']), parseInt(caracteristicasPersonaje1[0]['estaminaActual']), parseInt(caracteristicasPersonaje1[0]['estaminaMaxima']), parseInt(caracteristicasPersonaje1[0]['puntosExperiencia']), parseInt(caracteristicasPersonaje1[0]['inteligencia']));
+                        personaje1 = new Druida(caracteristicasPersonaje1[0]['nombre'], parseInt(caracteristicasPersonaje1[0]['fuerza']), parseInt(caracteristicasPersonaje1[0]['armadura']), parseInt(caracteristicasPersonaje1[0]['nivel']), parseInt(caracteristicasPersonaje1[0]['vidaActual']), parseInt(caracteristicasPersonaje1[0]['vidaMaxima']), parseInt(caracteristicasPersonaje1[0]['estaminaActual']), parseInt(caracteristicasPersonaje1[0]['estaminaMaxima']), parseInt(caracteristicasPersonaje1[0]['puntosExperiencia']), parseInt(caracteristicasPersonaje1[0]['quemado']), parseInt(caracteristicasPersonaje1[0]['envenenado']), parseInt(caracteristicasPersonaje1[0]['confundido']), parseInt(caracteristicasPersonaje1[0]['heridoLeve']), parseInt(caracteristicasPersonaje1[0]['heridoGrave']), parseInt(caracteristicasPersonaje1[0]['inteligencia']));
 
                         personaje1.asignarObjetos(caracteristicasPersonaje1['arma']['daga']['desgaste'], caracteristicasPersonaje1['curacion']['curacionSimple']['cantidad'], caracteristicasPersonaje1['curacion']['superCuracion']['cantidad'], caracteristicasPersonaje1['curacion']['curacionCompleta']['cantidad'], caracteristicasPersonaje1['estamina']['restaurarEstamina']['cantidad'], caracteristicasPersonaje1['estamina']['restaurarMuchaEstamina']['cantidad'], caracteristicasPersonaje1['estamina']['restaurarTodaEstamina']['cantidad']);
                         imgPersonaje1.setAttribute("src", "imgs/druidaDerecha.gif");
@@ -535,69 +535,6 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                             console.log("personaje1 no válido");
                             break;
                     }
-
-                    // Usé IA para convertir el mapa en un array porque JSON no me admite los mapas
-                    function mapaParaObjeto(map) {
-                        const obj = Object.fromEntries(map);
-                        for (let [key, value] of Object.entries(obj)) {
-                            if (value instanceof Map) {
-                                obj[key] = mapaParaObjeto(value);
-                            } 
-                        }
-                        return obj;
-                    }
-                    
-                    let inventarioPersonaje1 =mapaParaObjeto(personaje1.inventario);
-                    let estadosPersonaje1 = mapaParaObjeto(personaje1.estado);
-                    
-                    botonesPersonaje1.addEventListener("click", function() {
-                        fetch("updatePersonajes.php", {
-                            method: "POST",
-                            credentials: "include",
-                            headers: {
-                                "Content-Type": "application/json"
-                            },
-                            body: JSON.stringify(
-                                {personaje1, inventarioPersonaje1, estadosPersonaje1}
-                            )
-                        })
-                        // .then(response => response.text())
-                        // .then(data => console.log(data))
-                        // .catch(error => {
-                        //     console.error("Error en fetch:", error);
-                        // });
-                    });
-
-
-
-                    setInterval(()=>{
-                        fetch("updatePersonajes.php", {
-                            method: "POST",
-                            credentials: "include",
-                            headers: {
-                                "Content-Type": "application/json"
-                            },
-                            body: JSON.stringify(
-                                {personaje1, inventarioPersonaje1, estadosPersonaje1}
-                            )
-                        })
-                        .then(response => response.text())
-                        .then(data => location.reload())
-                        .catch(error => {
-                            console.error("Error en fetch:", error);
-                        });
-                    }, 5000);
-
-
-
-                    setInterval(function() {
-                        if (personaje1.estado.get("confundido") == true) {
-                            for (const element of claseBotonesPersonaje1) {
-                                element.textContent = "????"
-                            }
-                        }
-                    })
-                    
                 </script>
             </div>
             <div class="menu">
@@ -609,7 +546,7 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                         for (const element of clavesCuracionPersonaje1) {
                             let boton = document.createElement("button");
                             boton.textContent = element;
-                            boton.setAttribute("class", "option");
+                            boton.setAttribute("class", "option botonesPersonaje1");
                             boton.onclick = function() {
                                 personaje1.curarVida(element);
                             }
@@ -619,12 +556,76 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                         for (const element of clavesEstaminaPersonaje1) {
                             let boton = document.createElement("button");
                             boton.textContent = element;
-                            boton.setAttribute("class", "option");
+                            boton.setAttribute("class", "option botonesPersonaje1");
                             boton.onclick = function() {
                                 personaje1.restaurarEstamina(element);
                             }
                             divBotonesObjetosPersonaje1.appendChild(boton);
                         }
+
+                        // El siguiente script convierte el mapa de inventario y el mapa de estado del personaje1 en objetos para poder enviarlos por fetch a updatePersonajes.php y actualizar la base de datos con los cambios que se hayan producido en el combate, como el uso de objetos o la aplicacion de estados
+                        // Usé IA para convertir el mapa en un array porque JSON no me admite los mapas
+                        function mapaParaObjeto(map) {
+                            const obj = Object.fromEntries(map);
+                            for (let [key, value] of Object.entries(obj)) {
+                                if (value instanceof Map) {
+                                    obj[key] = mapaParaObjeto(value);
+                                }
+                            }
+                            return obj;
+                        }
+
+                        let inventarioPersonaje1 = mapaParaObjeto(personaje1.inventario);
+                        let estadosPersonaje1 = mapaParaObjeto(personaje1.estado);
+                        botonesPersonaje1.addEventListener("click", function() {
+                            fetch("updatePersonajes.php", {
+                                method: "POST",
+                                credentials: "include",
+                                headers: {
+                                    "Content-Type": "application/json"
+                                },
+                                body: JSON.stringify({
+                                    personaje1,
+                                    inventarioPersonaje1,
+                                    estadosPersonaje1
+                                })
+                            })
+                            // .then(response => response.text())
+                            // .then(data => console.log(data))
+                            // .catch(error => {
+                            //     console.error("Error en fetch:", error);
+                            // });
+                        });
+
+
+
+                        // setInterval(()=>{
+                        //     fetch("updatePersonajes.php", {
+                        //         method: "POST",
+                        //         credentials: "include",
+                        //         headers: {
+                        //             "Content-Type": "application/json"
+                        //         },
+                        //         body: JSON.stringify(
+                        //             {personaje1, inventarioPersonaje1, estadosPersonaje1}
+                        //         )
+                        //     })
+                        //     .then(response => response.text())
+                        //     .then(data => location.reload())
+                        //     .catch(error => {
+                        //         console.error("Error en fetch:", error);
+                        //     });
+                        // }, 5000);
+
+
+
+                        // setInterval(function() {
+                        //     if (personaje1.estado.get("confundido") == true) {
+                        //         for (const element of claseBotonesPersonaje1) {
+                        //             element.textContent = "????"
+                        //         }
+                        //     }
+                        // })
                     </script>
 
                 </div>
@@ -856,28 +857,28 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                 let imgPersonaje2 = document.createElement("img");
                 switch (caracteristicasPersonaje2["tipo"]) {
                     case "Arquero":
-                        personaje2 = new Arquero(caracteristicasPersonaje2[0]['nombre'], parseInt(caracteristicasPersonaje2[0]['fuerza']), parseInt(caracteristicasPersonaje2[0]['armadura']), parseInt(caracteristicasPersonaje2[0]['nivel']), parseInt(caracteristicasPersonaje2[0]['vidaActual']), parseInt(caracteristicasPersonaje2[0]['vidaMaxima']), parseInt(caracteristicasPersonaje2[0]['estaminaActual']), parseInt(caracteristicasPersonaje2[0]['estaminaMaxima']), parseInt(caracteristicasPersonaje2[0]['puntosExperiencia']), parseInt(caracteristicasPersonaje2[0]['punteria']));
+                        personaje2 = new Arquero(caracteristicasPersonaje2[0]['nombre'], parseInt(caracteristicasPersonaje2[0]['fuerza']), parseInt(caracteristicasPersonaje2[0]['armadura']), parseInt(caracteristicasPersonaje2[0]['nivel']), parseInt(caracteristicasPersonaje2[0]['vidaActual']), parseInt(caracteristicasPersonaje2[0]['vidaMaxima']), parseInt(caracteristicasPersonaje2[0]['estaminaActual']), parseInt(caracteristicasPersonaje2[0]['estaminaMaxima']), parseInt(caracteristicasPersonaje2[0]['puntosExperiencia']), parseInt(caracteristicasPersonaje1[0]['quemado']), parseInt(caracteristicasPersonaje1[0]['envenenado']), parseInt(caracteristicasPersonaje1[0]['confundido']), parseInt(caracteristicasPersonaje1[0]['heridoLeve']), parseInt(caracteristicasPersonaje1[0]['heridoGrave']), parseInt(caracteristicasPersonaje2[0]['punteria']));
 
                         personaje2.asignarObjetos(caracteristicasPersonaje2['arma']['arco']['desgaste'], caracteristicasPersonaje2['arma']['flecha']['cantidad'], caracteristicasPersonaje2['arma']['nunchakus']['desgaste'], caracteristicasPersonaje2['curacion']['curacionSimple']['cantidad'], caracteristicasPersonaje2['curacion']['superCuracion']['cantidad'], caracteristicasPersonaje2['curacion']['curacionCompleta']['cantidad'], caracteristicasPersonaje2['estamina']['restaurarEstamina']['cantidad'], caracteristicasPersonaje2['estamina']['restaurarMuchaEstamina']['cantidad'], caracteristicasPersonaje2['estamina']['restaurarTodaEstamina']['cantidad']);
                         imgPersonaje2.setAttribute("src", "imgs/arqueroIzquierda.gif");
                         imgPersonaje2.setAttribute("id", "imgPersonaje2");
                         break;
                     case "Caballero":
-                        personaje2 = new Caballero(caracteristicasPersonaje2[0]['nombre'], parseInt(caracteristicasPersonaje2[0]['fuerza']), parseInt(caracteristicasPersonaje2[0]['armadura']), parseInt(caracteristicasPersonaje2[0]['nivel']), parseInt(caracteristicasPersonaje2[0]['vidaActual']), parseInt(caracteristicasPersonaje2[0]['vidaMaxima']), parseInt(caracteristicasPersonaje2[0]['estaminaActual']), parseInt(caracteristicasPersonaje2[0]['estaminaMaxima']), parseInt(caracteristicasPersonaje2[0]['puntosExperiencia']));
+                        personaje2 = new Caballero(caracteristicasPersonaje2[0]['nombre'], parseInt(caracteristicasPersonaje2[0]['fuerza']), parseInt(caracteristicasPersonaje2[0]['armadura']), parseInt(caracteristicasPersonaje2[0]['nivel']), parseInt(caracteristicasPersonaje2[0]['vidaActual']), parseInt(caracteristicasPersonaje2[0]['vidaMaxima']), parseInt(caracteristicasPersonaje2[0]['estaminaActual']), parseInt(caracteristicasPersonaje2[0]['estaminaMaxima']), parseInt(caracteristicasPersonaje2[0]['puntosExperiencia']), parseInt(caracteristicasPersonaje1[0]['quemado']), parseInt(caracteristicasPersonaje1[0]['envenenado']), parseInt(caracteristicasPersonaje1[0]['confundido']), parseInt(caracteristicasPersonaje1[0]['heridoLeve']), parseInt(caracteristicasPersonaje1[0]['heridoGrave']));
 
                         personaje2.asignarObjetos(caracteristicasPersonaje2['arma']['espada']['desgaste'], caracteristicasPersonaje2['arma']['mazo']['desgaste'], caracteristicasPersonaje2['curacion']['curacionSimple']['cantidad'], caracteristicasPersonaje2['curacion']['superCuracion']['cantidad'], caracteristicasPersonaje2['curacion']['curacionCompleta']['cantidad'], caracteristicasPersonaje2['estamina']['restaurarEstamina']['cantidad'], caracteristicasPersonaje2['estamina']['restaurarMuchaEstamina']['cantidad'], caracteristicasPersonaje2['estamina']['restaurarTodaEstamina']['cantidad']);
                         imgPersonaje2.setAttribute("src", "imgs/caballeroIzquierda.gif");
                         imgPersonaje2.setAttribute("id", "imgPersonaje2");
                         break;
                     case "Hechicero":
-                        personaje2 = new Hechicero(caracteristicasPersonaje2[0]['nombre'], parseInt(caracteristicasPersonaje2[0]['fuerza']), parseInt(caracteristicasPersonaje2[0]['armadura']), parseInt(caracteristicasPersonaje2[0]['nivel']), parseInt(caracteristicasPersonaje2[0]['vidaActual']), parseInt(caracteristicasPersonaje2[0]['vidaMaxima']), parseInt(caracteristicasPersonaje2[0]['estaminaActual']), parseInt(caracteristicasPersonaje2[0]['estaminaMaxima']), parseInt(caracteristicasPersonaje2[0]['puntosExperiencia']), parseInt(caracteristicasPersonaje2[0]['inteligencia']));
+                        personaje2 = new Hechicero(caracteristicasPersonaje2[0]['nombre'], parseInt(caracteristicasPersonaje2[0]['fuerza']), parseInt(caracteristicasPersonaje2[0]['armadura']), parseInt(caracteristicasPersonaje2[0]['nivel']), parseInt(caracteristicasPersonaje2[0]['vidaActual']), parseInt(caracteristicasPersonaje2[0]['vidaMaxima']), parseInt(caracteristicasPersonaje2[0]['estaminaActual']), parseInt(caracteristicasPersonaje2[0]['estaminaMaxima']), parseInt(caracteristicasPersonaje2[0]['puntosExperiencia']), parseInt(caracteristicasPersonaje1[0]['quemado']), parseInt(caracteristicasPersonaje1[0]['envenenado']), parseInt(caracteristicasPersonaje1[0]['confundido']), parseInt(caracteristicasPersonaje1[0]['heridoLeve']), parseInt(caracteristicasPersonaje1[0]['heridoGrave']), parseInt(caracteristicasPersonaje2[0]['inteligencia']));
 
                         personaje2.asignarObjetos(caracteristicasPersonaje2['arma']['vara']['desgaste'], caracteristicasPersonaje2['curacion']['curacionSimple']['cantidad'], caracteristicasPersonaje2['curacion']['superCuracion']['cantidad'], caracteristicasPersonaje2['curacion']['curacionCompleta']['cantidad'], caracteristicasPersonaje2['estamina']['restaurarEstamina']['cantidad'], caracteristicasPersonaje2['estamina']['restaurarMuchaEstamina']['cantidad'], caracteristicasPersonaje2['estamina']['restaurarTodaEstamina']['cantidad']);
                         imgPersonaje2.setAttribute("src", "imgs/hechiceroIzquierda.gif");
                         imgPersonaje2.setAttribute("id", "imgPersonaje2");
                         break;
                     case "Druida":
-                        personaje2 = new Druida(caracteristicasPersonaje2[0]['nombre'], parseInt(caracteristicasPersonaje2[0]['fuerza']), parseInt(caracteristicasPersonaje2[0]['armadura']), parseInt(caracteristicasPersonaje2[0]['nivel']), parseInt(caracteristicasPersonaje2[0]['vidaActual']), parseInt(caracteristicasPersonaje2[0]['vidaMaxima']), parseInt(caracteristicasPersonaje2[0]['estaminaActual']), parseInt(caracteristicasPersonaje2[0]['estaminaMaxima']), parseInt(caracteristicasPersonaje2[0]['puntosExperiencia']), parseInt(caracteristicasPersonaje2[0]['inteligencia']));
+                        personaje2 = new Druida(caracteristicasPersonaje2[0]['nombre'], parseInt(caracteristicasPersonaje2[0]['fuerza']), parseInt(caracteristicasPersonaje2[0]['armadura']), parseInt(caracteristicasPersonaje2[0]['nivel']), parseInt(caracteristicasPersonaje2[0]['vidaActual']), parseInt(caracteristicasPersonaje2[0]['vidaMaxima']), parseInt(caracteristicasPersonaje2[0]['estaminaActual']), parseInt(caracteristicasPersonaje2[0]['estaminaMaxima']), parseInt(caracteristicasPersonaje2[0]['puntosExperiencia']), parseInt(caracteristicasPersonaje1[0]['quemado']), parseInt(caracteristicasPersonaje1[0]['envenenado']), parseInt(caracteristicasPersonaje1[0]['confundido']), parseInt(caracteristicasPersonaje1[0]['heridoLeve']), parseInt(caracteristicasPersonaje1[0]['heridoGrave']), parseInt(caracteristicasPersonaje2[0]['inteligencia']));
 
                         personaje2.asignarObjetos(caracteristicasPersonaje2['arma']['daga']['desgaste'], caracteristicasPersonaje2['curacion']['curacionSimple']['cantidad'], caracteristicasPersonaje2['curacion']['superCuracion']['cantidad'], caracteristicasPersonaje2['curacion']['curacionCompleta']['cantidad'], caracteristicasPersonaje2['estamina']['restaurarEstamina']['cantidad'], caracteristicasPersonaje2['estamina']['restaurarMuchaEstamina']['cantidad'], caracteristicasPersonaje2['estamina']['restaurarTodaEstamina']['cantidad']);
                         imgPersonaje2.setAttribute("src", "imgs/druidaIzquierda.gif");
@@ -1067,13 +1068,13 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                             console.log("personaje2 no válido");
                             break;
                     }
-                    setInterval(function() {
-                        if (personaje2.estado.get("confundido") == true) {
-                            for (const element of claseBotonesPersonaje2) {
-                                element.textContent = "????"
-                            }
-                        }
-                    })
+                    // setInterval(function() {
+                    //     if (personaje2.estado.get("confundido") == true) {
+                    //         for (const element of claseBotonesPersonaje2) {
+                    //             element.textContent = "????"
+                    //         }
+                    //     }
+                    // })
                 </script>
             </div>
             <div class="menu">

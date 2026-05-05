@@ -11,7 +11,7 @@ class Personaje {
     inventario = new Map();
     estado = new Map();
 
-    constructor(nombre, fuerza, armadura, nivel, vidaActual, vidaMaxima, estaminaActual, estaminaMaxima, puntosExperiencia) {
+    constructor(nombre, fuerza, armadura, nivel, vidaActual, vidaMaxima, estaminaActual, estaminaMaxima, puntosExperiencia, quemado, envenenado, confundido, heridoLeve, heridoGrave) {
         this.nombre = nombre;
         this.fuerza = fuerza;
         this.armadura = armadura;
@@ -21,11 +21,11 @@ class Personaje {
         this.estaminaActual = estaminaActual;
         this.estaminaMaxima = estaminaMaxima;
         this.puntosExperiencia = puntosExperiencia;
-        this.estado.set("quemado", false);
-        this.estado.set("envenenado", false);
-        this.estado.set("confundido", false);
-        this.estado.set("heridoLeve", false);
-        this.estado.set("heridoGrave", false);
+        this.estado.set("quemado", quemado);
+        this.estado.set("envenenado", envenenado);
+        this.estado.set("confundido", confundido);
+        this.estado.set("heridoLeve", heridoLeve);
+        this.estado.set("heridoGrave", heridoGrave);
         this.inventario.set("arma", new Map());
         this.inventario.set("curacion", new Map());
         this.inventario.set("restaurarEstamina", new Map());

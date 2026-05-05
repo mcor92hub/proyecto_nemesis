@@ -2,8 +2,8 @@ class Hechicero extends Personaje {
     aura = new Map();
     listaBotones;
     listaFunciones;
-    constructor(nombre, fuerza, armadura, nivel, vidaActual, vidaMaxima, estaminaActual, estaminaMaxima, puntosExperiencia, inteligencia) {
-        super(nombre, fuerza, armadura, nivel, vidaActual, vidaMaxima, estaminaActual, estaminaMaxima, puntosExperiencia);
+    constructor(nombre, fuerza, armadura, nivel, vidaActual, vidaMaxima, estaminaActual, estaminaMaxima, puntosExperiencia, inteligencia, quemado, envenenado, confundido, heridoLeve, heridoGrave) {
+        super(nombre, fuerza, armadura, nivel, vidaActual, vidaMaxima, estaminaActual, estaminaMaxima, puntosExperiencia, quemado, envenenado, confundido, heridoLeve, heridoGrave);
         this.inteligencia = inteligencia;
         this.aura.set("fuego", false);
         this.aura.set("pantanoso", false);

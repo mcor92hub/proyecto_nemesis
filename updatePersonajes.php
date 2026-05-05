@@ -1,7 +1,5 @@
 <?php
-// TRABAJO PARA MÁXIMO
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && basename($_SERVER['SCRIPT_FILENAME']) === 'updatePersonajes.php') {
-    // Todo el código actual de updatePersonajes.php aquí (desde session_start() hasta el final)
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     session_start();
     require_once "bd.php";
     $bd->autocommit(false);
@@ -9,7 +7,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && basename($_SERVER['SCRIPT_FILENAME'
     // TRABAJO PARA MÁXIMO
     error_log("JSON recibido: " . $json);  // Agrega esto después de $json = file_get_contents('php://input');
     $caracteristicasPersonaje1 = json_decode($json, true);
-    error_log("Decodificado: " . print_r($caracteristicasPersonaje1, true));  // Después de json_decode
 
     $errorUpdateConsulta = false;
     $descripcionError = "";
@@ -155,47 +152,60 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && basename($_SERVER['SCRIPT_FILENAME'
                 $descripcionError = "error en el update preparado de pocionEstaminaMax";
             }
             break;
-        // case 2:
-        //     $consultaCaballero = "SELECT * FROM partida pa 
-        //                 JOIN personaje pe ON pa.usuario1_id=pe.usuario_id
-        //                 JOIN caballero c ON pe.id_personaje=c.id_personaje
-        //                 WHERE pa.id_partida = " . $_SESSION['partida'] . "";
-        //     $resultado = $bd->query($consultaCaballero);
-        //     while ($fila = $resultado->fetch_assoc()) {
-        //         array_push($listaCaracteristicas, $fila);
-        //     }
-        //     $consultaarmaCaballero = "SELECT i.nombre, ig.cantidad, i.desgaste 
-        //                 FROM partida pa JOIN personaje pe ON pa.usuario1_id=pe.usuario_id
-        //                 JOIN caballero c ON pe.id_personaje=c.id_personaje
-        // 				JOIN item_guardado ig ON c.id_personaje  = ig.personaje_id
-        //                 JOIN item i ON ig.item_id = i.id_item
-        //                 where tipo = 'arma';";
-        //     $resultado = $bd->query($consultaarmaCaballero);
-        //     while ($fila = $resultado->fetch_assoc()) {
-        //         $listaCaracteristicas['arma'][$fila['nombre']] = $fila;
-        //     }
-        //     $consultaCuracionCaballero = "SELECT i.nombre, ig.cantidad, i.desgaste 
-        //                 FROM partida pa JOIN personaje pe ON pa.usuario1_id=pe.usuario_id
-        //                 JOIN caballero c ON pe.id_personaje=c.id_personaje
-        // 				JOIN item_guardado ig ON c.id_personaje  = ig.personaje_id
-        //                 JOIN item i ON ig.item_id = i.id_item
-        //                 where tipo = 'curacion';";
-        //     $resultado = $bd->query($consultaCuracionCaballero);
-        //     while ($fila = $resultado->fetch_assoc()) {
-        //         $listaCaracteristicas['curacion'][$fila['nombre']] = $fila;
-        //     }
-        //     $consultaEstaminaCaballero = "SELECT i.nombre, ig.cantidad, i.desgaste 
-        //                 FROM partida pa JOIN personaje pe ON pa.usuario1_id=pe.usuario_id
-        //                 JOIN caballero c ON pe.id_personaje=c.id_personaje
-        // 				JOIN item_guardado ig ON c.id_personaje  = ig.personaje_id
-        //                 JOIN item i ON ig.item_id = i.id_item
-        //                 where tipo = 'restaurarEstamina';";
-        //     $resultado = $bd->query($consultaEstaminaCaballero);
-        //     while ($fila = $resultado->fetch_assoc()) {
-        //         $listaCaracteristicas['estamina'][$fila['nombre']] = $fila;
-        //     }
-        //     $listaCaracteristicas["tipo"] = "Caballero";
-        //     break;
+        case 2:
+            $updateCaballero = "UPDATE personaje pe JOIN partida pa ON pe.id_personaje = pa.personaje1_id
+                            JOIN arquero a ON a.id_personaje = pa.personaje1_id
+                            SET fuerza = '" . $caracteristicasPersonaje1['personaje1']['fuerza'] . "',
+                            armadura = '" . $caracteristicasPersonaje1['personaje1']['armadura'] . "',
+                            vidaActual = '" . $caracteristicasPersonaje1['personaje1']['vidaActual'] . "',
+                            vidaMaxima = '" . $caracteristicasPersonaje1['personaje1']['vidaMaxima'] . "',
+                            estaminaActual = '" . $caracteristicasPersonaje1['personaje1']['estaminaActual'] . "',
+                            estaminaMaxima = '" . $caracteristicasPersonaje1['personaje1']['estaminaMaxima'] . "',
+                            nivel = '" . $caracteristicasPersonaje1['personaje1']['nivel'] . "',
+                            puntosExperiencia = '" . $caracteristicasPersonaje1['personaje1']['puntosExperiencia'] . "',
+                            envenenado = '" . $caracteristicasPersonaje1['estadosPersonaje1']['envenenado'] . "',
+                            quemado = '" . $caracteristicasPersonaje1['estadosPersonaje1']['quemado'] . "',
+                            heridoLeve = '" . $caracteristicasPersonaje1['estadosPersonaje1']['heridoLeve'] . "',
+                            heridoGrave = '" . $caracteristicasPersonaje1['estadosPersonaje1']['heridoGrave'] . "',
+                            confundido = '" . $caracteristicasPersonaje1['estadosPersonaje1']['confundido'] . "'
+                            WHERE pa.id_partida = " . $_SESSION['partida'] . "";
+            $resultado = $bd->query($updateCaballero);
+            if ($bd->errno) {
+                $errorUpdateConsulta = true;
+                $descripcionError = "error en el update del arquero";
+            }
+            $consultaarmaCaballero = "SELECT i.nombre, ig.cantidad, i.desgaste 
+                        FROM partida pa JOIN personaje pe ON pa.usuario1_id=pe.usuario_id
+                        JOIN caballero c ON pe.id_personaje=c.id_personaje
+        				JOIN item_guardado ig ON c.id_personaje  = ig.personaje_id
+                        JOIN item i ON ig.item_id = i.id_item
+                        where tipo = 'arma';";
+            $resultado = $bd->query($consultaarmaCaballero);
+            while ($fila = $resultado->fetch_assoc()) {
+                $listaCaracteristicas['arma'][$fila['nombre']] = $fila;
+            }
+            $consultaCuracionCaballero = "SELECT i.nombre, ig.cantidad, i.desgaste 
+                        FROM partida pa JOIN personaje pe ON pa.usuario1_id=pe.usuario_id
+                        JOIN caballero c ON pe.id_personaje=c.id_personaje
+        				JOIN item_guardado ig ON c.id_personaje  = ig.personaje_id
+                        JOIN item i ON ig.item_id = i.id_item
+                        where tipo = 'curacion';";
+            $resultado = $bd->query($consultaCuracionCaballero);
+            while ($fila = $resultado->fetch_assoc()) {
+                $listaCaracteristicas['curacion'][$fila['nombre']] = $fila;
+            }
+            $consultaEstaminaCaballero = "SELECT i.nombre, ig.cantidad, i.desgaste 
+                        FROM partida pa JOIN personaje pe ON pa.usuario1_id=pe.usuario_id
+                        JOIN caballero c ON pe.id_personaje=c.id_personaje
+        				JOIN item_guardado ig ON c.id_personaje  = ig.personaje_id
+                        JOIN item i ON ig.item_id = i.id_item
+                        where tipo = 'restaurarEstamina';";
+            $resultado = $bd->query($consultaEstaminaCaballero);
+            while ($fila = $resultado->fetch_assoc()) {
+                $listaCaracteristicas['estamina'][$fila['nombre']] = $fila;
+            }
+            $listaCaracteristicas["tipo"] = "Caballero";
+            break;
         // case 3:
         //     $consultaHechicero = "SELECT * FROM partida pa 
         //                 JOIN personaje pe ON pa.usuario1_id=pe.usuario_id
@@ -300,4 +310,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && basename($_SERVER['SCRIPT_FILENAME'
 
     // NO SE QUE HACE LA SIGUIENTE LINEA ES PARA NO TENER PROBLEMAS DE CACHÉ
     $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
+}else {
+    echo "no entro";
 }

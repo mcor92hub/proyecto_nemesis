@@ -3,8 +3,8 @@ class Druida extends Personaje {
     //posible transformacion en puercoespin que aumenta su armadura
     listaBotones;
     listaFunciones;
-    constructor(nombre, fuerza, armadura, nivel, vidaActual, vidaMaxima, estaminaActual, estaminaMaxima, puntosExperiencia, inteligencia) {
-        super(nombre, fuerza, armadura, nivel, vidaActual, vidaMaxima, estaminaActual, estaminaMaxima, puntosExperiencia);
+    constructor(nombre, fuerza, armadura, nivel, vidaActual, vidaMaxima, estaminaActual, estaminaMaxima, puntosExperiencia, inteligencia, quemado, envenenado, confundido, heridoLeve, heridoGrave) {
+        super(nombre, fuerza, armadura, nivel, vidaActual, vidaMaxima, estaminaActual, estaminaMaxima, puntosExperiencia, quemado, envenenado, confundido, heridoLeve, heridoGrave);
         this.inteligencia = inteligencia;
         this.posiblesTransformaciones.set("oso", false);
         this.posiblesTransformaciones.set("serpiente", false);

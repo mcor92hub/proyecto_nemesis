@@ -1,8 +1,8 @@
 class Caballero extends Personaje {
     listaBotones;
     listaFunciones;
-    constructor(nombre, fuerza, armadura, nivel, vidaActual, vidaMaxima, estaminaActual, estaminaMaxima, puntosExperiencia) {
-        super(nombre, fuerza, armadura, nivel, vidaActual, vidaMaxima, estaminaActual, estaminaMaxima, puntosExperiencia);
+    constructor(nombre, fuerza, armadura, nivel, vidaActual, vidaMaxima, estaminaActual, estaminaMaxima, puntosExperiencia, quemado, envenenado, confundido, heridoLeve, heridoGrave) {
+        super(nombre, fuerza, armadura, nivel, vidaActual, vidaMaxima, estaminaActual, estaminaMaxima, puntosExperiencia, quemado, envenenado, confundido, heridoLeve, heridoGrave);
         this.listaBotones=["Ataque Básico", "Hostión", "Rugido", "Intimidación"];
         this.listaFunciones = ["ataqueSimple", "hostion", "rugido", "intimidacion"];
     }

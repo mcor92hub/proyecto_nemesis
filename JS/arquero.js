@@ -2,8 +2,8 @@ class Arquero extends Personaje {
     punteria;
     listaBotones;
     listaFunciones;
-    constructor(nombre, fuerza, armadura, nivel, vidaActual, vidaMaxima, estaminaActual, estaminaMaxima, puntosExperiencia, punteria) {
-        super(nombre, fuerza, armadura, nivel, vidaActual, vidaMaxima, estaminaActual, estaminaMaxima, puntosExperiencia);
+    constructor(nombre, fuerza, armadura, nivel, vidaActual, vidaMaxima, estaminaActual, estaminaMaxima, puntosExperiencia, quemado, envenenado, confundido, heridoLeve, heridoGrave, punteria) {
+        super(nombre, fuerza, armadura, nivel, vidaActual, vidaMaxima, estaminaActual, estaminaMaxima, puntosExperiencia, quemado, envenenado, confundido, heridoLeve, heridoGrave);
         this.punteria = punteria;
         this.listaBotones = ["Ataque Básico", "Flechazo", "Hacerse Bolita", "Concentración"];
         this.listaFunciones = ["ataqueSimple", "flechazo", "hacerseBolita", "concentracion"];
