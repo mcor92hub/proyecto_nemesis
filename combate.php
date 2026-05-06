@@ -335,7 +335,7 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                         break;
                     case "Hechicero":
                         console.log(caracteristicasPersonaje1);
-                        personaje1 = new Hechicero(caracteristicasPersonaje1[0]['nombre'], parseInt(caracteristicasPersonaje1[0]['fuerza']), parseInt(caracteristicasPersonaje1[0]['armadura']), parseInt(caracteristicasPersonaje1[0]['nivel']), parseInt(caracteristicasPersonaje1[0]['vidaActual']), parseInt(caracteristicasPersonaje1[0]['vidaMaxima']), parseInt(caracteristicasPersonaje1[0]['estaminaActual']), parseInt(caracteristicasPersonaje1[0]['estaminaMaxima']), parseInt(caracteristicasPersonaje1[0]['puntosExperiencia']), parseInt(caracteristicasPersonaje1[0]['quemado']), parseInt(caracteristicasPersonaje1[0]['envenenado']), parseInt(caracteristicasPersonaje1[0]['confundido']), parseInt(caracteristicasPersonaje1[0]['heridoLeve']), parseInt(caracteristicasPersonaje1[0]['heridoGrave']), parseInt(caracteristicasPersonaje1[0]['inteligencia']), parseInt(caracteristicasPersonaje1[0]['fuego']), parseInt(caracteristicasPersonaje1[0]['pantanoso']), parseInt(caracteristicasPersonaje1[0]['enigma']), parseInt(caracteristicasPersonaje1[0]['pinchos']), parseInt(caracteristicasPersonaje1[0]['sombra']));
+                        personaje1 = new Hechicero(caracteristicasPersonaje1[0]['nombre'], parseInt(caracteristicasPersonaje1[0]['fuerza']), parseInt(caracteristicasPersonaje1[0]['armadura']), parseInt(caracteristicasPersonaje1[0]['nivel']), parseInt(caracteristicasPersonaje1[0]['vidaActual']), parseInt(caracteristicasPersonaje1[0]['vidaMaxima']), parseInt(caracteristicasPersonaje1[0]['estaminaActual']), parseInt(caracteristicasPersonaje1[0]['estaminaMaxima']), parseInt(caracteristicasPersonaje1[0]['puntosExperiencia']), parseInt(caracteristicasPersonaje1[0]['quemado']), parseInt(caracteristicasPersonaje1[0]['envenenado']), parseInt(caracteristicasPersonaje1[0]['confundido']), parseInt(caracteristicasPersonaje1[0]['heridoLeve']), parseInt(caracteristicasPersonaje1[0]['heridoGrave']), parseInt(caracteristicasPersonaje1[0]['inteligencia']), parseInt(caracteristicasPersonaje1[0]['fuego']), parseInt(caracteristicasPersonaje1[0]['veneno']), parseInt(caracteristicasPersonaje1[0]['enigmatico']), parseInt(caracteristicasPersonaje1[0]['pinchos']), parseInt(caracteristicasPersonaje1[0]['sombra']));
 
                         personaje1.asignarObjetos(caracteristicasPersonaje1['arma']['vara']['desgaste'], caracteristicasPersonaje1['curacion']['curacionSimple']['cantidad'], caracteristicasPersonaje1['curacion']['superCuracion']['cantidad'], caracteristicasPersonaje1['curacion']['curacionCompleta']['cantidad'], caracteristicasPersonaje1['estamina']['restaurarEstamina']['cantidad'], caracteristicasPersonaje1['estamina']['restaurarMuchaEstamina']['cantidad'], caracteristicasPersonaje1['estamina']['restaurarTodaEstamina']['cantidad']);
                         imgPersonaje1.setAttribute("src", "imgs/caballeroDerecha.gif");
@@ -432,22 +432,22 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                                 let transformaciones;
                                 personaje1.transformacion();
                                 switch (true) {
-                                    case (personaje1.posiblesTransformaciones.get("oso") == true):
+                                    case (personaje1.posiblesTransformaciones.get("oso") == 1):
                                         transformaciones = document.getElementById("imgPersonaje1");
                                         transformaciones.removeAttribute("src");
                                         transformaciones.setAttribute("src", "imgs/Transformaciones-druida/osoDerecha.gif");
                                         break;
-                                    case (personaje1.posiblesTransformaciones.get("serpiente") == true):
+                                    case (personaje1.posiblesTransformaciones.get("serpiente") == 1):
                                         transformaciones = document.getElementById("imgPersonaje1");
                                         transformaciones.removeAttribute("src");
                                         transformaciones.setAttribute("src", "imgs/Transformaciones-druida/serpienteDerecha.gif");
                                         break;
-                                    case (personaje1.posiblesTransformaciones.get("zorro") == true):
+                                    case (personaje1.posiblesTransformaciones.get("zorro") == 1):
                                         transformaciones = document.getElementById("imgPersonaje1");
                                         transformaciones.removeAttribute("src");
                                         transformaciones.setAttribute("src", "imgs/Transformaciones-druida/zorroDerecha.gif");
                                         break;
-                                    case (personaje1.posiblesTransformaciones.get("águila") == true):
+                                    case (personaje1.posiblesTransformaciones.get("águila") == 1):
                                         transformaciones = document.getElementById("imgPersonaje1");
                                         transformaciones.removeAttribute("src");
                                         transformaciones.setAttribute("src", "imgs/Transformaciones-druida/aguilaDerecha.gif");
@@ -484,27 +484,27 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                                 let manto;
                                 personaje1.farmearAura();
                                 switch (true) {
-                                    case (personaje1.aura.get("fuego")):
+                                    case (personaje1.aura.get("fuego") == 1):
                                         manto = document.getElementById("imgPersonaje1");
                                         manto.removeAttribute("src");
                                         manto.setAttribute("src", "imgs/Estados-hechicero/hechiceroFuegoDerecha.png");
                                         break;
-                                    case (personaje1.aura.get("pantanoso")):
+                                    case (personaje1.aura.get("veneno") == 1):
                                         manto = document.getElementById("imgPersonaje1");
                                         manto.removeAttribute("src");
                                         manto.setAttribute("src", "imgs/Estados-hechicero/hechiceroVenenoDerecha.png");
                                         break;
-                                    case (personaje1.aura.get("enigma")):
+                                    case (personaje1.aura.get("enigmatico") == 1):
                                         manto = document.getElementById("imgPersonaje1");
                                         manto.removeAttribute("src");
                                         manto.setAttribute("src", "imgs/Estados-hechicero/hechiceroEnigmaDerecha.png");
                                         break;
-                                    case (personaje1.aura.get("pinchos")):
+                                    case (personaje1.aura.get("pinchos") == 1):
                                         manto = document.getElementById("imgPersonaje1");
                                         manto.removeAttribute("src");
                                         manto.setAttribute("src", "imgs/Estados-hechicero/hechiceroPinchosDerecha.png");
                                         break;
-                                    case (personaje1.aura.get("sombra")):
+                                    case (personaje1.aura.get("sombra") == 1):
                                         manto = document.getElementById("imgPersonaje1");
                                         manto.removeAttribute("src");
                                         manto.setAttribute("src", "imgs/Estados-hechicero/hechiceroSombrioDerecha.png");
@@ -513,6 +513,7 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                                         document.getElementById("imgPersonaje1").src = "imgs/hechiceroDerecha.gif";
                                         break;
                                 }
+                                //cambiarImagenHechicero1();
                             }
                             for (let i = 0; i < 4; i++) {
                                 let boton = document.createElement("button");
@@ -624,7 +625,8 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                                             body: JSON.stringify({
                                                 personaje1,
                                                 inventarioPersonaje1,
-                                                estadosPersonaje1
+                                                estadosPersonaje1,
+                                                auraPersonaje1
                                             })
                                         })
                                         // .then(response => response.text())
@@ -901,14 +903,14 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                 let imgPersonaje2 = document.createElement("img");
                 switch (caracteristicasPersonaje2["tipo"]) {
                     case "Arquero":
-                        personaje2 = new Arquero(caracteristicasPersonaje2[0]['nombre'], parseInt(caracteristicasPersonaje2[0]['fuerza']), parseInt(caracteristicasPersonaje2[0]['armadura']), parseInt(caracteristicasPersonaje2[0]['nivel']), parseInt(caracteristicasPersonaje2[0]['vidaActual']), parseInt(caracteristicasPersonaje2[0]['vidaMaxima']), parseInt(caracteristicasPersonaje2[0]['estaminaActual']), parseInt(caracteristicasPersonaje2[0]['estaminaMaxima']), parseInt(caracteristicasPersonaje2[0]['puntosExperiencia']), parseInt(caracteristicasPersonaje1[0]['quemado']), parseInt(caracteristicasPersonaje1[0]['envenenado']), parseInt(caracteristicasPersonaje1[0]['confundido']), parseInt(caracteristicasPersonaje1[0]['heridoLeve']), parseInt(caracteristicasPersonaje1[0]['heridoGrave']), parseInt(caracteristicasPersonaje2[0]['punteria']));
+                        personaje2 = new Arquero(caracteristicasPersonaje2[0]['nombre'], parseInt(caracteristicasPersonaje2[0]['fuerza']), parseInt(caracteristicasPersonaje2[0]['armadura']), parseInt(caracteristicasPersonaje2[0]['nivel']), parseInt(caracteristicasPersonaje2[0]['vidaActual']), parseInt(caracteristicasPersonaje2[0]['vidaMaxima']), parseInt(caracteristicasPersonaje2[0]['estaminaActual']), parseInt(caracteristicasPersonaje2[0]['estaminaMaxima']), parseInt(caracteristicasPersonaje2[0]['puntosExperiencia']), parseInt(caracteristicasPersonaje2[0]['quemado']), parseInt(caracteristicasPersonaje2[0]['envenenado']), parseInt(caracteristicasPersonaje2[0]['confundido']), parseInt(caracteristicasPersonaje2[0]['heridoLeve']), parseInt(caracteristicasPersonaje2[0]['heridoGrave']), parseInt(caracteristicasPersonaje2[0]['punteria']));
 
                         personaje2.asignarObjetos(caracteristicasPersonaje2['arma']['arco']['desgaste'], caracteristicasPersonaje2['arma']['flecha']['cantidad'], caracteristicasPersonaje2['arma']['nunchakus']['desgaste'], caracteristicasPersonaje2['curacion']['curacionSimple']['cantidad'], caracteristicasPersonaje2['curacion']['superCuracion']['cantidad'], caracteristicasPersonaje2['curacion']['curacionCompleta']['cantidad'], caracteristicasPersonaje2['estamina']['restaurarEstamina']['cantidad'], caracteristicasPersonaje2['estamina']['restaurarMuchaEstamina']['cantidad'], caracteristicasPersonaje2['estamina']['restaurarTodaEstamina']['cantidad']);
                         imgPersonaje2.setAttribute("src", "imgs/arqueroIzquierda.gif");
                         imgPersonaje2.setAttribute("id", "imgPersonaje2");
                         break;
                     case "Caballero":
-                        personaje2 = new Caballero(caracteristicasPersonaje2[0]['nombre'], parseInt(caracteristicasPersonaje2[0]['fuerza']), parseInt(caracteristicasPersonaje2[0]['armadura']), parseInt(caracteristicasPersonaje2[0]['nivel']), parseInt(caracteristicasPersonaje2[0]['vidaActual']), parseInt(caracteristicasPersonaje2[0]['vidaMaxima']), parseInt(caracteristicasPersonaje2[0]['estaminaActual']), parseInt(caracteristicasPersonaje2[0]['estaminaMaxima']), parseInt(caracteristicasPersonaje2[0]['puntosExperiencia']), parseInt(caracteristicasPersonaje1[0]['quemado']), parseInt(caracteristicasPersonaje1[0]['envenenado']), parseInt(caracteristicasPersonaje1[0]['confundido']), parseInt(caracteristicasPersonaje1[0]['heridoLeve']), parseInt(caracteristicasPersonaje1[0]['heridoGrave']));
+                        personaje2 = new Caballero(caracteristicasPersonaje2[0]['nombre'], parseInt(caracteristicasPersonaje2[0]['fuerza']), parseInt(caracteristicasPersonaje2[0]['armadura']), parseInt(caracteristicasPersonaje2[0]['nivel']), parseInt(caracteristicasPersonaje2[0]['vidaActual']), parseInt(caracteristicasPersonaje2[0]['vidaMaxima']), parseInt(caracteristicasPersonaje2[0]['estaminaActual']), parseInt(caracteristicasPersonaje2[0]['estaminaMaxima']), parseInt(caracteristicasPersonaje2[0]['puntosExperiencia']), parseInt(caracteristicasPersonaje2[0]['quemado']), parseInt(caracteristicasPersonaje2[0]['envenenado']), parseInt(caracteristicasPersonaje2[0]['confundido']), parseInt(caracteristicasPersonaje2[0]['heridoLeve']), parseInt(caracteristicasPersonaje2[0]['heridoGrave']));
 
                         personaje2.asignarObjetos(caracteristicasPersonaje2['arma']['espada']['desgaste'], caracteristicasPersonaje2['arma']['mazo']['desgaste'], caracteristicasPersonaje2['curacion']['curacionSimple']['cantidad'], caracteristicasPersonaje2['curacion']['superCuracion']['cantidad'], caracteristicasPersonaje2['curacion']['curacionCompleta']['cantidad'], caracteristicasPersonaje2['estamina']['restaurarEstamina']['cantidad'], caracteristicasPersonaje2['estamina']['restaurarMuchaEstamina']['cantidad'], caracteristicasPersonaje2['estamina']['restaurarTodaEstamina']['cantidad']);
                         imgPersonaje2.setAttribute("src", "imgs/caballeroIzquierda.gif");
@@ -922,7 +924,7 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                         imgPersonaje2.setAttribute("id", "imgPersonaje2");
                         break;
                     case "Druida":
-                        personaje2 = new Druida(caracteristicasPersonaje2[0]['nombre'], parseInt(caracteristicasPersonaje2[0]['fuerza']), parseInt(caracteristicasPersonaje2[0]['armadura']), parseInt(caracteristicasPersonaje2[0]['nivel']), parseInt(caracteristicasPersonaje2[0]['vidaActual']), parseInt(caracteristicasPersonaje2[0]['vidaMaxima']), parseInt(caracteristicasPersonaje2[0]['estaminaActual']), parseInt(caracteristicasPersonaje2[0]['estaminaMaxima']), parseInt(caracteristicasPersonaje2[0]['puntosExperiencia']), parseInt(caracteristicasPersonaje1[0]['quemado']), parseInt(caracteristicasPersonaje1[0]['envenenado']), parseInt(caracteristicasPersonaje1[0]['confundido']), parseInt(caracteristicasPersonaje1[0]['heridoLeve']), parseInt(caracteristicasPersonaje1[0]['heridoGrave']), parseInt(caracteristicasPersonaje2[0]['inteligencia']));
+                        personaje2 = new Druida(caracteristicasPersonaje2[0]['nombre'], parseInt(caracteristicasPersonaje2[0]['fuerza']), parseInt(caracteristicasPersonaje2[0]['armadura']), parseInt(caracteristicasPersonaje2[0]['nivel']), parseInt(caracteristicasPersonaje2[0]['vidaActual']), parseInt(caracteristicasPersonaje2[0]['vidaMaxima']), parseInt(caracteristicasPersonaje2[0]['estaminaActual']), parseInt(caracteristicasPersonaje2[0]['estaminaMaxima']), parseInt(caracteristicasPersonaje2[0]['puntosExperiencia']), parseInt(caracteristicasPersonaje2[0]['quemado']), parseInt(caracteristicasPersonaje2[0]['envenenado']), parseInt(caracteristicasPersonaje2[0]['confundido']), parseInt(caracteristicasPersonaje2[0]['heridoLeve']), parseInt(caracteristicasPersonaje2[0]['heridoGrave']), parseInt(caracteristicasPersonaje2[0]['inteligencia']));
 
                         personaje2.asignarObjetos(caracteristicasPersonaje2['arma']['daga']['desgaste'], caracteristicasPersonaje2['curacion']['curacionSimple']['cantidad'], caracteristicasPersonaje2['curacion']['superCuracion']['cantidad'], caracteristicasPersonaje2['curacion']['curacionCompleta']['cantidad'], caracteristicasPersonaje2['estamina']['restaurarEstamina']['cantidad'], caracteristicasPersonaje2['estamina']['restaurarMuchaEstamina']['cantidad'], caracteristicasPersonaje2['estamina']['restaurarTodaEstamina']['cantidad']);
                         imgPersonaje2.setAttribute("src", "imgs/druidaIzquierda.gif");
@@ -1065,12 +1067,12 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                                         manto.removeAttribute("src");
                                         manto.setAttribute("src", "imgs/Estados-hechicero/hechiceroFuegoIzquierda.png");
                                         break;
-                                    case (personaje2.aura.get("pantanoso")):
+                                    case (personaje2.aura.get("veneno")):
                                         manto = document.getElementById("imgPersonaje2");
                                         manto.removeAttribute("src");
                                         manto.setAttribute("src", "imgs/Estados-hechicero/hechiceroVenenoIzquierda.png");
                                         break;
-                                    case (personaje2.aura.get("enigma")):
+                                    case (personaje2.aura.get("enigmatico")):
                                         manto = document.getElementById("imgPersonaje2");
                                         manto.removeAttribute("src");
                                         manto.setAttribute("src", "imgs/Estados-hechicero/hechiceroEnigmaIzquierda.png");

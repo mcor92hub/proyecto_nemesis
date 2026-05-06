@@ -5,7 +5,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $bd->autocommit(false);
     $json = file_get_contents('php://input');
     // TRABAJO PARA MÁXIMO
-    error_log("JSON recibido: " . $json);  // Agrega esto después de $json = file_get_contents('php://input');
+    error_log("JSON recibido: " . $json); 
     $caracteristicasPersonaje1 = json_decode($json, true);
 
     $errorUpdateConsulta = false;
@@ -164,6 +164,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             estaminaMaxima = '" . $caracteristicasPersonaje1['personaje1']['estaminaMaxima'] . "',
                             nivel = '" . $caracteristicasPersonaje1['personaje1']['nivel'] . "',
                             puntosExperiencia = '" . $caracteristicasPersonaje1['personaje1']['puntosExperiencia'] . "',
+                            inteligencia = '" . $caracteristicasPersonaje1['personaje1']['inteligencia'] . "',
                             envenenado = '" . $caracteristicasPersonaje1['estadosPersonaje1']['envenenado'] . "',
                             quemado = '" . $caracteristicasPersonaje1['estadosPersonaje1']['quemado'] . "',
                             heridoLeve = '" . $caracteristicasPersonaje1['estadosPersonaje1']['heridoLeve'] . "',
@@ -279,7 +280,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             quemado = '" . $caracteristicasPersonaje1['estadosPersonaje1']['quemado'] . "',
                             heridoLeve = '" . $caracteristicasPersonaje1['estadosPersonaje1']['heridoLeve'] . "',
                             heridoGrave = '" . $caracteristicasPersonaje1['estadosPersonaje1']['heridoGrave'] . "',
-                            confundido = '" . $caracteristicasPersonaje1['estadosPersonaje1']['confundido'] . "'
+                            confundido = '" . $caracteristicasPersonaje1['estadosPersonaje1']['confundido'] . "',
+                            fuego = '" . $caracteristicasPersonaje1['auraPersonaje1']['fuego'] . "',
+                            veneno = '" . $caracteristicasPersonaje1['auraPersonaje1']['veneno'] . "',
+                            enigmatico = '" . $caracteristicasPersonaje1['auraPersonaje1']['enigmatico'] . "',
+                            pinchos = '" . $caracteristicasPersonaje1['auraPersonaje1']['pinchos'] . "',
+                            sombra = '" . $caracteristicasPersonaje1['auraPersonaje1']['sombra'] . "'
                             WHERE pa.id_partida = " . $_SESSION['partida'] . "";
             $resultado = $bd->query($updateHechicero);
             if ($bd->errno) {

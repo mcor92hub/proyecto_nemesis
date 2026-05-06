@@ -36,40 +36,40 @@ class Druida extends Personaje {
             switch (azar) {
                 // Al hacer cada transformación mandamos las otras a false para que no haya transformaciones múltiples
                 case 0:
-                    this.posiblesTransformaciones.set("oso", true);
-                    this.posiblesTransformaciones.set("serpiente", false);
-                    this.posiblesTransformaciones.set("zorro", false);
-                    this.posiblesTransformaciones.set("águila", false);
+                    this.posiblesTransformaciones.set("oso", 1);
+                    this.posiblesTransformaciones.set("serpiente", 0);
+                    this.posiblesTransformaciones.set("zorro", 0);
+                    this.posiblesTransformaciones.set("águila", 0);
                     this.fuerza = 80;
                     this.armadura = 80;
                     this.inteligencia = inteligenciaActual;
                     console.log("OSO");
                     break;
                 case 1:
-                    this.posiblesTransformaciones.set("oso", false);
-                    this.posiblesTransformaciones.set("serpiente", true);
-                    this.posiblesTransformaciones.set("zorro", false);
-                    this.posiblesTransformaciones.set("águila", false);
+                    this.posiblesTransformaciones.set("oso", 0);
+                    this.posiblesTransformaciones.set("serpiente", 1);
+                    this.posiblesTransformaciones.set("zorro", 0);
+                    this.posiblesTransformaciones.set("águila", 0);
                     this.fuerza = 60;
                     this.armadura = armaduraActual;
                     this.inteligencia = inteligenciaActual;
                     console.log("SERPIENTE");
                     break;
                 case 2:
-                    this.posiblesTransformaciones.set("oso", false);
-                    this.posiblesTransformaciones.set("serpiente", false);
-                    this.posiblesTransformaciones.set("zorro", true);
-                    this.posiblesTransformaciones.set("águila", false);
+                    this.posiblesTransformaciones.set("oso", 0);
+                    this.posiblesTransformaciones.set("serpiente", 0);
+                    this.posiblesTransformaciones.set("zorro", 1);
+                    this.posiblesTransformaciones.set("águila", 0);
                     this.inteligencia = 50;
                     this.fuerza = 30;
                     this.armadura = 20;
                     console.log("ZORRO");
                     break;
                 case 3:
-                    this.posiblesTransformaciones.set("oso", false);
-                    this.posiblesTransformaciones.set("serpiente", false);
-                    this.posiblesTransformaciones.set("zorro", false);
-                    this.posiblesTransformaciones.set("águila", true);
+                    this.posiblesTransformaciones.set("oso", 0);
+                    this.posiblesTransformaciones.set("serpiente", 0);
+                    this.posiblesTransformaciones.set("zorro", 0);
+                    this.posiblesTransformaciones.set("águila", 1);
                     this.fuerza = 60;
                     this.armadura = armaduraActual;
                     this.inteligencia = inteligenciaActual;
