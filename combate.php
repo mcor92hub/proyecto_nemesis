@@ -334,7 +334,8 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                         imgPersonaje1.setAttribute("id", "imgPersonaje1");
                         break;
                     case "Hechicero":
-                        personaje1 = new Hechicero(caracteristicasPersonaje1[0]['nombre'], parseInt(caracteristicasPersonaje1[0]['fuerza']), parseInt(caracteristicasPersonaje1[0]['armadura']), parseInt(caracteristicasPersonaje1[0]['nivel']), parseInt(caracteristicasPersonaje1[0]['vidaActual']), parseInt(caracteristicasPersonaje1[0]['vidaMaxima']), parseInt(caracteristicasPersonaje1[0]['estaminaActual']), parseInt(caracteristicasPersonaje1[0]['estaminaMaxima']), parseInt(caracteristicasPersonaje1[0]['puntosExperiencia']), parseInt(caracteristicasPersonaje1[0]['quemado']), parseInt(caracteristicasPersonaje1[0]['envenenado']), parseInt(caracteristicasPersonaje1[0]['confundido']), parseInt(caracteristicasPersonaje1[0]['heridoLeve']), parseInt(caracteristicasPersonaje1[0]['heridoGrave']), parseInt(caracteristicasPersonaje1[0]['inteligencia']));
+                        console.log(caracteristicasPersonaje1);
+                        personaje1 = new Hechicero(caracteristicasPersonaje1[0]['nombre'], parseInt(caracteristicasPersonaje1[0]['fuerza']), parseInt(caracteristicasPersonaje1[0]['armadura']), parseInt(caracteristicasPersonaje1[0]['nivel']), parseInt(caracteristicasPersonaje1[0]['vidaActual']), parseInt(caracteristicasPersonaje1[0]['vidaMaxima']), parseInt(caracteristicasPersonaje1[0]['estaminaActual']), parseInt(caracteristicasPersonaje1[0]['estaminaMaxima']), parseInt(caracteristicasPersonaje1[0]['puntosExperiencia']), parseInt(caracteristicasPersonaje1[0]['quemado']), parseInt(caracteristicasPersonaje1[0]['envenenado']), parseInt(caracteristicasPersonaje1[0]['confundido']), parseInt(caracteristicasPersonaje1[0]['heridoLeve']), parseInt(caracteristicasPersonaje1[0]['heridoGrave']), parseInt(caracteristicasPersonaje1[0]['inteligencia']), parseInt(caracteristicasPersonaje1[0]['fuego']), parseInt(caracteristicasPersonaje1[0]['pantanoso']), parseInt(caracteristicasPersonaje1[0]['enigma']), parseInt(caracteristicasPersonaje1[0]['pinchos']), parseInt(caracteristicasPersonaje1[0]['sombra']));
 
                         personaje1.asignarObjetos(caracteristicasPersonaje1['arma']['vara']['desgaste'], caracteristicasPersonaje1['curacion']['curacionSimple']['cantidad'], caracteristicasPersonaje1['curacion']['superCuracion']['cantidad'], caracteristicasPersonaje1['curacion']['curacionCompleta']['cantidad'], caracteristicasPersonaje1['estamina']['restaurarEstamina']['cantidad'], caracteristicasPersonaje1['estamina']['restaurarMuchaEstamina']['cantidad'], caracteristicasPersonaje1['estamina']['restaurarTodaEstamina']['cantidad']);
                         imgPersonaje1.setAttribute("src", "imgs/caballeroDerecha.gif");
@@ -581,28 +582,61 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                             // Recalcular después de la acción
                             let evento = event.target;
                             if (evento instanceof HTMLButtonElement) {
-                                inventarioPersonaje1 = mapaParaObjeto(personaje1.inventario);
-                                estadosPersonaje1 = mapaParaObjeto(personaje1.estado);
-                                console.log(JSON.stringify(inventarioPersonaje1));
-                                console.log(JSON.stringify(estadosPersonaje1));
-                                console.log(JSON.stringify(personaje1));
-                                fetch("updatePersonajes.php", {
-                                    method: "POST",
-                                    credentials: "include",
-                                    headers: {
-                                        "Content-Type": "application/json"
-                                    },
-                                    body: JSON.stringify({
-                                        personaje1,
-                                        inventarioPersonaje1,
-                                        estadosPersonaje1
-                                    })
-                                })
-                                .then(response => response.text())
-                                .then(data => location.reload(), console.log("recargo"), console.log(data))
-                                .catch(error => {
-                                    console.error("Error en fetch:", error);
-                                });
+                                switch (true) {
+                                    case (personaje1 instanceof Arquero || personaje1 instanceof Caballero):
+                                        inventarioPersonaje1 = mapaParaObjeto(personaje1.inventario);
+                                        estadosPersonaje1 = mapaParaObjeto(personaje1.estado);
+                                        console.log(JSON.stringify(inventarioPersonaje1));
+                                        console.log(JSON.stringify(estadosPersonaje1));
+                                        console.log(JSON.stringify(personaje1));
+                                        fetch("updatePersonajes.php", {
+                                            method: "POST",
+                                            credentials: "include",
+                                            headers: {
+                                                "Content-Type": "application/json"
+                                            },
+                                            body: JSON.stringify({
+                                                personaje1,
+                                                inventarioPersonaje1,
+                                                estadosPersonaje1
+                                            })
+                                        })
+                                        // .then(response => response.text())
+                                        // .then(data => location.reload(), console.log("recargo"))
+                                        // .catch(error => {
+                                        //     console.error("Error en fetch:", error);
+                                        // });
+                                        break;
+                                    case (personaje1 instanceof Hechicero):
+                                        inventarioPersonaje1 = mapaParaObjeto(personaje1.inventario);
+                                        estadosPersonaje1 = mapaParaObjeto(personaje1.estado);
+                                        auraPersonaje1 = mapaParaObjeto(personaje1.aura);
+                                        console.log(JSON.stringify(inventarioPersonaje1));
+                                        console.log(JSON.stringify(estadosPersonaje1));
+                                        console.log(JSON.stringify(auraPersonaje1));
+                                        console.log(JSON.stringify(personaje1));
+                                        fetch("updatePersonajes.php", {
+                                            method: "POST",
+                                            credentials: "include",
+                                            headers: {
+                                                "Content-Type": "application/json"
+                                            },
+                                            body: JSON.stringify({
+                                                personaje1,
+                                                inventarioPersonaje1,
+                                                estadosPersonaje1
+                                            })
+                                        })
+                                        // .then(response => response.text())
+                                        // .then(data => location.reload(), console.log("recargo"))
+                                        // .catch(error => {
+                                        //     console.error("Error en fetch:", error);
+                                        // });
+                                        break;
+                                    default:
+                                        break;
+                                }
+
                             }
 
                         });
@@ -629,13 +663,13 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
 
 
 
-                        // setInterval(function() {
-                        //     if (personaje1.estado.get("confundido") == true) {
-                        //         for (const element of claseBotonesPersonaje1) {
-                        //             element.textContent = "????"
-                        //         }
-                        //     }
-                        // })
+                        setInterval(function() {
+                            if (personaje1.estado.get("confundido") == true) {
+                                for (const element of claseBotonesPersonaje1) {
+                                    element.textContent = "????"
+                                }
+                            }
+                        })
                     </script>
 
                 </div>

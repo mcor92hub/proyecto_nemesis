@@ -8,8 +8,8 @@ class Personaje {
     estaminaMaxima;
     nivel;
     puntosExperiencia;
-    inventario = new Map();
     estado = new Map();
+    inventario = new Map();
 
     constructor(nombre, fuerza, armadura, nivel, vidaActual, vidaMaxima, estaminaActual, estaminaMaxima, puntosExperiencia, quemado, envenenado, confundido, heridoLeve, heridoGrave) {
         this.nombre = nombre;
