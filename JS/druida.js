@@ -32,7 +32,7 @@ class Druida extends Personaje {
             this.estaminaActual -= 20;
             let inteligenciaActual = this.inteligencia;
             let armaduraActual = this.armadura;
-            let azar = Math.floor(Math.random() * 4);
+            let azar = Math.floor(Math.random() * 5);
             switch (azar) {
                 // Al hacer cada transformación mandamos las otras a false para que no haya transformaciones múltiples
                 case 0:
@@ -74,6 +74,13 @@ class Druida extends Personaje {
                     this.armadura = armaduraActual;
                     this.inteligencia = inteligenciaActual;
                     console.log("ÁGUILA");
+                    break;
+                case 4:
+                    this.posiblesTransformaciones.set("oso", 0);
+                    this.posiblesTransformaciones.set("serpiente", 0);
+                    this.posiblesTransformaciones.set("zorro", 0);
+                    this.posiblesTransformaciones.set("águila", 0);
+                    console.log("DRUIDA");
                     break;
             }
         } else {

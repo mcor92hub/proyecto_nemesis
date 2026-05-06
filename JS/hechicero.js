@@ -2,7 +2,7 @@ class Hechicero extends Personaje {
     aura = new Map();
     listaBotones;
     listaFunciones;
-    constructor(nombre, fuerza, armadura, nivel, vidaActual, vidaMaxima, estaminaActual, estaminaMaxima, puntosExperiencia, quemado, envenenado, confundido, heridoLeve, heridoGrave,inteligencia, fuego, veneno, enigmatico, pinchos, sombra) {
+    constructor(nombre, fuerza, armadura, nivel, vidaActual, vidaMaxima, estaminaActual, estaminaMaxima, puntosExperiencia, quemado, envenenado, confundido, heridoLeve, heridoGrave, inteligencia, fuego, veneno, enigmatico, pinchos, sombra) {
         super(nombre, fuerza, armadura, nivel, vidaActual, vidaMaxima, estaminaActual, estaminaMaxima, puntosExperiencia, quemado, envenenado, confundido, heridoLeve, heridoGrave);
         this.inteligencia = inteligencia;
         this.aura.set("fuego", fuego);
@@ -14,7 +14,7 @@ class Hechicero extends Personaje {
         this.listaFunciones = ["ataqueSimple", "farmearAura", "leer", "rimbonbancia"];
     }
 
-    asignarObjetos(desgasteVara, numPocion, numSuperPocion, numPocionMax, numPocionAguante, numSuperPocionAguante, numPocionAguanteMax){
+    asignarObjetos(desgasteVara, numPocion, numSuperPocion, numPocionMax, numPocionAguante, numSuperPocionAguante, numPocionAguanteMax) {
         let objetosArma = this.inventario.get("arma");
         let objetosCuracion = this.inventario.get("curacion");
         let objetosRestaurarAguante = this.inventario.get("restaurarEstamina");
@@ -30,7 +30,7 @@ class Hechicero extends Personaje {
     //el hechicero tendrá una habilidad elemental que usará para el ataque simple, que irá hacia los estados alterados, por ejemplo fuego para quemado, veneno para envenenado, enigmatico para confundirlo, cuchillas para heridoLeve y pedrolos para heridoGrave
 
     farmearAura() {
-        let opcion = prompt("Escoge el aura del hechicero (fuego, veneno, enigmático, acero o sombrío): ");
+        let opcion = prompt("Escoge el aura del hechicero (fuego, veneno, enigmático, acero, sombrío o normal): ");
         let inteligenciaActual = this.inteligencia;
         let fuerzaActual = this.fuerza;
         let armaduraActual = this.armadura;
@@ -109,6 +109,13 @@ class Hechicero extends Personaje {
                 } else {
                     console.log(`${this.nombre} se ha quedado sin maná`);
                 }
+                break;
+            case "normal":
+                this.aura.set("fuego", 0);
+                this.aura.set("veneno", 0);
+                this.aura.set("enigmatico", 0);
+                this.aura.set("pinchos", 0);
+                this.aura.set("sombra", 0);
                 break;
             default:
                 this.aura.set("fuego", 0);

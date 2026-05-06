@@ -184,6 +184,7 @@ class Personaje {
         let objetosRestaurarEstamina = this.inventario.get("restaurarEstamina");
         if (objetosRestaurarEstamina.has(objeto)) {
             let cantidad;
+            console.log(objeto);
             switch (objeto) {
                 case "pocionEstamina":
                     if (this.estaminaActual + 20 >= this.estaminaMaxima) {
@@ -192,7 +193,7 @@ class Personaje {
                         this.estaminaActual += 20;
                     }
                     cantidad = objetosRestaurarEstamina.get(objeto);
-                    if (cantidad - 1 == 0) {
+                    if (cantidad - 1 <= 0) {
                         objetosRestaurarEstamina.delete(objeto);
                     } else {
                         objetosRestaurarEstamina.set(objeto, cantidad - 1)
@@ -205,7 +206,7 @@ class Personaje {
                         this.estaminaActual += 50;
                     }
                     cantidad = objetosRestaurarEstamina.get(objeto);
-                    if (cantidad - 1 == 0) {
+                    if (cantidad - 1 <= 0) {
                         objetosRestaurarEstamina.delete(objeto);
                     } else {
                         objetosRestaurarEstamina.set(objeto, cantidad - 1)
@@ -214,7 +215,7 @@ class Personaje {
                 case "pocionEstaminaMax":
                     this.estaminaActual = this.estaminaMaxima;
                     cantidad = objetosRestaurarEstamina.get(objeto);
-                    if (cantidad - 1 == 0) {
+                    if (cantidad - 1 <= 0) {
                         objetosRestaurarEstamina.delete(objeto);
                     } else {
                         objetosRestaurarEstamina.set(objeto, cantidad - 1)
