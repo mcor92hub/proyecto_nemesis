@@ -5,19 +5,13 @@ header("Expires: 0");
 header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
 session_start();
 require_once "bd.php";
-require_once "updatePersonajes.php";
+require_once "updatePersonaje1.php";
+require_once "updatePersonaje2.php";
 
 $consultaTurno = "SELECT * FROM partida WHERE id_partida = " . $_SESSION['partida'] . "";
 $resultadoTurno = $bd->query($consultaTurno);
 $lista = [];
 while ($fila = $resultadoTurno->fetch_assoc()) {
-    if ($fila['turno'] == 1) {
-        $updatePartida = "UPDATE partida SET turno = 2 WHERE id_partida = " . $_SESSION['partida'] . "";
-        $bd->query($updatePartida);
-    } else {
-        $updatePartida = "UPDATE partida SET turno = 1 WHERE id_partida = " . $_SESSION['partida'] . "";
-        $bd->query($updatePartida);
-    }
     array_push($lista, $fila['personaje1_id']);
     array_push($lista, $fila['personaje2_id']);
 }
@@ -54,7 +48,7 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
     <?php
     $consultaTurno = "SELECT turno FROM partida WHERE id_partida = " . $_SESSION['partida'] . "";
     $resultadoTurno = $bd->query($consultaTurno);
-    $turno;
+
     while ($fila = $resultadoTurno->fetch_assoc()) {
         $turno = $fila['turno'];
     }
@@ -66,9 +60,9 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
         console.log(tiraMoneda);
         let turno;
         if (tiraMoneda == 1) {
-            turno = true;
+            turno = 1;
         } else {
-            turno = false;
+            turno = 2;
         }
         let claseBotonesPersonaje1 = document.getElementsByClassName("botonesPersonaje1");
         let claseBotonesPersonaje2 = document.getElementsByClassName("botonesPersonaje2");
@@ -76,10 +70,10 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
         setInterval(function() {
             for (const element of claseBotonesPersonaje1) {
                 element.addEventListener("click", function() {
-                    turno = false;
+                    turno = 2;
                 });
             }
-            if (turno == false) {
+            if (turno == 2) {
                 for (const element of claseBotonesPersonaje1) {
                     element.setAttribute("disabled", "");
                 }
@@ -89,10 +83,10 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
             }
             for (const element of claseBotonesPersonaje2) {
                 element.addEventListener("click", function() {
-                    turno = true;
+                    turno = 1;
                 });
             }
-            if (turno == true) {
+            if (turno == 1) {
                 for (const element of claseBotonesPersonaje2) {
                     element.setAttribute("disabled", "");
                 }
@@ -367,7 +361,7 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                         }
                         break;
                     case "Druida":
-                        personaje1 = new Druida(caracteristicasPersonaje1[0]['nombre'], parseInt(caracteristicasPersonaje1[0]['fuerza']), parseInt(caracteristicasPersonaje1[0]['armadura']), parseInt(caracteristicasPersonaje1[0]['nivel']), parseInt(caracteristicasPersonaje1[0]['vidaActual']), parseInt(caracteristicasPersonaje1[0]['vidaMaxima']), parseInt(caracteristicasPersonaje1[0]['estaminaActual']), parseInt(caracteristicasPersonaje1[0]['estaminaMaxima']), parseInt(caracteristicasPersonaje1[0]['puntosExperiencia']), parseInt(caracteristicasPersonaje1[0]['quemado']), parseInt(caracteristicasPersonaje1[0]['envenenado']), parseInt(caracteristicasPersonaje1[0]['confundido']), parseInt(caracteristicasPersonaje1[0]['heridoLeve']), parseInt(caracteristicasPersonaje1[0]['heridoGrave']), parseInt(caracteristicasPersonaje1[0]['inteligencia']), parseInt(caracteristicasPersonaje1[0]['inteligencia']), parseInt(caracteristicasPersonaje1[0]['fuego']), parseInt(caracteristicasPersonaje1[0]['oso']), parseInt(caracteristicasPersonaje1[0]['serpiente']), parseInt(caracteristicasPersonaje1[0]['zorro']), parseInt(caracteristicasPersonaje1[0]['águila']));
+                        personaje1 = new Druida(caracteristicasPersonaje1[0]['nombre'], parseInt(caracteristicasPersonaje1[0]['fuerza']), parseInt(caracteristicasPersonaje1[0]['armadura']), parseInt(caracteristicasPersonaje1[0]['nivel']), parseInt(caracteristicasPersonaje1[0]['vidaActual']), parseInt(caracteristicasPersonaje1[0]['vidaMaxima']), parseInt(caracteristicasPersonaje1[0]['estaminaActual']), parseInt(caracteristicasPersonaje1[0]['estaminaMaxima']), parseInt(caracteristicasPersonaje1[0]['puntosExperiencia']), parseInt(caracteristicasPersonaje1[0]['quemado']), parseInt(caracteristicasPersonaje1[0]['envenenado']), parseInt(caracteristicasPersonaje1[0]['confundido']), parseInt(caracteristicasPersonaje1[0]['heridoLeve']), parseInt(caracteristicasPersonaje1[0]['heridoGrave']), parseInt(caracteristicasPersonaje1[0]['inteligencia']), parseInt(caracteristicasPersonaje1[0]['oso']), parseInt(caracteristicasPersonaje1[0]['serpiente']), parseInt(caracteristicasPersonaje1[0]['zorro']), parseInt(caracteristicasPersonaje1[0]['aguila']));
 
                         personaje1.asignarObjetos(parseInt(caracteristicasPersonaje1['arma']['daga']['desgaste']), parseInt(caracteristicasPersonaje1['curacion']['curacionSimple']['cantidad']), parseInt(caracteristicasPersonaje1['curacion']['superCuracion']['cantidad']), parseInt(caracteristicasPersonaje1['curacion']['curacionCompleta']['cantidad']), parseInt(caracteristicasPersonaje1['estamina']['restaurarEstamina']['cantidad']), parseInt(caracteristicasPersonaje1['estamina']['restaurarMuchaEstamina']['cantidad']), parseInt(caracteristicasPersonaje1['estamina']['restaurarTodaEstamina']['cantidad']));
 
@@ -391,7 +385,6 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                             default:
                                 imgPersonaje1.setAttribute("id", "imgPersonaje1");
                                 imgPersonaje1.setAttribute("src", "imgs/druidaDerecha.gif");
-                                document.getElementById("imgPersonaje1").src = "imgs/druidaDerecha.gif";
                                 break;
                         }
                         break;
@@ -568,7 +561,7 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                                         console.log(JSON.stringify(inventarioPersonaje1));
                                         console.log(JSON.stringify(estadosPersonaje1));
                                         console.log(JSON.stringify(personaje1));
-                                        fetch("updatePersonajes.php", {
+                                        fetch("updatePersonaje1.php", {
                                             method: "POST",
                                             credentials: "include",
                                             headers: {
@@ -594,7 +587,7 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                                         console.log(JSON.stringify(estadosPersonaje1));
                                         console.log(JSON.stringify(auraPersonaje1));
                                         console.log(JSON.stringify(personaje1));
-                                        fetch("updatePersonajes.php", {
+                                        fetch("updatePersonaje1.php", {
                                             method: "POST",
                                             credentials: "include",
                                             headers: {
@@ -621,7 +614,7 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                                         console.log(JSON.stringify(estadosPersonaje1));
                                         console.log(JSON.stringify(transformacionesPersonaje1));
                                         console.log(JSON.stringify(personaje1));
-                                        fetch("updatePersonajes.php", {
+                                        fetch("updatePersonaje1.php", {
                                             method: "POST",
                                             credentials: "include",
                                             headers: {
@@ -651,7 +644,7 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
 
 
                         // setInterval(()=>{
-                        //     fetch("updatePersonajes.php", {
+                        //     fetch("updatePersonaje1.php", {
                         //         method: "POST",
                         //         credentials: "include",
                         //         headers: {
@@ -923,7 +916,7 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                         imgPersonaje2.setAttribute("id", "imgPersonaje2");
                         break;
                     case "Hechicero":
-                        personaje2 = new Hechicero(caracteristicasPersonaje2[0]['nombre'], parseInt(caracteristicasPersonaje2[0]['fuerza']), parseInt(caracteristicasPersonaje2[0]['armadura']), parseInt(caracteristicasPersonaje2[0]['nivel']), parseInt(caracteristicasPersonaje2[0]['vidaActual']), parseInt(caracteristicasPersonaje2[0]['vidaMaxima']), parseInt(caracteristicasPersonaje2[0]['estaminaActual']), parseInt(caracteristicasPersonaje2[0]['estaminaMaxima']), parseInt(caracteristicasPersonaje2[0]['puntosExperiencia']), parseInt(caracteristicasPersonaje2[0]['inteligencia']), parseInt(caracteristicasPersonaje2[0]['quemado']), parseInt(caracteristicasPersonaje2[0]['envenenado']), parseInt(caracteristicasPersonaje2[0]['confundido']), parseInt(caracteristicasPersonaje2[0]['heridoLeve']), parseInt(caracteristicasPersonaje2[0]['heridoGrave']), parseInt(caracteristicasPersonaje2[0]['fuego']), parseInt(caracteristicasPersonaje2[0]['veneno']), parseInt(caracteristicasPersonaje2[0]['enigmatico']), parseInt(caracteristicasPersonaje2[0]['pinchos']), parseInt(caracteristicasPersonaje2[0]['sombra']));
+                        personaje2 = new Hechicero(caracteristicasPersonaje2[0]['nombre'], parseInt(caracteristicasPersonaje2[0]['fuerza']), parseInt(caracteristicasPersonaje2[0]['armadura']), parseInt(caracteristicasPersonaje2[0]['nivel']), parseInt(caracteristicasPersonaje2[0]['vidaActual']), parseInt(caracteristicasPersonaje2[0]['vidaMaxima']), parseInt(caracteristicasPersonaje2[0]['estaminaActual']), parseInt(caracteristicasPersonaje2[0]['estaminaMaxima']), parseInt(caracteristicasPersonaje2[0]['puntosExperiencia']), parseInt(caracteristicasPersonaje2[0]['quemado']), parseInt(caracteristicasPersonaje2[0]['envenenado']), parseInt(caracteristicasPersonaje2[0]['confundido']), parseInt(caracteristicasPersonaje2[0]['heridoLeve']), parseInt(caracteristicasPersonaje2[0]['heridoGrave']),parseInt(caracteristicasPersonaje2[0]['inteligencia']), parseInt(caracteristicasPersonaje2[0]['fuego']), parseInt(caracteristicasPersonaje2[0]['veneno']), parseInt(caracteristicasPersonaje2[0]['enigmatico']), parseInt(caracteristicasPersonaje2[0]['pinchos']), parseInt(caracteristicasPersonaje2[0]['sombra']));
 
                         personaje2.asignarObjetos(parseInt(caracteristicasPersonaje2['arma']['vara']['desgaste']), parseInt(caracteristicasPersonaje2['curacion']['curacionSimple']['cantidad']), parseInt(caracteristicasPersonaje2['curacion']['superCuracion']['cantidad']), parseInt(caracteristicasPersonaje2['curacion']['curacionCompleta']['cantidad']), parseInt(caracteristicasPersonaje2['estamina']['restaurarEstamina']['cantidad']), parseInt(caracteristicasPersonaje2['estamina']['restaurarMuchaEstamina']['cantidad']), parseInt(caracteristicasPersonaje2['estamina']['restaurarTodaEstamina']['cantidad']));
 
@@ -955,7 +948,7 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                         }
                         break;
                     case "Druida":
-                        personaje2 = new Druida(caracteristicasPersonaje2[0]['nombre'], parseInt(caracteristicasPersonaje2[0]['fuerza']), parseInt(caracteristicasPersonaje2[0]['armadura']), parseInt(caracteristicasPersonaje2[0]['nivel']), parseInt(caracteristicasPersonaje2[0]['vidaActual']), parseInt(caracteristicasPersonaje2[0]['vidaMaxima']), parseInt(caracteristicasPersonaje2[0]['estaminaActual']), parseInt(caracteristicasPersonaje2[0]['estaminaMaxima']), parseInt(caracteristicasPersonaje2[0]['puntosExperiencia']), parseInt(caracteristicasPersonaje2[0]['inteligencia']), parseInt(caracteristicasPersonaje2[0]['quemado']), parseInt(caracteristicasPersonaje2[0]['envenenado']), parseInt(caracteristicasPersonaje2[0]['confundido']), parseInt(caracteristicasPersonaje2[0]['heridoLeve']), parseInt(caracteristicasPersonaje2[0]['heridoGrave']), parseInt(caracteristicasPersonaje2[0]['inteligencia']), parseInt(caracteristicasPersonaje2[0]['fuego']), parseInt(caracteristicasPersonaje2[0]['oso']), parseInt(caracteristicasPersonaje2[0]['serpiente']), parseInt(caracteristicasPersonaje2[0]['zorro']), parseInt(caracteristicasPersonaje2[0]['águila']));
+                        personaje2 = new Druida(caracteristicasPersonaje2[0]['nombre'], parseInt(caracteristicasPersonaje2[0]['fuerza']), parseInt(caracteristicasPersonaje2[0]['armadura']), parseInt(caracteristicasPersonaje2[0]['nivel']), parseInt(caracteristicasPersonaje2[0]['vidaActual']), parseInt(caracteristicasPersonaje2[0]['vidaMaxima']), parseInt(caracteristicasPersonaje2[0]['estaminaActual']), parseInt(caracteristicasPersonaje2[0]['estaminaMaxima']), parseInt(caracteristicasPersonaje2[0]['puntosExperiencia']), parseInt(caracteristicasPersonaje2[0]['quemado']), parseInt(caracteristicasPersonaje2[0]['envenenado']), parseInt(caracteristicasPersonaje2[0]['confundido']), parseInt(caracteristicasPersonaje2[0]['heridoLeve']), parseInt(caracteristicasPersonaje2[0]['heridoGrave']), parseInt(caracteristicasPersonaje2[0]['inteligencia']), parseInt(caracteristicasPersonaje2[0]['oso']), parseInt(caracteristicasPersonaje2[0]['serpiente']), parseInt(caracteristicasPersonaje2[0]['zorro']), parseInt(caracteristicasPersonaje2[0]['aguila']));
 
                         personaje2.asignarObjetos(parseInt(caracteristicasPersonaje2['arma']['daga']['desgaste']), parseInt(caracteristicasPersonaje2['curacion']['curacionSimple']['cantidad']), parseInt(caracteristicasPersonaje2['curacion']['superCuracion']['cantidad']), parseInt(caracteristicasPersonaje2['curacion']['curacionCompleta']['cantidad']), parseInt(caracteristicasPersonaje2['estamina']['restaurarEstamina']['cantidad']), parseInt(caracteristicasPersonaje2['estamina']['restaurarMuchaEstamina']['cantidad']), parseInt(caracteristicasPersonaje2['estamina']['restaurarTodaEstamina']['cantidad']));
 
@@ -979,7 +972,6 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                             default:
                                 imgPersonaje2.setAttribute("id", "imgPersonaje2");
                                 imgPersonaje2.setAttribute("src", "imgs/druidaIzquierda.gif");
-                                document.getElementById("imgPersonaje2").src = "imgs/druidaIzquierda.gif";
                                 break;
                         }
                         break;
@@ -1210,7 +1202,7 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                                         console.log(JSON.stringify(inventarioPersonaje2));
                                         console.log(JSON.stringify(estadosPersonaje2));
                                         console.log(JSON.stringify(personaje2));
-                                        fetch("updatePersonajes.php", {
+                                        fetch("updatePersonaje2.php", {
                                             method: "POST",
                                             credentials: "include",
                                             headers: {
@@ -1236,7 +1228,7 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                                         console.log(JSON.stringify(estadosPersonaje2));
                                         console.log(JSON.stringify(auraPersonaje2));
                                         console.log(JSON.stringify(personaje2));
-                                        fetch("updatePersonajes.php", {
+                                        fetch("updatePersonaje2.php", {
                                             method: "POST",
                                             credentials: "include",
                                             headers: {
@@ -1263,7 +1255,7 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                                         console.log(JSON.stringify(estadosPersonaje2));
                                         console.log(JSON.stringify(transformacionesPersonaje2));
                                         console.log(JSON.stringify(personaje2));
-                                        fetch("updatePersonajes.php", {
+                                        fetch("updatePersonaje2.php", {
                                             method: "POST",
                                             credentials: "include",
                                             headers: {

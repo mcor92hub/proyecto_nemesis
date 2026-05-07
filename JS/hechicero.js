@@ -14,7 +14,7 @@ class Hechicero extends Personaje {
         this.listaFunciones = ["ataqueSimple", "farmearAura", "leer", "rimbonbancia"];
     }
 
-    asignarObjetos(desgasteVara, numPocion, numSuperPocion, numPocionMax, numPocionAguante, numSuperPocionAguante, numPocionAguanteMax) {
+    asignarObjetos(desgasteVara, numPocion, numSuperPocion, numPocionMax, numPocionEstamina, numSuperPocionEstamina, numPocionEstaminaMax) {
         let objetosArma = this.inventario.get("arma");
         let objetosCuracion = this.inventario.get("curacion");
         let objetosRestaurarAguante = this.inventario.get("restaurarEstamina");
@@ -22,9 +22,9 @@ class Hechicero extends Personaje {
         objetosCuracion.set("pocion", numPocion);
         objetosCuracion.set("superPocion", numSuperPocion);
         objetosCuracion.set("pocionMax", numPocionMax);
-        objetosRestaurarAguante.set("pocionEstamina", numPocionAguante);
-        objetosRestaurarAguante.set("superPocionEstamina", numSuperPocionAguante);
-        objetosRestaurarAguante.set("pocionEstaminaMax", numPocionAguanteMax);
+        objetosRestaurarAguante.set("pocionEstamina", numPocionEstamina);
+        objetosRestaurarAguante.set("superPocionEstamina", numSuperPocionEstamina);
+        objetosRestaurarAguante.set("pocionEstaminaMax", numPocionEstaminaMax);
     }
 
     //el hechicero tendrá una habilidad elemental que usará para el ataque simple, que irá hacia los estados alterados, por ejemplo fuego para quemado, veneno para envenenado, enigmatico para confundirlo, cuchillas para heridoLeve y pedrolos para heridoGrave
