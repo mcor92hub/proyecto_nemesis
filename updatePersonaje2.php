@@ -34,20 +34,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         case 1:
             $updateArquero = "UPDATE personaje pe JOIN partida pa ON pe.id_personaje = pa.personaje2_id
                             JOIN arquero a ON a.id_personaje = pa.personaje2_id
-                            SET fuerza = '" . $caracteristicasPersonaje['personaje2']['fuerza'] . "',
-                            armadura = '" . $caracteristicasPersonaje['personaje2']['armadura'] . "',
-                            vidaActual = '" . $caracteristicasPersonaje['personaje2']['vidaActual'] . "',
-                            vidaMaxima = '" . $caracteristicasPersonaje['personaje2']['vidaMaxima'] . "',
-                            estaminaActual = '" . $caracteristicasPersonaje['personaje2']['estaminaActual'] . "',
-                            estaminaMaxima = '" . $caracteristicasPersonaje['personaje2']['estaminaMaxima'] . "',
-                            nivel = '" . $caracteristicasPersonaje['personaje2']['nivel'] . "',
-                            puntosExperiencia = '" . $caracteristicasPersonaje['personaje2']['puntosExperiencia'] . "',
-                            punteria = '" . $caracteristicasPersonaje['personaje2']['punteria'] . "',
-                            envenenado = '" . $caracteristicasPersonaje['estadosPersonaje2']['envenenado'] . "',
-                            quemado = '" . $caracteristicasPersonaje['estadosPersonaje2']['quemado'] . "',
-                            heridoLeve = '" . $caracteristicasPersonaje['estadosPersonaje2']['heridoLeve'] . "',
-                            heridoGrave = '" . $caracteristicasPersonaje['estadosPersonaje2']['heridoGrave'] . "',
-                            confundido = '" . $caracteristicasPersonaje['estadosPersonaje2']['confundido'] . "'
+                            SET fuerza = '" . $caracteristicasPersonaje['personaje']['fuerza'] . "',
+                            armadura = '" . $caracteristicasPersonaje['personaje']['armadura'] . "',
+                            vidaActual = '" . $caracteristicasPersonaje['personaje']['vidaActual'] . "',
+                            vidaMaxima = '" . $caracteristicasPersonaje['personaje']['vidaMaxima'] . "',
+                            estaminaActual = '" . $caracteristicasPersonaje['personaje']['estaminaActual'] . "',
+                            estaminaMaxima = '" . $caracteristicasPersonaje['personaje']['estaminaMaxima'] . "',
+                            nivel = '" . $caracteristicasPersonaje['personaje']['nivel'] . "',
+                            puntosExperiencia = '" . $caracteristicasPersonaje['personaje']['puntosExperiencia'] . "',
+                            envenenado = '" . $caracteristicasPersonaje['estadosPersonaje']['envenenado'] . "',
+                            quemado = '" . $caracteristicasPersonaje['estadosPersonaje']['quemado'] . "',
+                            heridoLeve = '" . $caracteristicasPersonaje['estadosPersonaje']['heridoLeve'] . "',
+                            heridoGrave = '" . $caracteristicasPersonaje['estadosPersonaje']['heridoGrave'] . "',
+                            confundido = '" . $caracteristicasPersonaje['estadosPersonaje']['confundido'] . "'
                             WHERE pa.id_partida = " . $_SESSION['partida'] . "";
             $resultado = $bd->query($updateArquero);
             if ($bd->errno) {
@@ -58,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             JOIN arquero a ON a.id_personaje = pa.personaje2_id
                             JOIN item_guardado ig ON a.id_personaje = ig.personaje_id
                             JOIN item i ON ig.item_id = i.id_item
-                            SET desgaste = " . $caracteristicasPersonaje['inventarioPersonaje2']['arma']['arco'] . "
+                            SET desgaste = " . $caracteristicasPersonaje['inventarioPersonaje']['arma']['arco'] . "
                             WHERE pa.id_partida = " . $_SESSION['partida'] . " AND i.nombre = 'arco';";
             $resultado = $bd->query($updateArco);
             if ($bd->errno) {
@@ -69,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             JOIN arquero a ON a.id_personaje = pa.personaje2_id
                             JOIN item_guardado ig ON a.id_personaje = ig.personaje_id
                             JOIN item i ON ig.item_id = i.id_item
-                            SET cantidad = " . $caracteristicasPersonaje['inventarioPersonaje2']['arma']['flechas'] . "
+                            SET cantidad = " . $caracteristicasPersonaje['inventarioPersonaje']['arma']['flechas'] . "
                             WHERE pa.id_partida = " . $_SESSION['partida'] . " AND i.nombre = 'flecha';";
             $resultado = $bd->query($updateFlechas);
             if ($bd->errno) {
@@ -80,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             JOIN arquero a ON a.id_personaje = pa.personaje2_id
                             JOIN item_guardado ig ON a.id_personaje = ig.personaje_id
                             JOIN item i ON ig.item_id = i.id_item
-                            SET desgaste = " . $caracteristicasPersonaje['inventarioPersonaje2']['arma']['nunchakus'] . "
+                            SET desgaste = " . $caracteristicasPersonaje['inventarioPersonaje']['arma']['nunchakus'] . "
                             WHERE pa.id_partida = " . $_SESSION['partida'] . " AND i.nombre = 'nunchakus';";
             $resultado = $bd->query($updateNunchakus);
             if ($bd->errno) {
@@ -103,7 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // UPDATES CURACION
             $item_nombre = "curacionSimple";
             // El JSON me devuelve los mapas como strings
-            $cantidad = (int) $caracteristicasPersonaje['inventarioPersonaje2']['curacion']['pocion'];
+            $cantidad = (int) $caracteristicasPersonaje['inventarioPersonaje']['curacion']['pocion'];
             $stmt->bind_param("is", $cantidad, $item_nombre);
             //esta linea ejecuta el update preparado y si esta mal salta error
             if (!$stmt->execute()) {
@@ -111,7 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $descripcionError = "error en el update preparado de curacion simple";
             }
             $item_nombre = "superCuracion";
-            $cantidad = (int) $caracteristicasPersonaje['inventarioPersonaje2']['curacion']['superPocion'];
+            $cantidad = (int) $caracteristicasPersonaje['inventarioPersonaje']['curacion']['superPocion'];
             $stmt->bind_param("is", $cantidad, $item_nombre);
             //esta linea ejecuta el update preparado y si esta mal salta error
             if (!$stmt->execute()) {
@@ -119,7 +118,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $descripcionError = "error en el update preparado de superCuracion";
             }
             $item_nombre = "curacionCompleta";
-            $cantidad = (int) $caracteristicasPersonaje['inventarioPersonaje2']['curacion']['pocionMax'];
+            $cantidad = (int) $caracteristicasPersonaje['inventarioPersonaje']['curacion']['pocionMax'];
             $stmt->bind_param("is", $cantidad, $item_nombre);
             //esta linea ejecuta el update preparado y si esta mal salta error
             if (!$stmt->execute()) {
@@ -129,7 +128,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             //UPDATES ESTAMINA 
             $item_nombre = "restaurarEstamina";
-            $cantidad = (int) $caracteristicasPersonaje['inventarioPersonaje2']['restaurarEstamina']['pocionEstamina'];
+            $cantidad = (int) $caracteristicasPersonaje['inventarioPersonaje']['restaurarEstamina']['pocionEstamina'];
             $stmt->bind_param("is", $cantidad, $item_nombre);
             //esta linea ejecuta el update preparado y si esta mal salta error
             if (!$stmt->execute()) {
@@ -137,7 +136,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $descripcionError = "error en el update preparado de pocionEstamina";
             }
             $item_nombre = "restaurarMuchaEstamina";
-            $cantidad = (int) $caracteristicasPersonaje['inventarioPersonaje2']['restaurarEstamina']['superPocionEstamina'];
+            $cantidad = (int) $caracteristicasPersonaje['inventarioPersonaje']['restaurarEstamina']['superPocionEstamina'];
             $stmt->bind_param("is", $cantidad, $item_nombre);
             //esta linea ejecuta el update preparado y si esta mal salta error
             if (!$stmt->execute()) {
@@ -145,7 +144,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $descripcionError = "error en el update preparado de SuperPocionEstamina";
             }
             $item_nombre = "restaurarTodaEstamina";
-            $cantidad = (int) $caracteristicasPersonaje['inventarioPersonaje2']['restaurarEstamina']['pocionEstaminaMax'];
+            $cantidad = (int) $caracteristicasPersonaje['inventarioPersonaje']['restaurarEstamina']['pocionEstaminaMax'];
             $stmt->bind_param("is", $cantidad, $item_nombre);
             //esta linea ejecuta el update preparado y si esta mal salta error
             if (!$stmt->execute()) {
@@ -156,20 +155,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         case 2:
             $updateCaballero = "UPDATE personaje pe JOIN partida pa ON pe.id_personaje = pa.personaje2_id
                             JOIN caballero c ON c.id_personaje = pa.personaje2_id
-                            SET fuerza = '" . $caracteristicasPersonaje['personaje2']['fuerza'] . "',
-                            armadura = '" . $caracteristicasPersonaje['personaje2']['armadura'] . "',
-                            vidaActual = '" . $caracteristicasPersonaje['personaje2']['vidaActual'] . "',
-                            vidaMaxima = '" . $caracteristicasPersonaje['personaje2']['vidaMaxima'] . "',
-                            estaminaActual = '" . $caracteristicasPersonaje['personaje2']['estaminaActual'] . "',
-                            estaminaMaxima = '" . $caracteristicasPersonaje['personaje2']['estaminaMaxima'] . "',
-                            nivel = '" . $caracteristicasPersonaje['personaje2']['nivel'] . "',
-                            puntosExperiencia = '" . $caracteristicasPersonaje['personaje2']['puntosExperiencia'] . "',
-                            inteligencia = '" . $caracteristicasPersonaje['personaje2']['inteligencia'] . "',
-                            envenenado = '" . $caracteristicasPersonaje['estadosPersonaje2']['envenenado'] . "',
-                            quemado = '" . $caracteristicasPersonaje['estadosPersonaje2']['quemado'] . "',
-                            heridoLeve = '" . $caracteristicasPersonaje['estadosPersonaje2']['heridoLeve'] . "',
-                            heridoGrave = '" . $caracteristicasPersonaje['estadosPersonaje2']['heridoGrave'] . "',
-                            confundido = '" . $caracteristicasPersonaje['estadosPersonaje2']['confundido'] . "'
+                            SET fuerza = '" . $caracteristicasPersonaje['personaje']['fuerza'] . "',
+                            armadura = '" . $caracteristicasPersonaje['personaje']['armadura'] . "',
+                            vidaActual = '" . $caracteristicasPersonaje['personaje']['vidaActual'] . "',
+                            vidaMaxima = '" . $caracteristicasPersonaje['personaje']['vidaMaxima'] . "',
+                            estaminaActual = '" . $caracteristicasPersonaje['personaje']['estaminaActual'] . "',
+                            estaminaMaxima = '" . $caracteristicasPersonaje['personaje']['estaminaMaxima'] . "',
+                            nivel = '" . $caracteristicasPersonaje['personaje']['nivel'] . "',
+                            puntosExperiencia = '" . $caracteristicasPersonaje['personaje']['puntosExperiencia'] . "',
+                            inteligencia = '" . $caracteristicasPersonaje['personaje']['inteligencia'] . "',
+                            envenenado = '" . $caracteristicasPersonaje['estadosPersonaje']['envenenado'] . "',
+                            quemado = '" . $caracteristicasPersonaje['estadosPersonaje']['quemado'] . "',
+                            heridoLeve = '" . $caracteristicasPersonaje['estadosPersonaje']['heridoLeve'] . "',
+                            heridoGrave = '" . $caracteristicasPersonaje['estadosPersonaje']['heridoGrave'] . "',
+                            confundido = '" . $caracteristicasPersonaje['estadosPersonaje']['confundido'] . "'
                             WHERE pa.id_partida = " . $_SESSION['partida'] . "";
             $resultado = $bd->query($updateCaballero);
             if ($bd->errno) {
@@ -181,7 +180,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             JOIN caballero c ON c.id_personaje = pa.personaje2_id
                             JOIN item_guardado ig ON c.id_personaje = ig.personaje_id
                             JOIN item i ON ig.item_id = i.id_item
-                            SET desgaste = " . $caracteristicasPersonaje['inventarioPersonaje2']['arma']['espada'] . "
+                            SET desgaste = " . $caracteristicasPersonaje['inventarioPersonaje']['arma']['espada'] . "
                             WHERE pa.id_partida = " . $_SESSION['partida'] . " AND i.nombre = 'espada';";
             $resultado = $bd->query($updateEspada);
             if ($bd->errno) {
@@ -192,7 +191,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             JOIN caballero c ON c.id_personaje = pa.personaje2_id
                             JOIN item_guardado ig ON c.id_personaje = ig.personaje_id
                             JOIN item i ON ig.item_id = i.id_item
-                            SET desgaste = " . $caracteristicasPersonaje['inventarioPersonaje2']['arma']['mazo'] . "
+                            SET desgaste = " . $caracteristicasPersonaje['inventarioPersonaje']['arma']['mazo'] . "
                             WHERE pa.id_partida = " . $_SESSION['partida'] . " AND i.nombre = 'mazo';";
             $resultado = $bd->query($updateMazo);
             if ($bd->errno) {
@@ -215,7 +214,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // UPDATES CURACION
             $item_nombre = "curacionSimple";
             // El JSON me devuelve los mapas como strings
-            $cantidad = (int) $caracteristicasPersonaje['inventarioPersonaje2']['curacion']['pocion'];
+            $cantidad = (int) $caracteristicasPersonaje['inventarioPersonaje']['curacion']['pocion'];
             $stmt->bind_param("is", $cantidad, $item_nombre);
             //esta linea ejecuta el update preparado y si esta mal salta error
             if (!$stmt->execute()) {
@@ -223,7 +222,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $descripcionError = "error en el update preparado de curacion simple";
             }
             $item_nombre = "superCuracion";
-            $cantidad = (int) $caracteristicasPersonaje['inventarioPersonaje2']['curacion']['superPocion'];
+            $cantidad = (int) $caracteristicasPersonaje['inventarioPersonaje']['curacion']['superPocion'];
             $stmt->bind_param("is", $cantidad, $item_nombre);
             //esta linea ejecuta el update preparado y si esta mal salta error
             if (!$stmt->execute()) {
@@ -231,7 +230,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $descripcionError = "error en el update preparado de superCuracion";
             }
             $item_nombre = "curacionCompleta";
-            $cantidad = (int) $caracteristicasPersonaje['inventarioPersonaje2']['curacion']['pocionMax'];
+            $cantidad = (int) $caracteristicasPersonaje['inventarioPersonaje']['curacion']['pocionMax'];
             $stmt->bind_param("is", $cantidad, $item_nombre);
             //esta linea ejecuta el update preparado y si esta mal salta error
             if (!$stmt->execute()) {
@@ -241,7 +240,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             //UPDATES ESTAMINA 
             $item_nombre = "restaurarEstamina";
-            $cantidad = (int) $caracteristicasPersonaje['inventarioPersonaje2']['restaurarEstamina']['pocionEstamina'];
+            $cantidad = (int) $caracteristicasPersonaje['inventarioPersonaje']['restaurarEstamina']['pocionEstamina'];
             $stmt->bind_param("is", $cantidad, $item_nombre);
             //esta linea ejecuta el update preparado y si esta mal salta error
             if (!$stmt->execute()) {
@@ -249,7 +248,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $descripcionError = "error en el update preparado de pocionEstamina";
             }
             $item_nombre = "restaurarMuchaEstamina";
-            $cantidad = (int) $caracteristicasPersonaje['inventarioPersonaje2']['restaurarEstamina']['superPocionEstamina'];
+            $cantidad = (int) $caracteristicasPersonaje['inventarioPersonaje']['restaurarEstamina']['superPocionEstamina'];
             $stmt->bind_param("is", $cantidad, $item_nombre);
             //esta linea ejecuta el update preparado y si esta mal salta error
             if (!$stmt->execute()) {
@@ -257,7 +256,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $descripcionError = "error en el update preparado de SuperPocionEstamina";
             }
             $item_nombre = "restaurarTodaEstamina";
-            $cantidad = (int) $caracteristicasPersonaje['inventarioPersonaje2']['restaurarEstamina']['pocionEstaminaMax'];
+            $cantidad = (int) $caracteristicasPersonaje['inventarioPersonaje']['restaurarEstamina']['pocionEstaminaMax'];
             $stmt->bind_param("is", $cantidad, $item_nombre);
             //esta linea ejecuta el update preparado y si esta mal salta error
             if (!$stmt->execute()) {
@@ -268,24 +267,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         case 3:
             $updateHechicero = "UPDATE personaje pe JOIN partida pa ON pe.id_personaje = pa.personaje2_id
                             JOIN hechicero h ON h.id_personaje = pa.personaje2_id
-                            SET fuerza = '" . $caracteristicasPersonaje['personaje2']['fuerza'] . "',
-                            armadura = '" . $caracteristicasPersonaje['personaje2']['armadura'] . "',
-                            vidaActual = '" . $caracteristicasPersonaje['personaje2']['vidaActual'] . "',
-                            vidaMaxima = '" . $caracteristicasPersonaje['personaje2']['vidaMaxima'] . "',
-                            estaminaActual = '" . $caracteristicasPersonaje['personaje2']['estaminaActual'] . "',
-                            estaminaMaxima = '" . $caracteristicasPersonaje['personaje2']['estaminaMaxima'] . "',
-                            nivel = '" . $caracteristicasPersonaje['personaje2']['nivel'] . "',
-                            puntosExperiencia = '" . $caracteristicasPersonaje['personaje2']['puntosExperiencia'] . "',
-                            envenenado = '" . $caracteristicasPersonaje['estadosPersonaje2']['envenenado'] . "',
-                            quemado = '" . $caracteristicasPersonaje['estadosPersonaje2']['quemado'] . "',
-                            heridoLeve = '" . $caracteristicasPersonaje['estadosPersonaje2']['heridoLeve'] . "',
-                            heridoGrave = '" . $caracteristicasPersonaje['estadosPersonaje2']['heridoGrave'] . "',
-                            confundido = '" . $caracteristicasPersonaje['estadosPersonaje2']['confundido'] . "',
-                            fuego = '" . $caracteristicasPersonaje['auraPersonaje2']['fuego'] . "',
-                            veneno = '" . $caracteristicasPersonaje['auraPersonaje2']['veneno'] . "',
-                            enigmatico = '" . $caracteristicasPersonaje['auraPersonaje2']['enigmatico'] . "',
-                            pinchos = '" . $caracteristicasPersonaje['auraPersonaje2']['pinchos'] . "',
-                            sombra = '" . $caracteristicasPersonaje['auraPersonaje2']['sombra'] . "'
+                            SET fuerza = '" . $caracteristicasPersonaje['personaje']['fuerza'] . "',
+                            armadura = '" . $caracteristicasPersonaje['personaje']['armadura'] . "',
+                            vidaActual = '" . $caracteristicasPersonaje['personaje']['vidaActual'] . "',
+                            vidaMaxima = '" . $caracteristicasPersonaje['personaje']['vidaMaxima'] . "',
+                            estaminaActual = '" . $caracteristicasPersonaje['personaje']['estaminaActual'] . "',
+                            estaminaMaxima = '" . $caracteristicasPersonaje['personaje']['estaminaMaxima'] . "',
+                            nivel = '" . $caracteristicasPersonaje['personaje']['nivel'] . "',
+                            puntosExperiencia = '" . $caracteristicasPersonaje['personaje']['puntosExperiencia'] . "',
+                            envenenado = '" . $caracteristicasPersonaje['estadosPersonaje']['envenenado'] . "',
+                            quemado = '" . $caracteristicasPersonaje['estadosPersonaje']['quemado'] . "',
+                            heridoLeve = '" . $caracteristicasPersonaje['estadosPersonaje']['heridoLeve'] . "',
+                            heridoGrave = '" . $caracteristicasPersonaje['estadosPersonaje']['heridoGrave'] . "',
+                            confundido = '" . $caracteristicasPersonaje['estadosPersonaje']['confundido'] . "',
+                            fuego = '" . $caracteristicasPersonaje['auraPersonaje']['fuego'] . "',
+                            veneno = '" . $caracteristicasPersonaje['auraPersonaje']['veneno'] . "',
+                            enigmatico = '" . $caracteristicasPersonaje['auraPersonaje']['enigmatico'] . "',
+                            pinchos = '" . $caracteristicasPersonaje['auraPersonaje']['pinchos'] . "',
+                            sombra = '" . $caracteristicasPersonaje['auraPersonaje']['sombra'] . "'
                             WHERE pa.id_partida = " . $_SESSION['partida'] . "";
             $resultado = $bd->query($updateHechicero);
             if ($bd->errno) {
@@ -297,7 +296,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             JOIN hechicero h ON h.id_personaje = pa.personaje2_id
                             JOIN item_guardado ig ON h.id_personaje = ig.personaje_id
                             JOIN item i ON ig.item_id = i.id_item
-                            SET desgaste = " . $caracteristicasPersonaje['inventarioPersonaje2']['arma']['vara'] . "
+                            SET desgaste = " . $caracteristicasPersonaje['inventarioPersonaje']['arma']['vara'] . "
                             WHERE pa.id_partida = " . $_SESSION['partida'] . " AND i.nombre = 'vara';";
             $resultado = $bd->query($updateVara);
             if ($bd->errno) {
@@ -320,7 +319,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // UPDATES CURACION
             $item_nombre = "curacionSimple";
             // El JSON me devuelve los mapas como strings
-            $cantidad = (int) $caracteristicasPersonaje['inventarioPersonaje2']['curacion']['pocion'];
+            $cantidad = (int) $caracteristicasPersonaje['inventarioPersonaje']['curacion']['pocion'];
             $stmt->bind_param("is", $cantidad, $item_nombre);
             //esta linea ejecuta el update preparado y si esta mal salta error
             if (!$stmt->execute()) {
@@ -328,7 +327,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $descripcionError = "error en el update preparado de curacion simple";
             }
             $item_nombre = "superCuracion";
-            $cantidad = (int) $caracteristicasPersonaje['inventarioPersonaje2']['curacion']['superPocion'];
+            $cantidad = (int) $caracteristicasPersonaje['inventarioPersonaje']['curacion']['superPocion'];
             $stmt->bind_param("is", $cantidad, $item_nombre);
             //esta linea ejecuta el update preparado y si esta mal salta error
             if (!$stmt->execute()) {
@@ -336,7 +335,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $descripcionError = "error en el update preparado de superCuracion";
             }
             $item_nombre = "curacionCompleta";
-            $cantidad = (int) $caracteristicasPersonaje['inventarioPersonaje2']['curacion']['pocionMax'];
+            $cantidad = (int) $caracteristicasPersonaje['inventarioPersonaje']['curacion']['pocionMax'];
             $stmt->bind_param("is", $cantidad, $item_nombre);
             //esta linea ejecuta el update preparado y si esta mal salta error
             if (!$stmt->execute()) {
@@ -346,7 +345,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             //UPDATES ESTAMINA 
             $item_nombre = "restaurarEstamina";
-            $cantidad = (int) $caracteristicasPersonaje['inventarioPersonaje2']['restaurarEstamina']['pocionEstamina'];
+            $cantidad = (int) $caracteristicasPersonaje['inventarioPersonaje']['restaurarEstamina']['pocionEstamina'];
             $stmt->bind_param("is", $cantidad, $item_nombre);
             //esta linea ejecuta el update preparado y si esta mal salta error
             if (!$stmt->execute()) {
@@ -354,7 +353,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $descripcionError = "error en el update preparado de pocionEstamina";
             }
             $item_nombre = "restaurarMuchaEstamina";
-            $cantidad = (int) $caracteristicasPersonaje['inventarioPersonaje2']['restaurarEstamina']['superPocionEstamina'];
+            $cantidad = (int) $caracteristicasPersonaje['inventarioPersonaje']['restaurarEstamina']['superPocionEstamina'];
             $stmt->bind_param("is", $cantidad, $item_nombre);
             //esta linea ejecuta el update preparado y si esta mal salta error
             if (!$stmt->execute()) {
@@ -362,7 +361,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $descripcionError = "error en el update preparado de SuperPocionEstamina";
             }
             $item_nombre = "restaurarTodaEstamina";
-            $cantidad = (int) $caracteristicasPersonaje['inventarioPersonaje2']['restaurarEstamina']['pocionEstaminaMax'];
+            $cantidad = (int) $caracteristicasPersonaje['inventarioPersonaje']['restaurarEstamina']['pocionEstaminaMax'];
             $stmt->bind_param("is", $cantidad, $item_nombre);
             //esta linea ejecuta el update preparado y si esta mal salta error
             if (!$stmt->execute()) {
@@ -374,23 +373,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         case 0:
             $updateDruida = "UPDATE personaje pe JOIN partida pa ON pe.id_personaje = pa.personaje2_id
                             JOIN druida d ON d.id_personaje = pa.personaje2_id
-                            SET fuerza = '" . $caracteristicasPersonaje['personaje2']['fuerza'] . "',
-                            armadura = '" . $caracteristicasPersonaje['personaje2']['armadura'] . "',
-                            vidaActual = '" . $caracteristicasPersonaje['personaje2']['vidaActual'] . "',
-                            vidaMaxima = '" . $caracteristicasPersonaje['personaje2']['vidaMaxima'] . "',
-                            estaminaActual = '" . $caracteristicasPersonaje['personaje2']['estaminaActual'] . "',
-                            estaminaMaxima = '" . $caracteristicasPersonaje['personaje2']['estaminaMaxima'] . "',
-                            nivel = '" . $caracteristicasPersonaje['personaje2']['nivel'] . "',
-                            puntosExperiencia = '" . $caracteristicasPersonaje['personaje2']['puntosExperiencia'] . "',
-                            envenenado = '" . $caracteristicasPersonaje['estadosPersonaje2']['envenenado'] . "',
-                            quemado = '" . $caracteristicasPersonaje['estadosPersonaje2']['quemado'] . "',
-                            heridoLeve = '" . $caracteristicasPersonaje['estadosPersonaje2']['heridoLeve'] . "',
-                            heridoGrave = '" . $caracteristicasPersonaje['estadosPersonaje2']['heridoGrave'] . "',
-                            confundido = '" . $caracteristicasPersonaje['estadosPersonaje2']['confundido'] . "',
-                            oso = '" . $caracteristicasPersonaje['transformacionesPersonaje2']['oso'] . "',
-                            serpiente = '" . $caracteristicasPersonaje['transformacionesPersonaje2']['serpiente'] . "',
-                            zorro = '" . $caracteristicasPersonaje['transformacionesPersonaje2']['zorro'] . "',
-                            aguila = '" . $caracteristicasPersonaje['transformacionesPersonaje2']['águila'] . "'   
+                            SET fuerza = '" . $caracteristicasPersonaje['personaje']['fuerza'] . "',
+                            armadura = '" . $caracteristicasPersonaje['personaje']['armadura'] . "',
+                            vidaActual = '" . $caracteristicasPersonaje['personaje']['vidaActual'] . "',
+                            vidaMaxima = '" . $caracteristicasPersonaje['personaje']['vidaMaxima'] . "',
+                            estaminaActual = '" . $caracteristicasPersonaje['personaje']['estaminaActual'] . "',
+                            estaminaMaxima = '" . $caracteristicasPersonaje['personaje']['estaminaMaxima'] . "',
+                            nivel = '" . $caracteristicasPersonaje['personaje']['nivel'] . "',
+                            puntosExperiencia = '" . $caracteristicasPersonaje['personaje']['puntosExperiencia'] . "',
+                            envenenado = '" . $caracteristicasPersonaje['estadosPersonaje']['envenenado'] . "',
+                            quemado = '" . $caracteristicasPersonaje['estadosPersonaje']['quemado'] . "',
+                            heridoLeve = '" . $caracteristicasPersonaje['estadosPersonaje']['heridoLeve'] . "',
+                            heridoGrave = '" . $caracteristicasPersonaje['estadosPersonaje']['heridoGrave'] . "',
+                            confundido = '" . $caracteristicasPersonaje['estadosPersonaje']['confundido'] . "',
+                            oso = '" . $caracteristicasPersonaje['transformacionesPersonaje']['oso'] . "',
+                            serpiente = '" . $caracteristicasPersonaje['transformacionesPersonaje']['serpiente'] . "',
+                            zorro = '" . $caracteristicasPersonaje['transformacionesPersonaje']['zorro'] . "',
+                            aguila = '" . $caracteristicasPersonaje['transformacionesPersonaje']['águila'] . "'   
                             WHERE pa.id_partida = " . $_SESSION['partida'] . "";
             $resultado = $bd->query($updateDruida);
             if ($bd->errno) {
@@ -402,7 +401,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             JOIN druida d ON d.id_personaje = pa.personaje2_id
                             JOIN item_guardado ig ON d.id_personaje = ig.personaje_id
                             JOIN item i ON ig.item_id = i.id_item
-                            SET desgaste = " . $caracteristicasPersonaje['inventarioPersonaje2']['arma']['daga'] . "
+                            SET desgaste = " . $caracteristicasPersonaje['inventarioPersonaje']['arma']['daga'] . "
                             WHERE pa.id_partida = " . $_SESSION['partida'] . " AND i.nombre = 'daga';";
             $resultado = $bd->query($updateDaga);
             if ($bd->errno) {
@@ -425,7 +424,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // UPDATES CURACION
             $item_nombre = "curacionSimple";
             // El JSON me devuelve los mapas como strings
-            $cantidad = (int) $caracteristicasPersonaje['inventarioPersonaje2']['curacion']['pocion'];
+            $cantidad = (int) $caracteristicasPersonaje['inventarioPersonaje']['curacion']['pocion'];
             $stmt->bind_param("is", $cantidad, $item_nombre);
             //esta linea ejecuta el update preparado y si esta mal salta error
             if (!$stmt->execute()) {
@@ -433,7 +432,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $descripcionError = "error en el update preparado de curacion simple";
             }
             $item_nombre = "superCuracion";
-            $cantidad = (int) $caracteristicasPersonaje['inventarioPersonaje2']['curacion']['superPocion'];
+            $cantidad = (int) $caracteristicasPersonaje['inventarioPersonaje']['curacion']['superPocion'];
             $stmt->bind_param("is", $cantidad, $item_nombre);
             //esta linea ejecuta el update preparado y si esta mal salta error
             if (!$stmt->execute()) {
@@ -441,7 +440,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $descripcionError = "error en el update preparado de superCuracion";
             }
             $item_nombre = "curacionCompleta";
-            $cantidad = (int) $caracteristicasPersonaje['inventarioPersonaje2']['curacion']['pocionMax'];
+            $cantidad = (int) $caracteristicasPersonaje['inventarioPersonaje']['curacion']['pocionMax'];
             $stmt->bind_param("is", $cantidad, $item_nombre);
             //esta linea ejecuta el update preparado y si esta mal salta error
             if (!$stmt->execute()) {
@@ -451,7 +450,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             //UPDATES ESTAMINA 
             $item_nombre = "restaurarEstamina";
-            $cantidad = (int) $caracteristicasPersonaje['inventarioPersonaje2']['restaurarEstamina']['pocionEstamina'];
+            $cantidad = (int) $caracteristicasPersonaje['inventarioPersonaje']['restaurarEstamina']['pocionEstamina'];
             $stmt->bind_param("is", $cantidad, $item_nombre);
             //esta linea ejecuta el update preparado y si esta mal salta error
             if (!$stmt->execute()) {
@@ -459,7 +458,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $descripcionError = "error en el update preparado de pocionEstamina";
             }
             $item_nombre = "restaurarMuchaEstamina";
-            $cantidad = (int) $caracteristicasPersonaje['inventarioPersonaje2']['restaurarEstamina']['superPocionEstamina'];
+            $cantidad = (int) $caracteristicasPersonaje['inventarioPersonaje']['restaurarEstamina']['superPocionEstamina'];
             $stmt->bind_param("is", $cantidad, $item_nombre);
             //esta linea ejecuta el update preparado y si esta mal salta error
             if (!$stmt->execute()) {
@@ -467,7 +466,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $descripcionError = "error en el update preparado de SuperPocionEstamina";
             }
             $item_nombre = "restaurarTodaEstamina";
-            $cantidad = (int) $caracteristicasPersonaje['inventarioPersonaje2']['restaurarEstamina']['pocionEstaminaMax'];
+            $cantidad = (int) $caracteristicasPersonaje['inventarioPersonaje']['restaurarEstamina']['pocionEstaminaMax'];
             $stmt->bind_param("is", $cantidad, $item_nombre);
             //esta linea ejecuta el update preparado y si esta mal salta error
             if (!$stmt->execute()) {

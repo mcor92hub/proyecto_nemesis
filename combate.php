@@ -45,6 +45,7 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
     <script src="JS/mago.js?v=<?php echo time(); ?>"></script>
     <script src="JS/hechicero.js?v=<?php echo time(); ?>"></script>
     <script src="JS/druida.js?v=<?php echo time(); ?>"></script>
+    <script src="JS/funciones.js?v=<?php echo time(); ?>"></script>
     <?php
     $consultaTurno = "SELECT turno FROM partida WHERE id_partida = " . $_SESSION['partida'] . "";
     $resultadoTurno = $bd->query($consultaTurno);
@@ -473,7 +474,7 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                                 boton.setAttribute("class", "botonesPersonaje1");
                                 let accion = personaje1.listaFunciones[i];
                                 if (i == 1) {
-                                    boton.setAttribute("onclick", "transformacion()");
+                                    boton.setAttribute("onclick", "personaje1.transformacion()");
                                     botonesPersonaje1.appendChild(boton);
                                 } else if (i == 2) {
                                     boton.setAttribute("onclick", "personaje1." + accion + "()");
@@ -536,107 +537,22 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                             divBotonesObjetosPersonaje1.appendChild(boton);
                         }
 
-                        // El siguiente script convierte el mapa de inventario y el mapa de estado del personaje1 en objetos para poder enviarlos por fetch a updatePersonajes.php y actualizar la base de datos con los cambios que se hayan producido en el combate, como el uso de objetos o la aplicacion de estados
-                        // Usé IA para convertir el mapa en un array porque JSON no me admite los mapas
-                        function mapaParaObjeto(map) {
-                            const obj = Object.fromEntries(map);
-                            for (let [key, value] of Object.entries(obj)) {
-                                if (value instanceof Map) {
-                                    obj[key] = mapaParaObjeto(value);
-                                }
-                            }
-                            return obj;
-                        }
+                        
+                        
 
-                        let inventarioPersonaje1 = mapaParaObjeto(personaje1.inventario);
-                        let estadosPersonaje1 = mapaParaObjeto(personaje1.estado);
+
+
+
+
+
+                        // let inventarioPersonaje1 = mapaParaObjeto(personaje1.inventario);
+                        // let estadosPersonaje1 = mapaParaObjeto(personaje1.estado);
                         divPersonaje1.addEventListener("click", function(event) {
                             // Recalcular después de la acción
                             let evento = event.target;
                             if (evento instanceof HTMLButtonElement) {
-                                switch (true) {
-                                    case (personaje1 instanceof Arquero || personaje1 instanceof Caballero):
-                                        inventarioPersonaje1 = mapaParaObjeto(personaje1.inventario);
-                                        estadosPersonaje1 = mapaParaObjeto(personaje1.estado);
-                                        console.log(JSON.stringify(inventarioPersonaje1));
-                                        console.log(JSON.stringify(estadosPersonaje1));
-                                        console.log(JSON.stringify(personaje1));
-                                        fetch("updatePersonaje1.php", {
-                                            method: "POST",
-                                            credentials: "include",
-                                            headers: {
-                                                "Content-Type": "application/json"
-                                            },
-                                            body: JSON.stringify({
-                                                personaje1,
-                                                inventarioPersonaje1,
-                                                estadosPersonaje1
-                                            })
-                                        })
-                                        // .then(response => response.text())
-                                        // .then(data => location.reload(), console.log("recargo"))
-                                        // .catch(error => {
-                                        //     console.error("Error en fetch:", error);
-                                        // });
-                                        break;
-                                    case (personaje1 instanceof Hechicero):
-                                        inventarioPersonaje1 = mapaParaObjeto(personaje1.inventario);
-                                        estadosPersonaje1 = mapaParaObjeto(personaje1.estado);
-                                        auraPersonaje1 = mapaParaObjeto(personaje1.aura);
-                                        console.log(JSON.stringify(inventarioPersonaje1));
-                                        console.log(JSON.stringify(estadosPersonaje1));
-                                        console.log(JSON.stringify(auraPersonaje1));
-                                        console.log(JSON.stringify(personaje1));
-                                        fetch("updatePersonaje1.php", {
-                                            method: "POST",
-                                            credentials: "include",
-                                            headers: {
-                                                "Content-Type": "application/json"
-                                            },
-                                            body: JSON.stringify({
-                                                personaje1,
-                                                inventarioPersonaje1,
-                                                estadosPersonaje1,
-                                                auraPersonaje1
-                                            })
-                                        })
-                                        // .then(response => response.text())
-                                        // .then(data => location.reload(), console.log("recargo"))
-                                        // .catch(error => {
-                                        //     console.error("Error en fetch:", error);
-                                        // });
-                                        break;
-                                    case (personaje1 instanceof Druida):
-                                        inventarioPersonaje1 = mapaParaObjeto(personaje1.inventario);
-                                        estadosPersonaje1 = mapaParaObjeto(personaje1.estado);
-                                        transformacionesPersonaje1 = mapaParaObjeto(personaje1.posiblesTransformaciones);
-                                        console.log(JSON.stringify(inventarioPersonaje1));
-                                        console.log(JSON.stringify(estadosPersonaje1));
-                                        console.log(JSON.stringify(transformacionesPersonaje1));
-                                        console.log(JSON.stringify(personaje1));
-                                        fetch("updatePersonaje1.php", {
-                                            method: "POST",
-                                            credentials: "include",
-                                            headers: {
-                                                "Content-Type": "application/json"
-                                            },
-                                            body: JSON.stringify({
-                                                personaje1,
-                                                inventarioPersonaje1,
-                                                estadosPersonaje1,
-                                                transformacionesPersonaje1
-                                            })
-                                        })
-                                        // .then(response => response.text())
-                                        // .then(data => location.reload(), console.log("recargo"))
-                                        // .catch(error => {
-                                        //     console.error("Error en fetch:", error);
-                                        // });
-                                        break;
-                                    default:
-                                        break;
-                                }
-
+                                // Ahora aquí hay que poner la función de arriba para los eventos de los botones de personaje1 y ya se puede borrar el switch de abajo
+                                fetchUpdate(personaje1);
                             }
 
                         });
@@ -906,7 +822,7 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                         personaje2.asignarObjetos(parseInt(caracteristicasPersonaje2['arma']['arco']['desgaste']), parseInt(caracteristicasPersonaje2['arma']['flecha']['cantidad']), parseInt(caracteristicasPersonaje2['arma']['nunchakus']['desgaste']), parseInt(caracteristicasPersonaje2['curacion']['curacionSimple']['cantidad']), parseInt(caracteristicasPersonaje2['curacion']['superCuracion']['cantidad']), parseInt(caracteristicasPersonaje2['curacion']['curacionCompleta']['cantidad']), parseInt(caracteristicasPersonaje2['estamina']['restaurarEstamina']['cantidad']), parseInt(caracteristicasPersonaje2['estamina']['restaurarMuchaEstamina']['cantidad']), parseInt(caracteristicasPersonaje2['estamina']['restaurarTodaEstamina']['cantidad']));
                         imgPersonaje2.setAttribute("src", "imgs/arqueroIzquierda.gif");
                         imgPersonaje2.setAttribute("id", "imgPersonaje2");
-                        
+
                         break;
                     case "Caballero":
                         personaje2 = new Caballero(caracteristicasPersonaje2[0]['nombre'], parseInt(caracteristicasPersonaje2[0]['fuerza']), parseInt(caracteristicasPersonaje2[0]['armadura']), parseInt(caracteristicasPersonaje2[0]['nivel']), parseInt(caracteristicasPersonaje2[0]['vidaActual']), parseInt(caracteristicasPersonaje2[0]['vidaMaxima']), parseInt(caracteristicasPersonaje2[0]['estaminaActual']), parseInt(caracteristicasPersonaje2[0]['estaminaMaxima']), parseInt(caracteristicasPersonaje2[0]['puntosExperiencia']), parseInt(caracteristicasPersonaje2[0]['quemado']), parseInt(caracteristicasPersonaje2[0]['envenenado']), parseInt(caracteristicasPersonaje2[0]['confundido']), parseInt(caracteristicasPersonaje2[0]['heridoLeve']), parseInt(caracteristicasPersonaje2[0]['heridoGrave']));
@@ -916,7 +832,7 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                         imgPersonaje2.setAttribute("id", "imgPersonaje2");
                         break;
                     case "Hechicero":
-                        personaje2 = new Hechicero(caracteristicasPersonaje2[0]['nombre'], parseInt(caracteristicasPersonaje2[0]['fuerza']), parseInt(caracteristicasPersonaje2[0]['armadura']), parseInt(caracteristicasPersonaje2[0]['nivel']), parseInt(caracteristicasPersonaje2[0]['vidaActual']), parseInt(caracteristicasPersonaje2[0]['vidaMaxima']), parseInt(caracteristicasPersonaje2[0]['estaminaActual']), parseInt(caracteristicasPersonaje2[0]['estaminaMaxima']), parseInt(caracteristicasPersonaje2[0]['puntosExperiencia']), parseInt(caracteristicasPersonaje2[0]['quemado']), parseInt(caracteristicasPersonaje2[0]['envenenado']), parseInt(caracteristicasPersonaje2[0]['confundido']), parseInt(caracteristicasPersonaje2[0]['heridoLeve']), parseInt(caracteristicasPersonaje2[0]['heridoGrave']),parseInt(caracteristicasPersonaje2[0]['inteligencia']), parseInt(caracteristicasPersonaje2[0]['fuego']), parseInt(caracteristicasPersonaje2[0]['veneno']), parseInt(caracteristicasPersonaje2[0]['enigmatico']), parseInt(caracteristicasPersonaje2[0]['pinchos']), parseInt(caracteristicasPersonaje2[0]['sombra']));
+                        personaje2 = new Hechicero(caracteristicasPersonaje2[0]['nombre'], parseInt(caracteristicasPersonaje2[0]['fuerza']), parseInt(caracteristicasPersonaje2[0]['armadura']), parseInt(caracteristicasPersonaje2[0]['nivel']), parseInt(caracteristicasPersonaje2[0]['vidaActual']), parseInt(caracteristicasPersonaje2[0]['vidaMaxima']), parseInt(caracteristicasPersonaje2[0]['estaminaActual']), parseInt(caracteristicasPersonaje2[0]['estaminaMaxima']), parseInt(caracteristicasPersonaje2[0]['puntosExperiencia']), parseInt(caracteristicasPersonaje2[0]['quemado']), parseInt(caracteristicasPersonaje2[0]['envenenado']), parseInt(caracteristicasPersonaje2[0]['confundido']), parseInt(caracteristicasPersonaje2[0]['heridoLeve']), parseInt(caracteristicasPersonaje2[0]['heridoGrave']), parseInt(caracteristicasPersonaje2[0]['inteligencia']), parseInt(caracteristicasPersonaje2[0]['fuego']), parseInt(caracteristicasPersonaje2[0]['veneno']), parseInt(caracteristicasPersonaje2[0]['enigmatico']), parseInt(caracteristicasPersonaje2[0]['pinchos']), parseInt(caracteristicasPersonaje2[0]['sombra']));
 
                         personaje2.asignarObjetos(parseInt(caracteristicasPersonaje2['arma']['vara']['desgaste']), parseInt(caracteristicasPersonaje2['curacion']['curacionSimple']['cantidad']), parseInt(caracteristicasPersonaje2['curacion']['superCuracion']['cantidad']), parseInt(caracteristicasPersonaje2['curacion']['curacionCompleta']['cantidad']), parseInt(caracteristicasPersonaje2['estamina']['restaurarEstamina']['cantidad']), parseInt(caracteristicasPersonaje2['estamina']['restaurarMuchaEstamina']['cantidad']), parseInt(caracteristicasPersonaje2['estamina']['restaurarTodaEstamina']['cantidad']));
 
@@ -1052,35 +968,35 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                         case (personaje2 instanceof Druida):
                             console.log("Es un Druida");
                             //Funcion que se llama al hacer la transformacion para cambiar la imagen segun la transformacion
-                            function cambiarImagenDruida2() {
-                                let transformaciones;
-                                personaje2.transformacion();
-                                switch (true) {
-                                    case (personaje2.posiblesTransformaciones.get("oso") == true):
-                                        transformaciones = document.getElementById("imgPersonaje2");
-                                        transformaciones.removeAttribute("src");
-                                        transformaciones.setAttribute("src", "imgs/Transformaciones-druida/osoIzquierda.gif");
-                                        break;
-                                    case (personaje2.posiblesTransformaciones.get("serpiente") == true):
-                                        transformaciones = document.getElementById("imgPersonaje2");
-                                        transformaciones.removeAttribute("src");
-                                        transformaciones.setAttribute("src", "imgs/Transformaciones-druida/serpienteIzquierda.gif");
-                                        break;
-                                    case (personaje2.posiblesTransformaciones.get("zorro") == true):
-                                        transformaciones = document.getElementById("imgPersonaje2");
-                                        transformaciones.removeAttribute("src");
-                                        transformaciones.setAttribute("src", "imgs/Transformaciones-druida/zorroIzquierda.gif");
-                                        break;
-                                    case (personaje2.posiblesTransformaciones.get("águila") == true):
-                                        transformaciones = document.getElementById("imgPersonaje2");
-                                        transformaciones.removeAttribute("src");
-                                        transformaciones.setAttribute("src", "imgs/Transformaciones-druida/aguilaIzquierda.gif");
-                                        break;
-                                    default:
-                                        document.getElementById("imgPersonaje2").src = "imgs/druidaIzquierda.gif";
-                                        break;
-                                }
-                            }
+                            // function cambiarImagenDruida2() {
+                            //     let transformaciones;
+                            //     personaje2.transformacion();
+                            //     switch (true) {
+                            //         case (personaje2.posiblesTransformaciones.get("oso") == true):
+                            //             transformaciones = document.getElementById("imgPersonaje2");
+                            //             transformaciones.removeAttribute("src");
+                            //             transformaciones.setAttribute("src", "imgs/Transformaciones-druida/osoIzquierda.gif");
+                            //             break;
+                            //         case (personaje2.posiblesTransformaciones.get("serpiente") == true):
+                            //             transformaciones = document.getElementById("imgPersonaje2");
+                            //             transformaciones.removeAttribute("src");
+                            //             transformaciones.setAttribute("src", "imgs/Transformaciones-druida/serpienteIzquierda.gif");
+                            //             break;
+                            //         case (personaje2.posiblesTransformaciones.get("zorro") == true):
+                            //             transformaciones = document.getElementById("imgPersonaje2");
+                            //             transformaciones.removeAttribute("src");
+                            //             transformaciones.setAttribute("src", "imgs/Transformaciones-druida/zorroIzquierda.gif");
+                            //             break;
+                            //         case (personaje2.posiblesTransformaciones.get("águila") == true):
+                            //             transformaciones = document.getElementById("imgPersonaje2");
+                            //             transformaciones.removeAttribute("src");
+                            //             transformaciones.setAttribute("src", "imgs/Transformaciones-druida/aguilaIzquierda.gif");
+                            //             break;
+                            //         default:
+                            //             document.getElementById("imgPersonaje2").src = "imgs/druidaIzquierda.gif";
+                            //             break;
+                            //     }
+                            // }
 
                             for (let i = 0; i < 4; i++) {
                                 let boton = document.createElement("button");
@@ -1088,7 +1004,7 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                                 boton.setAttribute("class", "botonesPersonaje2");
                                 let accion = personaje2.listaFunciones[i];
                                 if (i == 1) {
-                                    boton.setAttribute("onclick", "cambiarImagenDruida2()");
+                                    boton.setAttribute("onclick", "personaje2.transformacion()");
                                     botonesPersonaje2.appendChild(boton);
                                 } else if (i == 2) {
                                     boton.setAttribute("onclick", "personaje2." + accion + "()");
@@ -1159,8 +1075,6 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                             console.log("personaje2 no válido");
                             break;
                     }
-                    
-                    
                 </script>
             </div>
             <div class="menu">
@@ -1189,107 +1103,24 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                             divBotonesObjetosPersonaje2.appendChild(boton);
                         }
 
-                        let inventarioPersonaje2 = mapaParaObjeto(personaje2.inventario);
-                        let estadosPersonaje2 = mapaParaObjeto(personaje2.estado);
+
                         divPersonaje2.addEventListener("click", function(event) {
                             // Recalcular después de la acción
                             let evento = event.target;
                             if (evento instanceof HTMLButtonElement) {
-                                switch (true) {
-                                    case (personaje2 instanceof Arquero || personaje2 instanceof Caballero):
-                                        inventarioPersonaje2 = mapaParaObjeto(personaje2.inventario);
-                                        estadosPersonaje2 = mapaParaObjeto(personaje2.estado);
-                                        console.log(JSON.stringify(inventarioPersonaje2));
-                                        console.log(JSON.stringify(estadosPersonaje2));
-                                        console.log(JSON.stringify(personaje2));
-                                        fetch("updatePersonaje2.php", {
-                                            method: "POST",
-                                            credentials: "include",
-                                            headers: {
-                                                "Content-Type": "application/json"
-                                            },
-                                            body: JSON.stringify({
-                                                personaje2,
-                                                inventarioPersonaje2,
-                                                estadosPersonaje2
-                                            })
-                                        })
-                                        // .then(response => response.text())
-                                        // .then(data => location.reload(), console.log("recargo"))
-                                        // .catch(error => {
-                                        //     console.error("Error en fetch:", error);
-                                        // });
-                                        break;
-                                    case (personaje2 instanceof Hechicero):
-                                        inventarioPersonaje2 = mapaParaObjeto(personaje2.inventario);
-                                        estadosPersonaje2 = mapaParaObjeto(personaje2.estado);
-                                        auraPersonaje2 = mapaParaObjeto(personaje2.aura);
-                                        console.log(JSON.stringify(inventarioPersonaje2));
-                                        console.log(JSON.stringify(estadosPersonaje2));
-                                        console.log(JSON.stringify(auraPersonaje2));
-                                        console.log(JSON.stringify(personaje2));
-                                        fetch("updatePersonaje2.php", {
-                                            method: "POST",
-                                            credentials: "include",
-                                            headers: {
-                                                "Content-Type": "application/json"
-                                            },
-                                            body: JSON.stringify({
-                                                personaje2,
-                                                inventarioPersonaje2,
-                                                estadosPersonaje2,
-                                                auraPersonaje2
-                                            })
-                                        })
-                                        // .then(response => response.text())
-                                        // .then(data => location.reload(), console.log("recargo"))
-                                        // .catch(error => {
-                                        //     console.error("Error en fetch:", error);
-                                        // });
-                                        break;
-                                    case (personaje2 instanceof Druida):
-                                        inventarioPersonaje2 = mapaParaObjeto(personaje2.inventario);
-                                        estadosPersonaje2 = mapaParaObjeto(personaje2.estado);
-                                        transformacionesPersonaje2 = mapaParaObjeto(personaje2.posiblesTransformaciones);
-                                        console.log(JSON.stringify(inventarioPersonaje2));
-                                        console.log(JSON.stringify(estadosPersonaje2));
-                                        console.log(JSON.stringify(transformacionesPersonaje2));
-                                        console.log(JSON.stringify(personaje2));
-                                        fetch("updatePersonaje2.php", {
-                                            method: "POST",
-                                            credentials: "include",
-                                            headers: {
-                                                "Content-Type": "application/json"
-                                            },
-                                            body: JSON.stringify({
-                                                personaje2,
-                                                inventarioPersonaje2,
-                                                estadosPersonaje2,
-                                                transformacionesPersonaje2
-                                            })
-                                        })
-                                        // .then(response => response.text())
-                                        // .then(data => location.reload(), console.log("recargo"))
-                                        // .catch(error => {
-                                        //     console.error("Error en fetch:", error);
-                                        // });
-                                        break;
-                                    default:
-                                        break;
-                                }
-
+                                fetchUpdate(personaje2);
                             }
 
                         });
 
 
                         setInterval(function() {
-                        if (personaje2.estado.get("confundido") == true) {
-                            for (const element of claseBotonesPersonaje2) {
-                                element.textContent = "????"
+                            if (personaje2.estado.get("confundido") == true) {
+                                for (const element of claseBotonesPersonaje2) {
+                                    element.textContent = "????"
+                                }
                             }
-                        }
-                    });
+                        });
                     </script>
 
                 </div>
