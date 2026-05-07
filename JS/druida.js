@@ -3,13 +3,13 @@ class Druida extends Personaje {
     //posible transformacion en puercoespin que aumenta su armadura
     listaBotones;
     listaFunciones;
-    constructor(nombre, fuerza, armadura, nivel, vidaActual, vidaMaxima, estaminaActual, estaminaMaxima, puntosExperiencia, inteligencia, quemado, envenenado, confundido, heridoLeve, heridoGrave) {
+    constructor(nombre, fuerza, armadura, nivel, vidaActual, vidaMaxima, estaminaActual, estaminaMaxima, puntosExperiencia, inteligencia, quemado, envenenado, confundido, heridoLeve, heridoGrave, oso, serpiente, zorro, aguila) {
         super(nombre, fuerza, armadura, nivel, vidaActual, vidaMaxima, estaminaActual, estaminaMaxima, puntosExperiencia, quemado, envenenado, confundido, heridoLeve, heridoGrave);
         this.inteligencia = inteligencia;
-        this.posiblesTransformaciones.set("oso", false);
-        this.posiblesTransformaciones.set("serpiente", false);
-        this.posiblesTransformaciones.set("zorro", false);
-        this.posiblesTransformaciones.set("águila", false);
+        this.posiblesTransformaciones.set("oso", oso);
+        this.posiblesTransformaciones.set("serpiente", serpiente);
+        this.posiblesTransformaciones.set("zorro", zorro);
+        this.posiblesTransformaciones.set("águila", aguila);
         this.listaBotones = ["Ataque Básico", "Transformacion", "Piel de Carballo", "Enredaderas"];
         this.listaFunciones = ["ataqueSimple", "transformacion", "pielDeCarballo", "enredaderas"];
     }
