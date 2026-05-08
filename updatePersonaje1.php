@@ -20,15 +20,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $personajeId="";
     while ($fila = $resultadoTurno->fetch_assoc()) {
         if ($fila['turno'] == 1) {
-            $updatePartida = "UPDATE partida SET turno = 2 WHERE id_partida = " . $_SESSION['partida'] . "";
-            $bd->query($updatePartida);
+            // $updatePartida = "UPDATE partida SET turno = 2 WHERE id_partida = " . $_SESSION['partida'] . "";
+            // $bd->query($updatePartida);
             $personajeId = "pa.personaje1_id";
-            $numLista = 0;
-        } else {
-            $updatePartida = "UPDATE partida SET turno = 1 WHERE id_partida = " . $_SESSION['partida'] . "";
-            $bd->query($updatePartida);
-            $personajeId = "pa.personaje2_id";
             $numLista = 1;
+        } else {
+            // $updatePartida = "UPDATE partida SET turno = 1 WHERE id_partida = " . $_SESSION['partida'] . "";
+            // $bd->query($updatePartida);
+            $personajeId = "pa.personaje2_id";
+            $numLista = 0;
         }
         array_push($lista, $fila['personaje1_id']);
         array_push($lista, $fila['personaje2_id']);
@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             heridoGrave = '" . $caracteristicasPersonaje['estadosPersonaje']['heridoGrave'] . "',
                             confundido = '" . $caracteristicasPersonaje['estadosPersonaje']['confundido'] . "'
                             WHERE pa.id_partida = " . $_SESSION['partida'] . "";
-                            error_log($personajeId);
+                            error_log($updateArquero);
             $resultado = $bd->query($updateArquero);
             if ($bd->errno) {
                 $errorUpdateConsulta = true;
@@ -65,6 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             JOIN item i ON ig.item_id = i.id_item
                             SET desgaste = " . $caracteristicasPersonaje['inventarioPersonaje']['arma']['arco'] . "
                             WHERE pa.id_partida = " . $_SESSION['partida'] . " AND i.nombre = 'arco';";
+                            error_log($updateArco);
             $resultado = $bd->query($updateArco);
             if ($bd->errno) {
                 $errorUpdateConsulta = true;
@@ -187,6 +188,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             JOIN item i ON ig.item_id = i.id_item
                             SET desgaste = " . $caracteristicasPersonaje['inventarioPersonaje']['arma']['espada'] . "
                             WHERE pa.id_partida = " . $_SESSION['partida'] . " AND i.nombre = 'espada';";
+                            error_log($updateEspada);
             $resultado = $bd->query($updateEspada);
             if ($bd->errno) {
                 $errorUpdateConsulta = true;
@@ -292,6 +294,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             pinchos = '" . $caracteristicasPersonaje['auraPersonaje']['pinchos'] . "',
                             sombra = '" . $caracteristicasPersonaje['auraPersonaje']['sombra'] . "'
                             WHERE pa.id_partida = " . $_SESSION['partida'] . "";
+            error_log($updateHechicero);
             $resultado = $bd->query($updateHechicero);
             if ($bd->errno) {
                 $errorUpdateConsulta = true;
@@ -493,13 +496,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $bd->rollback();
     } else {
         $bd->commit();
-        header("location: combate.php");
+        echo json_encode(['success' => true]);
+        // header("location: combate.php");
     }
 
 
 
     // NO SE QUE HACE LA SIGUIENTE LINEA ES PARA NO TENER PROBLEMAS DE CACHÉ
     $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
-} else {
-    echo "no entro";
 }

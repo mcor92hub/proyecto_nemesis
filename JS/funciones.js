@@ -33,6 +33,12 @@ function fetchUpdate(personaje) {
                     estadosPersonaje
                 })
             })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        window.location.href = "combate.php";
+                    }
+                });
             // .then(response => response.text())
             // .then(data => location.reload(), console.log("recargo"))
             // .catch(error => {
@@ -60,6 +66,12 @@ function fetchUpdate(personaje) {
                     auraPersonaje
                 })
             })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        window.location.href = "combate.php";
+                    }
+                });
             // .then(response => response.text())
             // .then(data => location.reload(), console.log("recargo"))
             // .catch(error => {
@@ -87,6 +99,12 @@ function fetchUpdate(personaje) {
                     transformacionesPersonaje
                 })
             })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        window.location.href = "combate.php";
+                    }
+                });
             // .then(response => response.text())
             // .then(data => location.reload(), console.log("recargo"))
             // .catch(error => {
@@ -96,4 +114,23 @@ function fetchUpdate(personaje) {
         default:
             break;
     }
+}
+
+function fetchTurno(turno) {
+    fetch("updateTurno.php", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({turno})
+    })
+    alert("fetch turno "+ turno);
+    //alert("fetch turno", turno);
+        // .then(response => response.json())
+        // .then(data => {
+        //     if (data.success) {
+        //         window.location.href = "combate.php";
+        //     }
+        // });
 }

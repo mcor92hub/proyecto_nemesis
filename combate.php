@@ -12,6 +12,7 @@ $consultaTurno = "SELECT * FROM partida WHERE id_partida = " . $_SESSION['partid
 $resultadoTurno = $bd->query($consultaTurno);
 $lista = [];
 while ($fila = $resultadoTurno->fetch_assoc()) {
+    $turno = $fila['turno'];
     array_push($lista, $fila['personaje1_id']);
     array_push($lista, $fila['personaje2_id']);
 }
@@ -46,32 +47,27 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
     <script src="JS/hechicero.js?v=<?php echo time(); ?>"></script>
     <script src="JS/druida.js?v=<?php echo time(); ?>"></script>
     <script src="JS/funciones.js?v=<?php echo time(); ?>"></script>
-    <?php
-    $consultaTurno = "SELECT turno FROM partida WHERE id_partida = " . $_SESSION['partida'] . "";
-    $resultadoTurno = $bd->query($consultaTurno);
-
-    while ($fila = $resultadoTurno->fetch_assoc()) {
-        $turno = $fila['turno'];
-    }
-    //NO VA AQUÍ
-
-    ?>
+   
     <script>
-        let tiraMoneda = <?php echo json_encode($turno, JSON_UNESCAPED_UNICODE) ?>;
-        console.log(tiraMoneda);
-        let turno;
-        if (tiraMoneda == 1) {
-            turno = 1;
-        } else {
-            turno = 2;
-        }
+        let turno = <?php echo json_encode($turno, JSON_UNESCAPED_UNICODE) ?>;
+        console.log(turno);
+
+        setInterval(() => {
+            if (turno == 1) {
+                fetchUpdate(personaje1);
+            } else {
+                fetchUpdate(personaje2);
+            }
+        }, 5000);
+
         let claseBotonesPersonaje1 = document.getElementsByClassName("botonesPersonaje1");
         let claseBotonesPersonaje2 = document.getElementsByClassName("botonesPersonaje2");
 
+        // ARREGLAR ESTO Y SUBIRLO PARRIBA DONDE LOS FETCHS
         setInterval(function() {
             for (const element of claseBotonesPersonaje1) {
                 element.addEventListener("click", function() {
-                    turno = 2;
+                    // turno = 2;
                 });
             }
             if (turno == 2) {
@@ -84,7 +80,7 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
             }
             for (const element of claseBotonesPersonaje2) {
                 element.addEventListener("click", function() {
-                    turno = 1;
+                    // turno = 1;
                 });
             }
             if (turno == 1) {
@@ -537,23 +533,16 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                             divBotonesObjetosPersonaje1.appendChild(boton);
                         }
 
-                        
-                        
 
-
-
-
-
-
-                        // let inventarioPersonaje1 = mapaParaObjeto(personaje1.inventario);
-                        // let estadosPersonaje1 = mapaParaObjeto(personaje1.estado);
                         divPersonaje1.addEventListener("click", function(event) {
                             // Recalcular después de la acción
                             let evento = event.target;
                             if (evento instanceof HTMLButtonElement) {
                                 // Ahora aquí hay que poner la función de arriba para los eventos de los botones de personaje1 y ya se puede borrar el switch de abajo
                                 fetchUpdate(personaje1);
+                                fetchTurno(turno);
                             }
+
 
                         });
 
@@ -1109,6 +1098,7 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                             let evento = event.target;
                             if (evento instanceof HTMLButtonElement) {
                                 fetchUpdate(personaje2);
+                                fetchTurno(turno);
                             }
 
                         });
