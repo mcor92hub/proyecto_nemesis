@@ -19,21 +19,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $lista = [];
     $personajeId="";
     while ($fila = $resultadoTurno->fetch_assoc()) {
-        if ($fila['turno'] == 1) {
+        //AQUÍ ESTA TODO EL PUTO PROBLEMA, HAY QUE PONERLE 4 OPCIONES DE MANERA QUE ENTRE EN UNA U OTRA DEPENDIENDO DE LA INFORMACIÓN QUE MANDAMOS, HAY QUE PONERLE UN $_SESSION DE PERSONAJE PARA COMPROBAR Y VER SI ESTAMOS MANDANDO LA INFO QUE ES
+        if ($fila['turno'] == 1 && $fila['personaje1_id'] == ) {
             // $updatePartida = "UPDATE partida SET turno = 2 WHERE id_partida = " . $_SESSION['partida'] . "";
             // $bd->query($updatePartida);
-            $personajeId = "pa.personaje1_id";
+            $personajeId = "pa.personaje2_id";
             $numLista = 1;
         } else {
             // $updatePartida = "UPDATE partida SET turno = 1 WHERE id_partida = " . $_SESSION['partida'] . "";
             // $bd->query($updatePartida);
-            $personajeId = "pa.personaje2_id";
+            $personajeId = "pa.personaje1_id";
             $numLista = 0;
         }
         array_push($lista, $fila['personaje1_id']);
         array_push($lista, $fila['personaje2_id']);
     }
-
+    error_log("arco: ". print_r($caracteristicasPersonaje['inventarioPersonaje']['arma']['arco'], true));
+    error_log("espada: ". print_r($caracteristicasPersonaje['inventarioPersonaje']['arma']['espada'], true));
     //AQUÍ HAY QUE CAMBIAR LOS SELECTS POR UPDATES
     switch (intval($lista[$numLista]) % 4) {
         case 1:
@@ -53,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             heridoGrave = '" . $caracteristicasPersonaje['estadosPersonaje']['heridoGrave'] . "',
                             confundido = '" . $caracteristicasPersonaje['estadosPersonaje']['confundido'] . "'
                             WHERE pa.id_partida = " . $_SESSION['partida'] . "";
-                            error_log($updateArquero);
+                            //error_log($updateArquero);
             $resultado = $bd->query($updateArquero);
             if ($bd->errno) {
                 $errorUpdateConsulta = true;
@@ -65,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             JOIN item i ON ig.item_id = i.id_item
                             SET desgaste = " . $caracteristicasPersonaje['inventarioPersonaje']['arma']['arco'] . "
                             WHERE pa.id_partida = " . $_SESSION['partida'] . " AND i.nombre = 'arco';";
-                            error_log($updateArco);
+                            //error_log($updateArco);
             $resultado = $bd->query($updateArco);
             if ($bd->errno) {
                 $errorUpdateConsulta = true;
@@ -188,7 +190,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             JOIN item i ON ig.item_id = i.id_item
                             SET desgaste = " . $caracteristicasPersonaje['inventarioPersonaje']['arma']['espada'] . "
                             WHERE pa.id_partida = " . $_SESSION['partida'] . " AND i.nombre = 'espada';";
-                            error_log($updateEspada);
+                            //error_log($updateEspada);
             $resultado = $bd->query($updateEspada);
             if ($bd->errno) {
                 $errorUpdateConsulta = true;

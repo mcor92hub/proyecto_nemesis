@@ -54,9 +54,11 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
 
         setInterval(() => {
             if (turno == 1) {
-                fetchUpdate(personaje1);
-            } else {
                 fetchUpdate(personaje2);
+                console.log("posible fallo"+personaje2);
+            } else {
+                fetchUpdate(personaje1);
+                console.log("posible fallo"+personaje1);
             }
         }, 5000);
 
