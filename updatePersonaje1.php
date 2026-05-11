@@ -17,25 +17,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $descripcionError = "error en el select de la partida";
     }
     $lista = [];
-    $personajeId="";
-    while ($fila = $resultadoTurno->fetch_assoc()) {
+    $personajeId = "";
+    
+    if ($fila = $resultadoTurno->fetch_assoc()) {
         //AQUÍ ESTA TODO EL PUTO PROBLEMA, HAY QUE PONERLE 4 OPCIONES DE MANERA QUE ENTRE EN UNA U OTRA DEPENDIENDO DE LA INFORMACIÓN QUE MANDAMOS, HAY QUE PONERLE UN $_SESSION DE PERSONAJE PARA COMPROBAR Y VER SI ESTAMOS MANDANDO LA INFO QUE ES
-        if ($fila['turno'] == 1 && $fila['personaje1_id'] == ) {
+        if ($fila['turno'] == 1 && $fila['usuario1_id'] == $_SESSION['usuarioPartida']) {
             // $updatePartida = "UPDATE partida SET turno = 2 WHERE id_partida = " . $_SESSION['partida'] . "";
-            // $bd->query($updatePartida);
-            $personajeId = "pa.personaje2_id";
-            $numLista = 1;
-        } else {
-            // $updatePartida = "UPDATE partida SET turno = 1 WHERE id_partida = " . $_SESSION['partida'] . "";
             // $bd->query($updatePartida);
             $personajeId = "pa.personaje1_id";
             $numLista = 0;
+        } elseif ($fila['turno'] == 1 && $fila['usuario2_id'] == $_SESSION['usuarioPartida']) {
+            $personajeId = "pa.personaje2_id";
+            $numLista = 1;
+        } elseif ($fila['turno'] == 2 && $fila['usuario2_id'] == $_SESSION['usuarioPartida']) {
+            $personajeId = "pa.personaje2_id";
+            $numLista = 1;
+        }elseif ($fila['turno'] == 2 && $fila['usuario1_id'] == $_SESSION['usuarioPartida']) {
+            $personajeId = "pa.personaje1_id";
+            $numLista = 0;
         }
+        error_log("personajeId: " . $personajeId. "variable de sesion".$_SESSION['usuarioPartida']);
+
+
+        // {
+        //     // $updatePartida = "UPDATE partida SET turno = 1 WHERE id_partida = " . $_SESSION['partida'] . "";
+        //     // $bd->query($updatePartida);
+        //     $personajeId = "pa.personaje1_id";
+        //     $numLista = 0;
+        // }
         array_push($lista, $fila['personaje1_id']);
         array_push($lista, $fila['personaje2_id']);
     }
-    error_log("arco: ". print_r($caracteristicasPersonaje['inventarioPersonaje']['arma']['arco'], true));
-    error_log("espada: ". print_r($caracteristicasPersonaje['inventarioPersonaje']['arma']['espada'], true));
+    error_log("lista: ".print_r($lista[0]));
+    error_log("lista: ".print_r($lista[1]));
+    error_log("arco: " . print_r($caracteristicasPersonaje['inventarioPersonaje']['arma']['arco'], true));
+    error_log("espada: " . print_r($caracteristicasPersonaje['inventarioPersonaje']['arma']['espada'], true));
     //AQUÍ HAY QUE CAMBIAR LOS SELECTS POR UPDATES
     switch (intval($lista[$numLista]) % 4) {
         case 1:
@@ -55,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             heridoGrave = '" . $caracteristicasPersonaje['estadosPersonaje']['heridoGrave'] . "',
                             confundido = '" . $caracteristicasPersonaje['estadosPersonaje']['confundido'] . "'
                             WHERE pa.id_partida = " . $_SESSION['partida'] . "";
-                            //error_log($updateArquero);
+            //error_log($updateArquero);
             $resultado = $bd->query($updateArquero);
             if ($bd->errno) {
                 $errorUpdateConsulta = true;
@@ -67,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             JOIN item i ON ig.item_id = i.id_item
                             SET desgaste = " . $caracteristicasPersonaje['inventarioPersonaje']['arma']['arco'] . "
                             WHERE pa.id_partida = " . $_SESSION['partida'] . " AND i.nombre = 'arco';";
-                            //error_log($updateArco);
+            //error_log($updateArco);
             $resultado = $bd->query($updateArco);
             if ($bd->errno) {
                 $errorUpdateConsulta = true;
@@ -190,7 +206,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             JOIN item i ON ig.item_id = i.id_item
                             SET desgaste = " . $caracteristicasPersonaje['inventarioPersonaje']['arma']['espada'] . "
                             WHERE pa.id_partida = " . $_SESSION['partida'] . " AND i.nombre = 'espada';";
-                            //error_log($updateEspada);
+            //error_log($updateEspada);
             $resultado = $bd->query($updateEspada);
             if ($bd->errno) {
                 $errorUpdateConsulta = true;
@@ -290,7 +306,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             heridoGrave = '" . $caracteristicasPersonaje['estadosPersonaje']['heridoGrave'] . "',
                             confundido = '" . $caracteristicasPersonaje['estadosPersonaje']['confundido'] . "',
                             fuego = '" . $caracteristicasPersonaje['auraPersonaje']['fuego'] . "',
-                            inteligencia = '".$caracteristicasPersonaje['personaje']['inteligencia']."',
+                            inteligencia = '" . $caracteristicasPersonaje['personaje']['inteligencia'] . "',
                             veneno = '" . $caracteristicasPersonaje['auraPersonaje']['veneno'] . "',
                             enigmatico = '" . $caracteristicasPersonaje['auraPersonaje']['enigmatico'] . "',
                             pinchos = '" . $caracteristicasPersonaje['auraPersonaje']['pinchos'] . "',
@@ -396,7 +412,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             heridoLeve = '" . $caracteristicasPersonaje['estadosPersonaje']['heridoLeve'] . "',
                             heridoGrave = '" . $caracteristicasPersonaje['estadosPersonaje']['heridoGrave'] . "',
                             confundido = '" . $caracteristicasPersonaje['estadosPersonaje']['confundido'] . "',
-                            inteligencia = '".$caracteristicasPersonaje['personaje']['inteligencia']."',
+                            inteligencia = '" . $caracteristicasPersonaje['personaje']['inteligencia'] . "',
                             oso = '" . $caracteristicasPersonaje['transformacionesPersonaje']['oso'] . "',
                             serpiente = '" . $caracteristicasPersonaje['transformacionesPersonaje']['serpiente'] . "',
                             zorro = '" . $caracteristicasPersonaje['transformacionesPersonaje']['zorro'] . "',

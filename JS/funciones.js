@@ -15,8 +15,38 @@ function fetchUpdate(personaje) {
     let inventarioPersonaje = mapaParaObjeto(personaje.inventario);
     let estadosPersonaje = mapaParaObjeto(personaje.estado);
     switch (true) {
-        case (personaje instanceof Arquero || personaje instanceof Caballero):
+        case (personaje instanceof Arquero):
             inventarioPersonaje = mapaParaObjeto(personaje.inventario);
+            estadosPersonaje = mapaParaObjeto(personaje.estado);
+            console.log(JSON.stringify(inventarioPersonaje));
+            console.log(JSON.stringify(estadosPersonaje));
+            console.log(JSON.stringify(personaje));
+            fetch("updatePersonaje1.php", {
+                method: "POST",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    personaje,
+                    inventarioPersonaje,
+                    estadosPersonaje
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        window.location.href = "combate.php";
+                    }
+                });
+            // .then(response => response.text())
+            // .then(data => location.reload(), console.log("recargo"))
+            // .catch(error => {
+            //     console.error("Error en fetch:", error);
+            // });
+            break;
+        case (personaje instanceof Caballero):
+inventarioPersonaje = mapaParaObjeto(personaje.inventario);
             estadosPersonaje = mapaParaObjeto(personaje.estado);
             console.log(JSON.stringify(inventarioPersonaje));
             console.log(JSON.stringify(estadosPersonaje));

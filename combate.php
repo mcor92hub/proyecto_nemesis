@@ -17,6 +17,8 @@ while ($fila = $resultadoTurno->fetch_assoc()) {
     array_push($lista, $fila['personaje2_id']);
 }
 
+var_dump($_SESSION['usuarioPartida']);
+
 // NO SE QUE HACE LA SIGUIENTE LINEA ES PARA NO TENER PROBLEMAS DE CACHÉ
 $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
 ?>
@@ -55,10 +57,8 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
         setInterval(() => {
             if (turno == 1) {
                 fetchUpdate(personaje2);
-                console.log("posible fallo"+personaje2);
             } else {
                 fetchUpdate(personaje1);
-                console.log("posible fallo"+personaje1);
             }
         }, 5000);
 
@@ -541,6 +541,7 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                             let evento = event.target;
                             if (evento instanceof HTMLButtonElement) {
                                 // Ahora aquí hay que poner la función de arriba para los eventos de los botones de personaje1 y ya se puede borrar el switch de abajo
+                                console.log("mando click personaje1");
                                 fetchUpdate(personaje1);
                                 fetchTurno(turno);
                             }
@@ -1099,12 +1100,11 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                             // Recalcular después de la acción
                             let evento = event.target;
                             if (evento instanceof HTMLButtonElement) {
+                                console.log("mando click personaje2");
                                 fetchUpdate(personaje2);
                                 fetchTurno(turno);
                             }
-
                         });
-
 
                         setInterval(function() {
                             if (personaje2.estado.get("confundido") == true) {
@@ -1114,7 +1114,6 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                             }
                         });
                     </script>
-
                 </div>
                 <script>
                     const mainBtn2 = document.getElementById("mainBtn2");
