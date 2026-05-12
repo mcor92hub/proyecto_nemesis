@@ -33,12 +33,13 @@ function fetchUpdate(personaje) {
                     estadosPersonaje
                 })
             })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        window.location.href = "combate.php";
-                    }
-                });
+                // .then(response => response.json())
+                // .then(data => {
+                //     if (data.success) {
+                //         //window.location.href = "combate.php";
+                //         console.log("fetch personaje1 actualizado correctamente");
+                //     }
+                // });
             // .then(response => response.text())
             // .then(data => location.reload(), console.log("recargo"))
             // .catch(error => {
@@ -63,12 +64,12 @@ inventarioPersonaje = mapaParaObjeto(personaje.inventario);
                     estadosPersonaje
                 })
             })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        window.location.href = "combate.php";
-                    }
-                });
+                // .then(response => response.json())
+                // .then(data => {
+                //     if (data.success) {
+                //         window.location.href = "combate.php";
+                //     }
+                // });
             // .then(response => response.text())
             // .then(data => location.reload(), console.log("recargo"))
             // .catch(error => {
@@ -96,12 +97,13 @@ inventarioPersonaje = mapaParaObjeto(personaje.inventario);
                     auraPersonaje
                 })
             })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        window.location.href = "combate.php";
-                    }
-                });
+                // .then(response => response.json())
+                // .then(data => {
+                //     if (data.success) {
+                //         //window.location.href = "combate.php";
+                //         console.log("fetch personaje1 actualizado correctamente");
+                //     }
+                // });
             // .then(response => response.text())
             // .then(data => location.reload(), console.log("recargo"))
             // .catch(error => {
@@ -129,12 +131,13 @@ inventarioPersonaje = mapaParaObjeto(personaje.inventario);
                     transformacionesPersonaje
                 })
             })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        window.location.href = "combate.php";
-                    }
-                });
+                // .then(response => response.json())
+                // .then(data => {
+                //     if (data.success) {
+                //         //window.location.href = "combate.php";
+                //         console.log("fetch personaje1 actualizado correctamente");
+                //     }
+                // });
             // .then(response => response.text())
             // .then(data => location.reload(), console.log("recargo"))
             // .catch(error => {
@@ -155,7 +158,7 @@ function fetchTurno(turno) {
         },
         body: JSON.stringify({turno})
     })
-    alert("fetch turno "+ turno);
+    //alert("fetch turno "+ turno);
     //alert("fetch turno", turno);
         // .then(response => response.json())
         // .then(data => {

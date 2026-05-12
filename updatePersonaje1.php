@@ -5,7 +5,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $bd->autocommit(false);
     $json = file_get_contents('php://input');
     // TRABAJO PARA MÁXIMO
-    error_log("JSON recibido: " . $json);
+    // error_log("JSON recibido: " . $json);
     $caracteristicasPersonaje = json_decode($json, true);
 
     $errorUpdateConsulta = false;
@@ -21,40 +21,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     if ($fila = $resultadoTurno->fetch_assoc()) {
         //AQUÍ ESTA TODO EL PUTO PROBLEMA, HAY QUE PONERLE 4 OPCIONES DE MANERA QUE ENTRE EN UNA U OTRA DEPENDIENDO DE LA INFORMACIÓN QUE MANDAMOS, HAY QUE PONERLE UN $_SESSION DE PERSONAJE PARA COMPROBAR Y VER SI ESTAMOS MANDANDO LA INFO QUE ES
+        error_log("turno en la consulta: " . $fila['turno']);
         if ($fila['turno'] == 1 && $fila['usuario1_id'] == $_SESSION['usuarioPartida']) {
-            // $updatePartida = "UPDATE partida SET turno = 2 WHERE id_partida = " . $_SESSION['partida'] . "";
-            // $bd->query($updatePartida);
             $personajeId = "pa.personaje1_id";
             $numLista = 0;
+            error_log(print_r("turno 1, usuario1", true));
         } elseif ($fila['turno'] == 1 && $fila['usuario2_id'] == $_SESSION['usuarioPartida']) {
-            $personajeId = "pa.personaje2_id";
-            $numLista = 1;
+            $personajeId = "pa.personaje1_id";
+            $numLista = 0;
+            error_log(print_r("turno 1, usuario2", true));
         } elseif ($fila['turno'] == 2 && $fila['usuario2_id'] == $_SESSION['usuarioPartida']) {
             $personajeId = "pa.personaje2_id";
             $numLista = 1;
+            error_log(print_r("turno 2, usuario2", true));
         }elseif ($fila['turno'] == 2 && $fila['usuario1_id'] == $_SESSION['usuarioPartida']) {
-            $personajeId = "pa.personaje1_id";
-            $numLista = 0;
+            $personajeId = "pa.personaje2_id";
+            $numLista = 1;
+            error_log(print_r("turno 2, usuario1", true));
         }
-        error_log("personajeId: " . $personajeId. "variable de sesion".$_SESSION['usuarioPartida']);
+        // error_log("personajeId: " . $personajeId. "variable de sesion".$_SESSION['usuarioPartida']);
 
-
-        // {
-        //     // $updatePartida = "UPDATE partida SET turno = 1 WHERE id_partida = " . $_SESSION['partida'] . "";
-        //     // $bd->query($updatePartida);
-        //     $personajeId = "pa.personaje1_id";
-        //     $numLista = 0;
-        // }
         array_push($lista, $fila['personaje1_id']);
         array_push($lista, $fila['personaje2_id']);
     }
-    error_log("lista: ".print_r($lista[0]));
-    error_log("lista: ".print_r($lista[1]));
-    error_log("arco: " . print_r($caracteristicasPersonaje['inventarioPersonaje']['arma']['arco'], true));
-    error_log("espada: " . print_r($caracteristicasPersonaje['inventarioPersonaje']['arma']['espada'], true));
-    //AQUÍ HAY QUE CAMBIAR LOS SELECTS POR UPDATES
+    error_log("lista: ".print_r($lista[$numLista], true));
+    
+    // error_log("arco: " . print_r($caracteristicasPersonaje['inventarioPersonaje']['arma']['arco'], true));
+    // error_log("espada: " . print_r($caracteristicasPersonaje['inventarioPersonaje']['arma']['espada'], true));
+
+    error_log("valor del switch: " . print_r($lista[$numLista] % 4, true));
+    error_log("JSON recibido: " . print_r($json, true));
     switch (intval($lista[$numLista]) % 4) {
         case 1:
+            error_log("ENTRÓ EN EL CASE 1");
             $updateArquero = "UPDATE personaje pe JOIN partida pa ON pe.id_personaje = " . $personajeId . "
                             JOIN arquero a ON a.id_personaje = " . $personajeId . "
                             SET fuerza = '" . $caracteristicasPersonaje['personaje']['fuerza'] . "',
@@ -178,6 +177,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             break;
         case 2:
+            error_log("ENTRÓ EN EL CASE 2");
             $updateCaballero = "UPDATE personaje pe JOIN partida pa ON pe.id_personaje = " . $personajeId . "
                             JOIN caballero c ON c.id_personaje = " . $personajeId . "
                             SET fuerza = '" . $caracteristicasPersonaje['personaje']['fuerza'] . "',
@@ -205,8 +205,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             JOIN item_guardado ig ON c.id_personaje = ig.personaje_id
                             JOIN item i ON ig.item_id = i.id_item
                             SET desgaste = " . $caracteristicasPersonaje['inventarioPersonaje']['arma']['espada'] . "
-                            WHERE pa.id_partida = " . $_SESSION['partida'] . " AND i.nombre = 'espada';";
-            //error_log($updateEspada);
+                            WHERE pa.id_partida = " . $_SESSION['partida'] . " AND i.nombre = 'espada'";
+            error_log($updateEspada);
             $resultado = $bd->query($updateEspada);
             if ($bd->errno) {
                 $errorUpdateConsulta = true;
@@ -290,6 +290,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             break;
         case 3:
+            error_log("ENTRÓ EN EL CASE 3");
             $updateHechicero = "UPDATE personaje pe JOIN partida pa ON pe.id_personaje = " . $personajeId . "
                             JOIN hechicero h ON h.id_personaje = " . $personajeId . "
                             SET fuerza = '" . $caracteristicasPersonaje['personaje']['fuerza'] . "',
@@ -397,6 +398,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             break;
         case 0:
+            error_log("ENTRÓ EN EL CASE 0");
             $updateDruida = "UPDATE personaje pe JOIN partida pa ON pe.id_personaje = " . $personajeId . "
                             JOIN druida d ON d.id_personaje = " . $personajeId . "
                             SET fuerza = '" . $caracteristicasPersonaje['personaje']['fuerza'] . "',
