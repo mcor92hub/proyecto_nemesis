@@ -63,10 +63,10 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                 </li>
             </ul>
             <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+                <div class="tab-pane fade show active slide-in-right" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
                     <a href="elegirPersonaje.php"><img src="imgs/combate.png" alt=""></a>
                 </div>
-                <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+                <div class="tab-pane fade slide-in-right" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
                     <h3>Mis personajes</h3>
                     <?php
                     $imgs = ["imgs/arqueroDerecha.gif", "imgs/caballeroDerecha.gif", "imgs/hechiceroDerecha.gif", "imgs/druidaDerecha.gif"];
@@ -83,7 +83,7 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                     ?>
 
                 </div>
-                <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
+                <div class="tab-pane fade slide-in-right" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
                     <h3>
                         <?php
                         echo $_SESSION['nick'];
