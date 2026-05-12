@@ -54,7 +54,7 @@ if (isset($_GET['personajeElegido'])) {
                 AND ultima_actividad_usuario1 >= CURRENT_TIMESTAMP - INTERVAL 30 SECOND;";
             $bd->query($updatePartida);
             $_SESSION['partida'] = $idPartidaEspera['id_partida'];
-            $_SESSION['usuarioPartida'] = 2;
+            $_SESSION['idPersonajeElegido'] = 2;
             header("Location: combate.php");
         }
     }
