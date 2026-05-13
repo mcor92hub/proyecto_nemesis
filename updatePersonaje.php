@@ -4,8 +4,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     require_once "bd.php";
     $bd->autocommit(false);
     $json = file_get_contents('php://input');
-    // TRABAJO PARA MÁXIMO
-    // error_log("JSON recibido: " . $json);
     $caracteristicasPersonaje = json_decode($json, true);
     
     // Obtener IDs de los personajes
@@ -31,7 +29,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $personajeId = "";
     
     if ($fila = $resultadoTurno->fetch_assoc()) {
-        //AQUÍ ESTA TODO EL PUTO PROBLEMA, HAY QUE PONERLE 4 OPCIONES DE MANERA QUE ENTRE EN UNA U OTRA DEPENDIENDO DE LA INFORMACIÓN QUE MANDAMOS, HAY QUE PONERLE UN $_SESSION DE PERSONAJE PARA COMPROBAR Y VER SI ESTAMOS MANDANDO LA INFO QUE ES
         error_log("turno en la consulta: " . $fila['turno']);
         if ($fila['turno'] == 1 && $fila['personaje1_id'] == $idPersonaje1[0]) {
             $personajeId = "pa.personaje1_id";
@@ -50,21 +47,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $numLista = 0;
             error_log(print_r("turno 2, usuario1", true));
         }
-        // error_log("personajeId: " . $personajeId. "variable de sesion".$_SESSION['usuarioPartida']);
 
         array_push($lista, $fila['personaje1_id']);
         array_push($lista, $fila['personaje2_id']);
     }
     error_log("lista: ".print_r($lista[$numLista], true));
-    
-    // error_log("arco: " . print_r($caracteristicasPersonaje['inventarioPersonaje']['arma']['arco'], true));
-    // error_log("espada: " . print_r($caracteristicasPersonaje['inventarioPersonaje']['arma']['espada'], true));
+
 
     error_log("valor del switch: " . print_r($lista[$numLista] % 4, true));
     error_log("JSON recibido: " . print_r($json, true));
     switch (intval($lista[$numLista]) % 4) {
         case 1:
-            error_log("ENTRÓ EN EL CASE 1");
             $updateArquero = "UPDATE personaje pe JOIN partida pa ON pe.id_personaje = " . $personajeId . "
                             JOIN arquero a ON a.id_personaje = " . $personajeId . "
                             SET fuerza = '" . $caracteristicasPersonaje['personaje']['fuerza'] . "',
@@ -81,7 +74,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             heridoGrave = '" . $caracteristicasPersonaje['estadosPersonaje']['heridoGrave'] . "',
                             confundido = '" . $caracteristicasPersonaje['estadosPersonaje']['confundido'] . "'
                             WHERE pa.id_partida = " . $_SESSION['partida'] . "";
-            //error_log($updateArquero);
             $resultado = $bd->query($updateArquero);
             if ($bd->errno) {
                 $errorUpdateConsulta = true;
@@ -93,7 +85,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             JOIN item i ON ig.item_id = i.id_item
                             SET desgaste = " . $caracteristicasPersonaje['inventarioPersonaje']['arma']['arco'] . "
                             WHERE pa.id_partida = " . $_SESSION['partida'] . " AND i.nombre = 'arco';";
-            //error_log($updateArco);
             $resultado = $bd->query($updateArco);
             if ($bd->errno) {
                 $errorUpdateConsulta = true;
@@ -136,7 +127,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             // UPDATES CURACION
             $item_nombre = "curacionSimple";
-            // El JSON me devuelve los mapas como strings
             $cantidad = (int) $caracteristicasPersonaje['inventarioPersonaje']['curacion']['pocion'];
             $stmt->bind_param("is", $cantidad, $item_nombre);
             //esta linea ejecuta el update preparado y si esta mal salta error
@@ -188,7 +178,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             break;
         case 2:
-            error_log("ENTRÓ EN EL CASE 2");
             $updateCaballero = "UPDATE personaje pe JOIN partida pa ON pe.id_personaje = " . $personajeId . "
                             JOIN caballero c ON c.id_personaje = " . $personajeId . "
                             SET fuerza = '" . $caracteristicasPersonaje['personaje']['fuerza'] . "',
@@ -217,7 +206,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             JOIN item i ON ig.item_id = i.id_item
                             SET desgaste = " . $caracteristicasPersonaje['inventarioPersonaje']['arma']['espada'] . "
                             WHERE pa.id_partida = " . $_SESSION['partida'] . " AND i.nombre = 'espada'";
-            error_log($updateEspada);
             $resultado = $bd->query($updateEspada);
             if ($bd->errno) {
                 $errorUpdateConsulta = true;
@@ -249,7 +237,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             // UPDATES CURACION
             $item_nombre = "curacionSimple";
-            // El JSON me devuelve los mapas como strings
             $cantidad = (int) $caracteristicasPersonaje['inventarioPersonaje']['curacion']['pocion'];
             $stmt->bind_param("is", $cantidad, $item_nombre);
             //esta linea ejecuta el update preparado y si esta mal salta error
@@ -273,7 +260,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $errorUpdateConsulta = true;
                 $descripcionError = "error en el update preparado de curacionMax";
             }
-
             //UPDATES ESTAMINA 
             $item_nombre = "restaurarEstamina";
             $cantidad = (int) $caracteristicasPersonaje['inventarioPersonaje']['restaurarEstamina']['pocionEstamina'];
@@ -301,7 +287,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             break;
         case 3:
-            error_log("ENTRÓ EN EL CASE 3");
             $updateHechicero = "UPDATE personaje pe JOIN partida pa ON pe.id_personaje = " . $personajeId . "
                             JOIN hechicero h ON h.id_personaje = " . $personajeId . "
                             SET fuerza = '" . $caracteristicasPersonaje['personaje']['fuerza'] . "',
@@ -324,7 +309,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             pinchos = '" . $caracteristicasPersonaje['auraPersonaje']['pinchos'] . "',
                             sombra = '" . $caracteristicasPersonaje['auraPersonaje']['sombra'] . "'
                             WHERE pa.id_partida = " . $_SESSION['partida'] . "";
-            error_log($updateHechicero);
             $resultado = $bd->query($updateHechicero);
             if ($bd->errno) {
                 $errorUpdateConsulta = true;
@@ -409,7 +393,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             break;
         case 0:
-            error_log("ENTRÓ EN EL CASE 0");
             $updateDruida = "UPDATE personaje pe JOIN partida pa ON pe.id_personaje = " . $personajeId . "
                             JOIN druida d ON d.id_personaje = " . $personajeId . "
                             SET fuerza = '" . $caracteristicasPersonaje['personaje']['fuerza'] . "',
@@ -528,6 +511,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         $bd->commit();
         echo json_encode(['success' => true]);
-        // header("location: combate.php");
     }
 }

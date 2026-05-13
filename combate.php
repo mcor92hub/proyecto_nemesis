@@ -5,7 +5,7 @@ header("Expires: 0");
 header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
 session_start();
 require_once "bd.php";
-require_once "updatePersonaje.php";
+//require_once "updatePersonaje.php";
 
 $consultaTurno = "SELECT * FROM partida WHERE id_partida = " . $_SESSION['partida'] . "";
 $resultadoTurno = $bd->query($consultaTurno);
@@ -50,7 +50,7 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
     <script>
         let turno = <?php echo json_encode($turno, JSON_UNESCAPED_UNICODE) ?>;
 
-
+        
         let claseBotonesPersonaje1 = document.getElementsByClassName("botonesPersonaje1");
         let claseBotonesPersonaje2 = document.getElementsByClassName("botonesPersonaje2");
 
