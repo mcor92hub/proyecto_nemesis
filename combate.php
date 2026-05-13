@@ -17,8 +17,6 @@ while ($fila = $resultadoTurno->fetch_assoc()) {
     array_push($lista, $fila['personaje2_id']);
 }
 
-// var_dump($_SESSION['usuarioPartida']);
-
 // NO SE QUE HACE LA SIGUIENTE LINEA ES PARA NO TENER PROBLEMAS DE CACHÉ
 $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
 ?>
