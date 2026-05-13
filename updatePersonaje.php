@@ -2,12 +2,22 @@
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     session_start();
     require_once "bd.php";
-    require_once "obtenerIdPersonaje.php";
     $bd->autocommit(false);
     $json = file_get_contents('php://input');
     // TRABAJO PARA MÁXIMO
     // error_log("JSON recibido: " . $json);
     $caracteristicasPersonaje = json_decode($json, true);
+    
+    // Obtener IDs de los personajes
+    $sentencia = "SELECT personaje1_id, personaje2_id FROM partida WHERE id_partida = " . $_SESSION['partida'] . ";";
+    $resultado = $bd->query($sentencia);
+    
+    $idPersonaje1 = [];
+    $idPersonaje2 = [];
+    while ($ids = $resultado->fetch_assoc()) {
+        array_push($idPersonaje1, $ids['personaje1_id']);
+        array_push($idPersonaje2, $ids['personaje2_id']);
+    }
 
     $errorUpdateConsulta = false;
     $descripcionError = "";
@@ -520,9 +530,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo json_encode(['success' => true]);
         // header("location: combate.php");
     }
-
-
-
-    // NO SE QUE HACE LA SIGUIENTE LINEA ES PARA NO TENER PROBLEMAS DE CACHÉ
-    $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
 }

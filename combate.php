@@ -5,8 +5,7 @@ header("Expires: 0");
 header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
 session_start();
 require_once "bd.php";
-require_once "updatePersonaje1.php";
-require_once "updatePersonaje2.php";
+require_once "updatePersonaje.php";
 
 $consultaTurno = "SELECT * FROM partida WHERE id_partida = " . $_SESSION['partida'] . "";
 $resultadoTurno = $bd->query($consultaTurno);
@@ -50,15 +49,7 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
 
     <script>
         let turno = <?php echo json_encode($turno, JSON_UNESCAPED_UNICODE) ?>;
-        console.log(turno);
 
-        // setInterval(() => {
-        //     if (turno == 1) {
-        //         fetchUpdate(personaje2);
-        //     } else {
-        //         fetchUpdate(personaje1);
-        //     }
-        // }, 5000);
 
         let claseBotonesPersonaje1 = document.getElementsByClassName("botonesPersonaje1");
         let claseBotonesPersonaje2 = document.getElementsByClassName("botonesPersonaje2");
@@ -548,28 +539,6 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
 
 
                         });
-
-
-
-                        // setInterval(()=>{
-                        //     fetch("updatePersonaje1.php", {
-                        //         method: "POST",
-                        //         credentials: "include",
-                        //         headers: {
-                        //             "Content-Type": "application/json"
-                        //         },
-                        //         body: JSON.stringify(
-                        //             {personaje1, inventarioPersonaje1, estadosPersonaje1}
-                        //         )
-                        //     })
-                        //     .then(response => response.text())
-                        //     .then(data => location.reload())
-                        //     .catch(error => {
-                        //         console.error("Error en fetch:", error);
-                        //     });
-                        // }, 5000);
-
-
 
                         setInterval(function() {
                             if (personaje1.estado.get("confundido") == true) {
@@ -1102,7 +1071,8 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                             if (evento instanceof HTMLButtonElement) {
                                 fetchUpdate(personaje2);
                                 fetchTurno(turno);
-                                fetchUpdate(personaje1);        
+                                fetchUpdate(personaje1);     
+                                
                                 event.stopPropagation(); // Detener la propagación del evento para evitar conflictos con otros botones
                             }
                         });

@@ -21,7 +21,7 @@ function fetchUpdate(personaje) {
             console.log(JSON.stringify(inventarioPersonaje));
             console.log(JSON.stringify(estadosPersonaje));
             console.log(JSON.stringify(personaje));
-            fetch("updatePersonaje1.php", {
+            fetch("updatePersonaje.php", {
                 method: "POST",
                 credentials: "include",
                 headers: {
@@ -33,26 +33,25 @@ function fetchUpdate(personaje) {
                     estadosPersonaje
                 })
             })
-                // .then(response => response.json())
-                // .then(data => {
-                //     if (data.success) {
-                //         //window.location.href = "combate.php";
-                //         console.log("fetch personaje1 actualizado correctamente");
-                //     }
-                // });
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        window.location.href = "combate.php";
+                    }
+                });
             // .then(response => response.text())
             // .then(data => location.reload(), console.log("recargo"))
             // .catch(error => {
             //     console.error("Error en fetch:", error);
             // });
-            break;
+            // break;
         case (personaje instanceof Caballero):
-inventarioPersonaje = mapaParaObjeto(personaje.inventario);
+            inventarioPersonaje = mapaParaObjeto(personaje.inventario);
             estadosPersonaje = mapaParaObjeto(personaje.estado);
             console.log(JSON.stringify(inventarioPersonaje));
             console.log(JSON.stringify(estadosPersonaje));
             console.log(JSON.stringify(personaje));
-            fetch("updatePersonaje1.php", {
+            fetch("updatePersonaje.php", {
                 method: "POST",
                 credentials: "include",
                 headers: {
@@ -64,12 +63,12 @@ inventarioPersonaje = mapaParaObjeto(personaje.inventario);
                     estadosPersonaje
                 })
             })
-                // .then(response => response.json())
-                // .then(data => {
-                //     if (data.success) {
-                //         window.location.href = "combate.php";
-                //     }
-                // });
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = "combate.php";
+                }
+            });
             // .then(response => response.text())
             // .then(data => location.reload(), console.log("recargo"))
             // .catch(error => {
@@ -84,7 +83,7 @@ inventarioPersonaje = mapaParaObjeto(personaje.inventario);
             console.log(JSON.stringify(estadosPersonaje));
             console.log(JSON.stringify(auraPersonaje));
             console.log(JSON.stringify(personaje));
-            fetch("updatePersonaje1.php", {
+            fetch("updatePersonaje.php", {
                 method: "POST",
                 credentials: "include",
                 headers: {
@@ -97,13 +96,13 @@ inventarioPersonaje = mapaParaObjeto(personaje.inventario);
                     auraPersonaje
                 })
             })
-                // .then(response => response.json())
-                // .then(data => {
-                //     if (data.success) {
-                //         //window.location.href = "combate.php";
-                //         console.log("fetch personaje1 actualizado correctamente");
-                //     }
-                // });
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = "combate.php";
+                    console.log("fetch personaje1 actualizado correctamente");
+                }
+            });
             // .then(response => response.text())
             // .then(data => location.reload(), console.log("recargo"))
             // .catch(error => {
@@ -118,7 +117,7 @@ inventarioPersonaje = mapaParaObjeto(personaje.inventario);
             console.log(JSON.stringify(estadosPersonaje));
             console.log(JSON.stringify(transformacionesPersonaje));
             console.log(JSON.stringify(personaje));
-            fetch("updatePersonaje1.php", {
+            fetch("updatePersonaje.php", {
                 method: "POST",
                 credentials: "include",
                 headers: {
@@ -131,13 +130,13 @@ inventarioPersonaje = mapaParaObjeto(personaje.inventario);
                     transformacionesPersonaje
                 })
             })
-                // .then(response => response.json())
-                // .then(data => {
-                //     if (data.success) {
-                //         //window.location.href = "combate.php";
-                //         console.log("fetch personaje1 actualizado correctamente");
-                //     }
-                // });
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = "combate.php";
+                    console.log("fetch personaje1 actualizado correctamente");
+                }
+            });
             // .then(response => response.text())
             // .then(data => location.reload(), console.log("recargo"))
             // .catch(error => {
@@ -156,14 +155,14 @@ function fetchTurno(turno) {
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({turno})
+        body: JSON.stringify({ turno })
     })
     //alert("fetch turno "+ turno);
     //alert("fetch turno", turno);
-        // .then(response => response.json())
-        // .then(data => {
-        //     if (data.success) {
-        //         window.location.href = "combate.php";
-        //     }
-        // });
+    // .then(response => response.json())
+    // .then(data => {
+    //     if (data.success) {
+    //         window.location.href = "combate.php";
+    //     }
+    // });
 }
