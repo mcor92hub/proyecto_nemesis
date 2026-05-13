@@ -2,6 +2,7 @@
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     session_start();
     require_once "bd.php";
+    require_once "obtenerIdPersonaje.php";
     $bd->autocommit(false);
     $json = file_get_contents('php://input');
     // TRABAJO PARA MÁXIMO
@@ -22,21 +23,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($fila = $resultadoTurno->fetch_assoc()) {
         //AQUÍ ESTA TODO EL PUTO PROBLEMA, HAY QUE PONERLE 4 OPCIONES DE MANERA QUE ENTRE EN UNA U OTRA DEPENDIENDO DE LA INFORMACIÓN QUE MANDAMOS, HAY QUE PONERLE UN $_SESSION DE PERSONAJE PARA COMPROBAR Y VER SI ESTAMOS MANDANDO LA INFO QUE ES
         error_log("turno en la consulta: " . $fila['turno']);
-        if ($fila['turno'] == 1 && $fila['usuario1_id'] == $_SESSION['usuarioPartida']) {
+        if ($fila['turno'] == 1 && $fila['personaje1_id'] == $idPersonaje1[0]) {
             $personajeId = "pa.personaje1_id";
             $numLista = 0;
             error_log(print_r("turno 1, usuario1", true));
-        } elseif ($fila['turno'] == 1 && $fila['usuario2_id'] == $_SESSION['usuarioPartida']) {
+        } elseif ($fila['turno'] == 1 && $fila['personaje2_id'] == $idPersonaje2[0]) {
             $personajeId = "pa.personaje1_id";
-            $numLista = 0;
+            $numLista = 1;
             error_log(print_r("turno 1, usuario2", true));
-        } elseif ($fila['turno'] == 2 && $fila['usuario2_id'] == $_SESSION['usuarioPartida']) {
+        } elseif ($fila['turno'] == 2 && $fila['personaje2_id'] == $idPersonaje2[0]) {
             $personajeId = "pa.personaje2_id";
             $numLista = 1;
             error_log(print_r("turno 2, usuario2", true));
-        }elseif ($fila['turno'] == 2 && $fila['usuario1_id'] == $_SESSION['usuarioPartida']) {
+        }elseif ($fila['turno'] == 2 && $fila['personaje1_id'] == $idPersonaje1[0]) {
             $personajeId = "pa.personaje2_id";
-            $numLista = 1;
+            $numLista = 0;
             error_log(print_r("turno 2, usuario1", true));
         }
         // error_log("personajeId: " . $personajeId. "variable de sesion".$_SESSION['usuarioPartida']);
