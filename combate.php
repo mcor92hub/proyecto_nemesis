@@ -50,7 +50,9 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
     <script>
         let turno = <?php echo json_encode($turno, JSON_UNESCAPED_UNICODE) ?>;
 
-        
+        //USAR UN SETINTERVAL PARA FECHEAR UNA PAGINA NUEVA QUE SOLO CONSULTE EL TURNO EN EL QUE ESTAMOS Y LO DEVUELVA Y MIRANDO EL USUARIO1_ID Y EL USUARIO2_ID SEGÚN EL TURNO QUE SEA RECARGA LA PÁGINA
+
+
         let claseBotonesPersonaje1 = document.getElementsByClassName("botonesPersonaje1");
         let claseBotonesPersonaje2 = document.getElementsByClassName("botonesPersonaje2");
 
