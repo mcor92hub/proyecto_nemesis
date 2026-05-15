@@ -15,10 +15,12 @@ while ($fila = $resultadoTurno->fetch_assoc()) {
     array_push($lista, $fila['personaje1_id']);
     array_push($lista, $fila['personaje2_id']);
 }
-if ($_SESSION['usuario1']) {
+$usuario1 = null;
+$usuario2 = null;
+if (isset($_SESSION['usuario1'])) {
     $usuario1 = true;
-}elseif ($_SESSION['usuario2']) {
-    $usuario2=true;
+} elseif (isset($_SESSION['usuario2'])) {
+    $usuario2 = true;
 }
 
 // NO SE QUE HACE LA SIGUIENTE LINEA ES PARA NO TENER PROBLEMAS DE CACHÉ
@@ -53,24 +55,40 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
     <script src="JS/funciones.js?v=<?php echo time(); ?>"></script>
 
     <script>
-        let usuario1 = <?php echo json_decode($usuario1, JSON_UNESCAPED_UNICODE) ?>;
+        let turno = <?php echo json_encode($turno ?? null, JSON_UNESCAPED_UNICODE) ?>;
+        let usuario1 = <?php echo json_encode($usuario1 ?? null, JSON_UNESCAPED_UNICODE) ?>;
+        let usuario2 = <?php echo json_encode($usuario2 ?? null, JSON_UNESCAPED_UNICODE) ?>;
         console.log(usuario1);
-
+        console.log(usuario2);
         //USAR UN SETINTERVAL PARA FECHEAR UNA PAGINA NUEVA QUE SOLO CONSULTE EL TURNO EN EL QUE ESTAMOS Y LO DEVUELVA Y MIRANDO EL USUARIO1_ID Y EL USUARIO2_ID SEGÚN EL TURNO QUE SEA RECARGA LA PÁGINA
         setInterval(() => {
-            fetchConsultaTurno();
-        }, 1000);
+            fetchConsultaTurno().then(turno => {
+                if (turno == "1" && usuario1 === true) {
+                    window.location.reload();
+                }
+                if (turno == "2" && usuario2 === true) {
+                    window.location.reload();
+                }
+            });
+
+        }, 3000);
 
 
         let claseBotonesPersonaje1 = document.getElementsByClassName("botonesPersonaje1");
         let claseBotonesPersonaje2 = document.getElementsByClassName("botonesPersonaje2");
 
-        // ARREGLAR ESTO Y SUBIRLO PARRIBA DONDE LOS FETCHS
+
+        //ARREGLAR ESTO Y SUBIRLO PARRIBA DONDE LOS FETCHS
         setInterval(function() {
-            for (const element of claseBotonesPersonaje1) {
-                element.addEventListener("click", function() {
-                    // turno = 2;
-                });
+            if (usuario1 === true) {
+                for (const element of claseBotonesPersonaje2) {
+                    element.setAttribute("disabled", "");
+                }
+            }
+            if (usuario2 === true) {
+                for (const element of claseBotonesPersonaje1) {
+                    element.setAttribute("disabled", "");
+                }
             }
             if (turno == 2) {
                 for (const element of claseBotonesPersonaje1) {
@@ -80,11 +98,7 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                     element.removeAttribute("disabled");
                 }
             }
-            for (const element of claseBotonesPersonaje2) {
-                element.addEventListener("click", function() {
-                    // turno = 1;
-                });
-            }
+
             if (turno == 1) {
                 for (const element of claseBotonesPersonaje2) {
                     element.setAttribute("disabled", "");
@@ -544,7 +558,6 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                                 fetchUpdate(personaje1);
                                 fetchTurno(turno);
                                 fetchUpdate(personaje2);
-
                                 event.stopPropagation(); // Detener la propagación del evento para evitar conflictos con otros botones
                             }
 

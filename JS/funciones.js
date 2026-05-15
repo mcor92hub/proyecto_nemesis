@@ -39,12 +39,12 @@ function fetchUpdate(personaje) {
                         window.location.href = "combate.php";
                     }
                 });
-            // .then(response => response.text())
-            // .then(data => location.reload(), console.log("recargo"))
-            // .catch(error => {
-            //     console.error("Error en fetch:", error);
-            // });
-            // break;
+        // .then(response => response.text())
+        // .then(data => location.reload(), console.log("recargo"))
+        // .catch(error => {
+        //     console.error("Error en fetch:", error);
+        // });
+        // break;
         case (personaje instanceof Caballero):
             inventarioPersonaje = mapaParaObjeto(personaje.inventario);
             estadosPersonaje = mapaParaObjeto(personaje.estado);
@@ -63,12 +63,12 @@ function fetchUpdate(personaje) {
                     estadosPersonaje
                 })
             })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    window.location.href = "combate.php";
-                }
-            });
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        window.location.href = "combate.php";
+                    }
+                });
             // .then(response => response.text())
             // .then(data => location.reload(), console.log("recargo"))
             // .catch(error => {
@@ -96,13 +96,13 @@ function fetchUpdate(personaje) {
                     auraPersonaje
                 })
             })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    window.location.href = "combate.php";
-                    console.log("fetch personaje1 actualizado correctamente");
-                }
-            });
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        window.location.href = "combate.php";
+                        console.log("fetch personaje1 actualizado correctamente");
+                    }
+                });
             // .then(response => response.text())
             // .then(data => location.reload(), console.log("recargo"))
             // .catch(error => {
@@ -130,13 +130,13 @@ function fetchUpdate(personaje) {
                     transformacionesPersonaje
                 })
             })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    window.location.href = "combate.php";
-                    console.log("fetch personaje1 actualizado correctamente");
-                }
-            });
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        window.location.href = "combate.php";
+                        console.log("fetch personaje1 actualizado correctamente");
+                    }
+                });
             // .then(response => response.text())
             // .then(data => location.reload(), console.log("recargo"))
             // .catch(error => {
@@ -168,18 +168,18 @@ function fetchTurno(turno) {
 }
 
 function fetchConsultaTurno() {
-    fetch("consultaTurno.php")
-    .then(response => {
-        if (!response.ok) {
-            throw new Error("Error en el response");
-        }
-        return response.json();
-    })
-    .then(data => {
-        if (data.success) {
-            return data.turno;
-        } else {
-            console.log("No se encontró la partida");
-        }
-    })
+    return fetch("consultaTurno.php")
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Error en el response");
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                return data.turno;
+            } else {
+                console.log("No se encontró la partida");
+            }
+        });
 }
