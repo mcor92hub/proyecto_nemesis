@@ -15,6 +15,11 @@ while ($fila = $resultadoTurno->fetch_assoc()) {
     array_push($lista, $fila['personaje1_id']);
     array_push($lista, $fila['personaje2_id']);
 }
+if ($_SESSION['usuario1']) {
+    $usuario1 = true;
+}elseif ($_SESSION['usuario2']) {
+    $usuario2=true;
+}
 
 // NO SE QUE HACE LA SIGUIENTE LINEA ES PARA NO TENER PROBLEMAS DE CACHÉ
 $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
@@ -48,9 +53,13 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
     <script src="JS/funciones.js?v=<?php echo time(); ?>"></script>
 
     <script>
-        let turno = <?php echo json_encode($turno, JSON_UNESCAPED_UNICODE) ?>;
+        let usuario1 = <?php echo json_decode($usuario1, JSON_UNESCAPED_UNICODE) ?>;
+        console.log(usuario1);
 
         //USAR UN SETINTERVAL PARA FECHEAR UNA PAGINA NUEVA QUE SOLO CONSULTE EL TURNO EN EL QUE ESTAMOS Y LO DEVUELVA Y MIRANDO EL USUARIO1_ID Y EL USUARIO2_ID SEGÚN EL TURNO QUE SEA RECARGA LA PÁGINA
+        setInterval(() => {
+            fetchConsultaTurno();
+        }, 1000);
 
 
         let claseBotonesPersonaje1 = document.getElementsByClassName("botonesPersonaje1");
@@ -535,7 +544,7 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                                 fetchUpdate(personaje1);
                                 fetchTurno(turno);
                                 fetchUpdate(personaje2);
-                                
+
                                 event.stopPropagation(); // Detener la propagación del evento para evitar conflictos con otros botones
                             }
 
@@ -1073,8 +1082,8 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                             if (evento instanceof HTMLButtonElement) {
                                 fetchUpdate(personaje2);
                                 fetchTurno(turno);
-                                fetchUpdate(personaje1);     
-                                
+                                fetchUpdate(personaje1);
+
                                 event.stopPropagation(); // Detener la propagación del evento para evitar conflictos con otros botones
                             }
                         });

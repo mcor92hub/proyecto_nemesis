@@ -166,3 +166,20 @@ function fetchTurno(turno) {
     //     }
     // });
 }
+
+function fetchConsultaTurno() {
+    fetch("consultaTurno.php")
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("Error en el response");
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            return data.turno;
+        } else {
+            console.log("No se encontró la partida");
+        }
+    })
+}

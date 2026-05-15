@@ -25,19 +25,20 @@ if (isset($_GET['personajeElegido'])) {
             LIMIT 1";
         $resultadoConsultaPartida2 = $bd->query($consultaPartida2);
         if ($resultadoConsultaPartida2->num_rows == 0) {
-            $numero = random_int(1,2);
-            $insertPartidaNueva = "INSERT INTO partida (usuario1_id, personaje1_id, estado, turno, ultima_actividad_usuario1) VALUES(" . $_SESSION['id_usuario'] . "," . $_GET['personajeElegido'] . " ,'en proceso', ".$numero.",CURRENT_TIMESTAMP)";
+            $numero = random_int(1, 2);
+            $insertPartidaNueva = "INSERT INTO partida (usuario1_id, personaje1_id, estado, turno, ultima_actividad_usuario1) VALUES(" . $_SESSION['id_usuario'] . "," . $_GET['personajeElegido'] . " ,'en proceso', " . $numero . ",CURRENT_TIMESTAMP)";
             $resultadoInsertPartidaNueva = $bd->query($insertPartidaNueva);
             $_SESSION['partida'] = $bd->insert_id;
+            $_SESSION['usuario1'] = true;
         } else {
             var_dump("borrar");
-            $numero = random_int(1,2);
+            $numero = random_int(1, 2);
             $borraPartidas = "DELETE FROM partida WHERE usuario1_id=" . $_SESSION['id_usuario'] . "";
             $bd->query($borraPartidas);
-            $insertPartidaNueva = "INSERT INTO partida (usuario1_id, personaje1_id, estado, turno, ultima_actividad_usuario1) VALUES(" . $_SESSION['id_usuario'] . "," . $_GET['personajeElegido'] . " ,'en proceso', ".$numero.",CURRENT_TIMESTAMP)";
+            $insertPartidaNueva = "INSERT INTO partida (usuario1_id, personaje1_id, estado, turno, ultima_actividad_usuario1) VALUES(" . $_SESSION['id_usuario'] . "," . $_GET['personajeElegido'] . " ,'en proceso', " . $numero . ",CURRENT_TIMESTAMP)";
             $resultadoInsertPartidaNueva = $bd->query($insertPartidaNueva);
             $_SESSION['partida'] = $bd->insert_id;
-            $_SESSION['usuarioPartida'] = 1;
+            $_SESSION['usuario1'] = true;
         }
     } else {
         $consultaIdPartida = "SELECT id_partida FROM partida WHERE estado = 'en proceso' LIMIT 1";
@@ -54,14 +55,13 @@ if (isset($_GET['personajeElegido'])) {
                 AND ultima_actividad_usuario1 >= CURRENT_TIMESTAMP - INTERVAL 30 SECOND;";
             $bd->query($updatePartida);
             $_SESSION['partida'] = $idPartidaEspera['id_partida'];
-            $_SESSION['idPersonajeElegido'] = 2;
+            $_SESSION['usuario2'] = true;
             header("Location: combate.php");
         }
     }
 } else {
     echo "falla el $_GET";
 }
-
 ?>
 
 <!DOCTYPE html>
