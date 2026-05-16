@@ -1,8 +1,6 @@
 <?php
-// if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 session_start();
 require_once "bd.php";
-// $bd->autocommit(false);
 $json = file_get_contents('php://input');
 // TRABAJO PARA MÁXIMO
 error_log("Turno: " . $json);
@@ -18,4 +16,3 @@ if ($turno == 1) {
     $bd->query($updatePartida);
     echo "update";
 }
-//}

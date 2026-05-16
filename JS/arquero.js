@@ -77,10 +77,6 @@ class Arquero extends Personaje {
             } else {
                 objetosArma.set("flechas", cantidad - 1);
             }
-            if (objetivo.vidaActual <= 0) {
-                this.puntosExperiencia += objetivo.vidaMaxima;
-                this.subirNivel();
-            }
         } else {
             if (!objetosArma.has("flechas")) {
                 console.log("No tienes flechas");

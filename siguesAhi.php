@@ -1,6 +1,6 @@
 <?php
-// Con esta página actualizamos la columna "ultima_actividad_usuario1" por si en algún momento se desconectara de la partida
 session_start();
+// Con esta página actualizamos la columna "ultima_actividad_usuario1" por si en algún momento se desconectara de la partida
 $bd = new mysqli("localhost", "root", "", "proyecto_nemesis");
 
 $consulta = "UPDATE partida 

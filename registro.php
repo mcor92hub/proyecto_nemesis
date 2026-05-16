@@ -1,8 +1,8 @@
 <?php
+session_start();
 header("Cache-Control: no-cache, no-store, must-revalidate");
 header("Pragma: no-cache");
 header("Expires: 0");
-session_start();
 require_once "bd.php";
 if (isset($_POST['email'], $_POST['nick'], $_POST['passRegistro'], $_POST['passConfirmacion'], $_POST['arquero'], $_POST['caballero'], $_POST['hechicero'], $_POST['druida'])) {
     try {

@@ -1,6 +1,9 @@
-<!-- PHP DE INICIO DE SESIÓN -->
 <?php
 session_start();
+?>
+
+<!-- PHP DE INICIO DE SESIÓN -->
+<?php
 require_once "bd.php";
 if (isset($_POST['usuario'], $_POST['pass'])) {
     $consultaUsuario = "SELECT * FROM usuario WHERE nick = '" . $_POST['usuario'] . "'";

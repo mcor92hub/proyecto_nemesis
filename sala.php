@@ -1,10 +1,9 @@
-<!-- Cuando encuentre usuario mostrar o redirigir a otra página donde seleccione al personaje con el que jugar -->
-
 <?php
+session_start();
+// Cuando encuentre usuario mostrar o redirigir a otra página donde seleccione al personaje con el que jugar
 header("Cache-Control: no-cache, no-store, must-revalidate");
 header("Pragma: no-cache");
 header("Expires: 0");
-session_start();
 require_once "bd.php";
 if (isset($_GET['personajeElegido'])) {
     $consultaPartida =

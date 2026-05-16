@@ -1,11 +1,10 @@
 <?php
+session_start();
 header("Cache-Control: no-cache, no-store, must-revalidate");
 header("Pragma: no-cache");
 header("Expires: 0");
 header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
-session_start();
 require_once "bd.php";
-//require_once "updatePersonaje.php";
 
 $consultaTurno = "SELECT * FROM partida WHERE id_partida = " . $_SESSION['partida'] . "";
 $resultadoTurno = $bd->query($consultaTurno);
@@ -43,7 +42,6 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
 
 <body>
     <!-- PARA EVITAR PROBLEMAS DE CACHÉ está el echo time() -->
-
     <script src="JS/objetos.js?v=<?php echo time(); ?>"></script>
     <script src="JS/personaje.js?v=<?php echo time(); ?>"></script>
     <script src="JS/guerrero.js?v=<?php echo time(); ?>"></script>
@@ -53,6 +51,7 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
     <script src="JS/hechicero.js?v=<?php echo time(); ?>"></script>
     <script src="JS/druida.js?v=<?php echo time(); ?>"></script>
     <script src="JS/funciones.js?v=<?php echo time(); ?>"></script>
+    <script src="JS/constructores.js?v=<?php echo time(); ?>"></script>
 
     <script>
         let turno = <?php echo json_encode($turno ?? null, JSON_UNESCAPED_UNICODE) ?>;
@@ -60,51 +59,40 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
         let usuario2 = <?php echo json_encode($usuario2 ?? null, JSON_UNESCAPED_UNICODE) ?>;
         console.log(usuario1);
         console.log(usuario2);
-        //USAR UN SETINTERVAL PARA FECHEAR UNA PAGINA NUEVA QUE SOLO CONSULTE EL TURNO EN EL QUE ESTAMOS Y LO DEVUELVA Y MIRANDO EL USUARIO1_ID Y EL USUARIO2_ID SEGÚN EL TURNO QUE SEA RECARGA LA PÁGINA
+        console.log(turno);
+
         setInterval(() => {
-            fetchConsultaTurno().then(turno => {
-                if (turno == "1" && usuario1 === true) {
-                    window.location.reload();
-                }
-                if (turno == "2" && usuario2 === true) {
+            fetchConsultaTurno().then(turnoConsultado => {
+                // Al cambiar el turno cuando se pulsa un botón entrará en el if y recargará la página con los valores de la BBDD correctos
+                if (turno != turnoConsultado) {
                     window.location.reload();
                 }
             });
-
-        }, 3000);
-
-
+        }, 1000);
         let claseBotonesPersonaje1 = document.getElementsByClassName("botonesPersonaje1");
         let claseBotonesPersonaje2 = document.getElementsByClassName("botonesPersonaje2");
 
-
-        //ARREGLAR ESTO Y SUBIRLO PARRIBA DONDE LOS FETCHS
+        // Comprobamos que usuario somos en que turno estamos para habilitar o deshabilitar los botones
         setInterval(function() {
-            if (usuario1 === true) {
-                for (const element of claseBotonesPersonaje2) {
-                    element.setAttribute("disabled", "");
+            if (usuario1 == true) {
+                if (turno == 1) {
+                    for (const element of claseBotonesPersonaje1) {
+                        element.removeAttribute("disabled");
+                    }
+                } else if (turno == 2) {
+                    for (const element of claseBotonesPersonaje1) {
+                        element.setAttribute("disabled", "");
+                    }
                 }
-            }
-            if (usuario2 === true) {
-                for (const element of claseBotonesPersonaje1) {
-                    element.setAttribute("disabled", "");
-                }
-            }
-            if (turno == 2) {
-                for (const element of claseBotonesPersonaje1) {
-                    element.setAttribute("disabled", "");
-                }
-                for (const element of claseBotonesPersonaje2) {
-                    element.removeAttribute("disabled");
-                }
-            }
-
-            if (turno == 1) {
-                for (const element of claseBotonesPersonaje2) {
-                    element.setAttribute("disabled", "");
-                }
-                for (const element of claseBotonesPersonaje1) {
-                    element.removeAttribute("disabled");
+            } else if (usuario2 == true) {
+                if (turno == 2) {
+                    for (const element of claseBotonesPersonaje2) {
+                        element.removeAttribute("disabled");
+                    }
+                } else if (turno == 1) {
+                    for (const element of claseBotonesPersonaje2) {
+                        element.setAttribute("disabled", "");
+                    }
                 }
             }
         }, 1000);
@@ -327,25 +315,17 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                 let personaje1;
                 switch (caracteristicasPersonaje1["tipo"]) {
                     case "Arquero":
-                        personaje1 = new Arquero(caracteristicasPersonaje1[0]['nombre'], parseInt(caracteristicasPersonaje1[0]['fuerza']), parseInt(caracteristicasPersonaje1[0]['armadura']), parseInt(caracteristicasPersonaje1[0]['nivel']), parseInt(caracteristicasPersonaje1[0]['vidaActual']), parseInt(caracteristicasPersonaje1[0]['vidaMaxima']), parseInt(caracteristicasPersonaje1[0]['estaminaActual']), parseInt(caracteristicasPersonaje1[0]['estaminaMaxima']), parseInt(caracteristicasPersonaje1[0]['puntosExperiencia']), parseInt(caracteristicasPersonaje1[0]['quemado']), parseInt(caracteristicasPersonaje1[0]['envenenado']), parseInt(caracteristicasPersonaje1[0]['confundido']), parseInt(caracteristicasPersonaje1[0]['heridoLeve']), parseInt(caracteristicasPersonaje1[0]['heridoGrave']), parseInt(caracteristicasPersonaje1[0]['punteria']));
-
-                        personaje1.asignarObjetos(parseInt(caracteristicasPersonaje1['arma']['arco']['desgaste']), parseInt(caracteristicasPersonaje1['arma']['flecha']['cantidad']), parseInt(caracteristicasPersonaje1['arma']['nunchakus']['desgaste']), parseInt(caracteristicasPersonaje1['curacion']['curacionSimple']['cantidad']), parseInt(caracteristicasPersonaje1['curacion']['superCuracion']['cantidad']), parseInt(caracteristicasPersonaje1['curacion']['curacionCompleta']['cantidad']), parseInt(caracteristicasPersonaje1['estamina']['restaurarEstamina']['cantidad']), parseInt(caracteristicasPersonaje1['estamina']['restaurarMuchaEstamina']['cantidad']), parseInt(caracteristicasPersonaje1['estamina']['restaurarTodaEstamina']['cantidad']));
+                        personaje1 = constructorArquero(caracteristicasPersonaje1);
                         imgPersonaje1.setAttribute("src", "imgs/arqueroDerecha.gif");
                         imgPersonaje1.setAttribute("id", "imgPersonaje1");
                         break;
                     case "Caballero":
-                        personaje1 = new Caballero(caracteristicasPersonaje1[0]['nombre'], parseInt(caracteristicasPersonaje1[0]['fuerza']), parseInt(caracteristicasPersonaje1[0]['armadura']), parseInt(caracteristicasPersonaje1[0]['nivel']), parseInt(caracteristicasPersonaje1[0]['vidaActual']), parseInt(caracteristicasPersonaje1[0]['vidaMaxima']), parseInt(caracteristicasPersonaje1[0]['estaminaActual']), parseInt(caracteristicasPersonaje1[0]['estaminaMaxima']), parseInt(caracteristicasPersonaje1[0]['puntosExperiencia']), parseInt(caracteristicasPersonaje1[0]['quemado']), parseInt(caracteristicasPersonaje1[0]['envenenado']), parseInt(caracteristicasPersonaje1[0]['confundido']), parseInt(caracteristicasPersonaje1[0]['heridoLeve']), parseInt(caracteristicasPersonaje1[0]['heridoGrave']));
-
-                        personaje1.asignarObjetos(parseInt(caracteristicasPersonaje1['arma']['espada']['desgaste']), parseInt(caracteristicasPersonaje1['arma']['mazo']['desgaste']), parseInt(caracteristicasPersonaje1['curacion']['curacionSimple']['cantidad']), parseInt(caracteristicasPersonaje1['curacion']['superCuracion']['cantidad']), parseInt(caracteristicasPersonaje1['curacion']['curacionCompleta']['cantidad']), parseInt(caracteristicasPersonaje1['estamina']['restaurarEstamina']['cantidad']), parseInt(caracteristicasPersonaje1['estamina']['restaurarMuchaEstamina']['cantidad']), parseInt(caracteristicasPersonaje1['estamina']['restaurarTodaEstamina']['cantidad']));
+                        personaje1 = constructorCaballero(caracteristicasPersonaje1);
                         imgPersonaje1.setAttribute("src", "imgs/caballeroDerecha.gif");
                         imgPersonaje1.setAttribute("id", "imgPersonaje1");
                         break;
                     case "Hechicero":
-                        console.log(caracteristicasPersonaje1);
-                        personaje1 = new Hechicero(caracteristicasPersonaje1[0]['nombre'], parseInt(caracteristicasPersonaje1[0]['fuerza']), parseInt(caracteristicasPersonaje1[0]['armadura']), parseInt(caracteristicasPersonaje1[0]['nivel']), parseInt(caracteristicasPersonaje1[0]['vidaActual']), parseInt(caracteristicasPersonaje1[0]['vidaMaxima']), parseInt(caracteristicasPersonaje1[0]['estaminaActual']), parseInt(caracteristicasPersonaje1[0]['estaminaMaxima']), parseInt(caracteristicasPersonaje1[0]['puntosExperiencia']), parseInt(caracteristicasPersonaje1[0]['quemado']), parseInt(caracteristicasPersonaje1[0]['envenenado']), parseInt(caracteristicasPersonaje1[0]['confundido']), parseInt(caracteristicasPersonaje1[0]['heridoLeve']), parseInt(caracteristicasPersonaje1[0]['heridoGrave']), parseInt(caracteristicasPersonaje1[0]['inteligencia']), parseInt(caracteristicasPersonaje1[0]['fuego']), parseInt(caracteristicasPersonaje1[0]['veneno']), parseInt(caracteristicasPersonaje1[0]['enigmatico']), parseInt(caracteristicasPersonaje1[0]['pinchos']), parseInt(caracteristicasPersonaje1[0]['sombra']));
-
-                        personaje1.asignarObjetos(parseInt(caracteristicasPersonaje1['arma']['vara']['desgaste']), parseInt(caracteristicasPersonaje1['curacion']['curacionSimple']['cantidad']), parseInt(caracteristicasPersonaje1['curacion']['superCuracion']['cantidad']), parseInt(caracteristicasPersonaje1['curacion']['curacionCompleta']['cantidad']), parseInt(caracteristicasPersonaje1['estamina']['restaurarEstamina']['cantidad']), parseInt(caracteristicasPersonaje1['estamina']['restaurarMuchaEstamina']['cantidad']), parseInt(caracteristicasPersonaje1['estamina']['restaurarTodaEstamina']['cantidad']));
-
+                        personaje1 = constructorHechicero(caracteristicasPersonaje1);
                         switch (true) {
                             case (personaje1.aura.get("fuego") == 1):
                                 imgPersonaje1.setAttribute("id", "imgPersonaje1");
@@ -374,9 +354,7 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                         }
                         break;
                     case "Druida":
-                        personaje1 = new Druida(caracteristicasPersonaje1[0]['nombre'], parseInt(caracteristicasPersonaje1[0]['fuerza']), parseInt(caracteristicasPersonaje1[0]['armadura']), parseInt(caracteristicasPersonaje1[0]['nivel']), parseInt(caracteristicasPersonaje1[0]['vidaActual']), parseInt(caracteristicasPersonaje1[0]['vidaMaxima']), parseInt(caracteristicasPersonaje1[0]['estaminaActual']), parseInt(caracteristicasPersonaje1[0]['estaminaMaxima']), parseInt(caracteristicasPersonaje1[0]['puntosExperiencia']), parseInt(caracteristicasPersonaje1[0]['quemado']), parseInt(caracteristicasPersonaje1[0]['envenenado']), parseInt(caracteristicasPersonaje1[0]['confundido']), parseInt(caracteristicasPersonaje1[0]['heridoLeve']), parseInt(caracteristicasPersonaje1[0]['heridoGrave']), parseInt(caracteristicasPersonaje1[0]['inteligencia']), parseInt(caracteristicasPersonaje1[0]['oso']), parseInt(caracteristicasPersonaje1[0]['serpiente']), parseInt(caracteristicasPersonaje1[0]['zorro']), parseInt(caracteristicasPersonaje1[0]['aguila']));
-
-                        personaje1.asignarObjetos(parseInt(caracteristicasPersonaje1['arma']['daga']['desgaste']), parseInt(caracteristicasPersonaje1['curacion']['curacionSimple']['cantidad']), parseInt(caracteristicasPersonaje1['curacion']['superCuracion']['cantidad']), parseInt(caracteristicasPersonaje1['curacion']['curacionCompleta']['cantidad']), parseInt(caracteristicasPersonaje1['estamina']['restaurarEstamina']['cantidad']), parseInt(caracteristicasPersonaje1['estamina']['restaurarMuchaEstamina']['cantidad']), parseInt(caracteristicasPersonaje1['estamina']['restaurarTodaEstamina']['cantidad']));
+                        personaje1 = constructorDruida(caracteristicasPersonaje1);
 
                         switch (true) {
                             case (personaje1.posiblesTransformaciones.get("oso") == 1):
@@ -451,9 +429,11 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                                 let accion = personaje1.listaFunciones[i];
                                 if (i > 1) {
                                     boton.setAttribute("onclick", "personaje1." + accion + "()");
+                                    boton.setAttribute("disabled", "");
                                     botonesPersonaje1.appendChild(boton);
                                 } else {
                                     boton.setAttribute("onclick", "personaje1." + accion + "(personaje2)");
+                                    boton.setAttribute("disabled", "");
                                     botonesPersonaje1.appendChild(boton);
                                 }
                             }
@@ -468,9 +448,11 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                                 let accion = personaje1.listaFunciones[i];
                                 if (i == 2) {
                                     boton.setAttribute("onclick", "personaje1." + accion + "()");
+                                    boton.setAttribute("disabled", "");
                                     botonesPersonaje1.appendChild(boton);
                                 } else {
                                     boton.setAttribute("onclick", "personaje1." + accion + "(personaje2)");
+                                    boton.setAttribute("disabled", "");
                                     botonesPersonaje1.appendChild(boton);
                                 }
                             }
@@ -487,12 +469,15 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                                 let accion = personaje1.listaFunciones[i];
                                 if (i == 1) {
                                     boton.setAttribute("onclick", "personaje1.transformacion()");
+                                    boton.setAttribute("disabled", "");
                                     botonesPersonaje1.appendChild(boton);
                                 } else if (i == 2) {
                                     boton.setAttribute("onclick", "personaje1." + accion + "()");
+                                    boton.setAttribute("disabled", "");
                                     botonesPersonaje1.appendChild(boton);
                                 } else {
                                     boton.setAttribute("onclick", "personaje1." + accion + "(personaje2)");
+                                    boton.setAttribute("disabled", "");
                                     botonesPersonaje1.appendChild(boton);
                                 }
                             }
@@ -507,12 +492,15 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                                 let accion = personaje1.listaFunciones[i];
                                 if (i == 1) {
                                     boton.setAttribute("onclick", "personaje1.farmearAura()");
+                                    boton.setAttribute("disabled", "");
                                     botonesPersonaje1.appendChild(boton);
                                 } else if (i == 2) {
                                     boton.setAttribute("onclick", "personaje1." + accion + "()");
+                                    boton.setAttribute("disabled", "");
                                     botonesPersonaje1.appendChild(boton);
                                 } else {
                                     boton.setAttribute("onclick", "personaje1." + accion + "(personaje2)");
+                                    boton.setAttribute("disabled", "");
                                     botonesPersonaje1.appendChild(boton);
                                 }
                             }
@@ -521,71 +509,39 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                             console.log("personaje1 no válido");
                             break;
                     }
-                </script>
-            </div>
-            <div class="menu">
-                <button id="mainBtn1" class="main-btn">⚔</button>
-                <div id="optionsPersonaje1">
-                    <script>
-                        let divBotonesObjetosPersonaje1 = document.getElementById("optionsPersonaje1");
-                        let clavesCuracionPersonaje1 = personaje1.inventario.get("curacion").keys();
-                        for (const element of clavesCuracionPersonaje1) {
-                            let boton = document.createElement("button");
-                            boton.textContent = element;
-                            boton.setAttribute("class", "option botonesPersonaje1");
-                            boton.onclick = function() {
-                                personaje1.curarVida(element);
-                            }
-                            divBotonesObjetosPersonaje1.appendChild(boton);
-                        }
-                        let clavesEstaminaPersonaje1 = personaje1.inventario.get("restaurarEstamina").keys();
-                        for (const element of clavesEstaminaPersonaje1) {
-                            let boton = document.createElement("button");
-                            boton.textContent = element;
-                            boton.setAttribute("class", "option botonesPersonaje1");
-                            boton.onclick = function() {
-                                personaje1.restaurarEstamina(element);
-                            }
-                            divBotonesObjetosPersonaje1.appendChild(boton);
-                        }
 
+                    let clavesCuracionPersonaje1 = personaje1.inventario.get("curacion").keys();
+                    for (const element of clavesCuracionPersonaje1) {
+                        let boton = document.createElement("button");
+                        boton.textContent = element;
+                        boton.setAttribute("class", "botonesPersonaje1");
+                        boton.setAttribute("disabled", "");
+                        boton.setAttribute("onclick", "personaje1.curarVida('" + element + "')");
+                        botonesPersonaje1.appendChild(boton);
+                    }
+                    let clavesEstaminaPersonaje1 = personaje1.inventario.get("restaurarEstamina").keys();
+                    for (const element of clavesEstaminaPersonaje1) {
+                        let boton = document.createElement("button");
+                        boton.textContent = element;
+                        boton.setAttribute("class", "botonesPersonaje1");
+                        boton.setAttribute("disabled", "");
+                        boton.setAttribute("onclick", "personaje1.restaurarEstamina('" + element + "')");
+                        botonesPersonaje1.appendChild(boton);
+                    }
 
-                        divPersonaje1.addEventListener("click", function(event) {
-                            // Recalcular después de la acción
-                            let evento = event.target;
-                            if (evento instanceof HTMLButtonElement) {
-                                // Ahora aquí hay que poner la función de arriba para los eventos de los botones de personaje1 y ya se puede borrar el switch de abajo
-                                fetchUpdate(personaje1);
-                                fetchTurno(turno);
-                                fetchUpdate(personaje2);
-                                event.stopPropagation(); // Detener la propagación del evento para evitar conflictos con otros botones
-                            }
-
-
-                        });
-
-                        setInterval(function() {
-                            if (personaje1.estado.get("confundido") == true) {
-                                for (const element of claseBotonesPersonaje1) {
-                                    element.textContent = "????"
-                                }
-                            }
-                        });
-                    </script>
-
-                </div>
-                <script>
-                    const mainBtn1 = document.getElementById("mainBtn1");
-                    const menu1 = document.querySelector(".menu");
-
-                    mainBtn1.addEventListener("click", () => {
-                        menu1.classList.toggle("active");
-                    });
+                    divPersonaje1.addEventListener("click", function(event) {
+                    // Recalcular después de la acción
+                    let evento = event.target;
+                    if (evento instanceof HTMLButtonElement) {
+                        fetchUpdate(personaje1);
+                        fetchTurno(turno);
+                        fetchUpdate(personaje2);
+                        event.stopPropagation(); // Detener la propagación del evento para evitar conflictos con otros botones
+                    }
+                });
                 </script>
             </div>
         </div>
-
-
 
         <!-- PERSONAJE 2 -->
         <div id="personaje2">
@@ -802,25 +758,17 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                 let imgPersonaje2 = document.createElement("img");
                 switch (caracteristicasPersonaje2["tipo"]) {
                     case "Arquero":
-                        personaje2 = new Arquero(caracteristicasPersonaje2[0]['nombre'], parseInt(caracteristicasPersonaje2[0]['fuerza']), parseInt(caracteristicasPersonaje2[0]['armadura']), parseInt(caracteristicasPersonaje2[0]['nivel']), parseInt(caracteristicasPersonaje2[0]['vidaActual']), parseInt(caracteristicasPersonaje2[0]['vidaMaxima']), parseInt(caracteristicasPersonaje2[0]['estaminaActual']), parseInt(caracteristicasPersonaje2[0]['estaminaMaxima']), parseInt(caracteristicasPersonaje2[0]['puntosExperiencia']), parseInt(caracteristicasPersonaje2[0]['quemado']), parseInt(caracteristicasPersonaje2[0]['envenenado']), parseInt(caracteristicasPersonaje2[0]['confundido']), parseInt(caracteristicasPersonaje2[0]['heridoLeve']), parseInt(caracteristicasPersonaje2[0]['heridoGrave']), parseInt(caracteristicasPersonaje2[0]['punteria']));
-
-                        personaje2.asignarObjetos(parseInt(caracteristicasPersonaje2['arma']['arco']['desgaste']), parseInt(caracteristicasPersonaje2['arma']['flecha']['cantidad']), parseInt(caracteristicasPersonaje2['arma']['nunchakus']['desgaste']), parseInt(caracteristicasPersonaje2['curacion']['curacionSimple']['cantidad']), parseInt(caracteristicasPersonaje2['curacion']['superCuracion']['cantidad']), parseInt(caracteristicasPersonaje2['curacion']['curacionCompleta']['cantidad']), parseInt(caracteristicasPersonaje2['estamina']['restaurarEstamina']['cantidad']), parseInt(caracteristicasPersonaje2['estamina']['restaurarMuchaEstamina']['cantidad']), parseInt(caracteristicasPersonaje2['estamina']['restaurarTodaEstamina']['cantidad']));
+                        personaje2 = constructorArquero(caracteristicasPersonaje2);
                         imgPersonaje2.setAttribute("src", "imgs/arqueroIzquierda.gif");
                         imgPersonaje2.setAttribute("id", "imgPersonaje2");
-
                         break;
                     case "Caballero":
-                        personaje2 = new Caballero(caracteristicasPersonaje2[0]['nombre'], parseInt(caracteristicasPersonaje2[0]['fuerza']), parseInt(caracteristicasPersonaje2[0]['armadura']), parseInt(caracteristicasPersonaje2[0]['nivel']), parseInt(caracteristicasPersonaje2[0]['vidaActual']), parseInt(caracteristicasPersonaje2[0]['vidaMaxima']), parseInt(caracteristicasPersonaje2[0]['estaminaActual']), parseInt(caracteristicasPersonaje2[0]['estaminaMaxima']), parseInt(caracteristicasPersonaje2[0]['puntosExperiencia']), parseInt(caracteristicasPersonaje2[0]['quemado']), parseInt(caracteristicasPersonaje2[0]['envenenado']), parseInt(caracteristicasPersonaje2[0]['confundido']), parseInt(caracteristicasPersonaje2[0]['heridoLeve']), parseInt(caracteristicasPersonaje2[0]['heridoGrave']));
-
-                        personaje2.asignarObjetos(parseInt(caracteristicasPersonaje2['arma']['espada']['desgaste']), parseInt(caracteristicasPersonaje2['arma']['mazo']['desgaste']), parseInt(caracteristicasPersonaje2['curacion']['curacionSimple']['cantidad']), parseInt(caracteristicasPersonaje2['curacion']['superCuracion']['cantidad']), parseInt(caracteristicasPersonaje2['curacion']['curacionCompleta']['cantidad']), parseInt(caracteristicasPersonaje2['estamina']['restaurarEstamina']['cantidad']), parseInt(caracteristicasPersonaje2['estamina']['restaurarMuchaEstamina']['cantidad']), parseInt(caracteristicasPersonaje2['estamina']['restaurarTodaEstamina']['cantidad']));
+                        personaje2 = constructorCaballero(caracteristicasPersonaje2);
                         imgPersonaje2.setAttribute("src", "imgs/caballeroIzquierda.gif");
                         imgPersonaje2.setAttribute("id", "imgPersonaje2");
                         break;
                     case "Hechicero":
-                        personaje2 = new Hechicero(caracteristicasPersonaje2[0]['nombre'], parseInt(caracteristicasPersonaje2[0]['fuerza']), parseInt(caracteristicasPersonaje2[0]['armadura']), parseInt(caracteristicasPersonaje2[0]['nivel']), parseInt(caracteristicasPersonaje2[0]['vidaActual']), parseInt(caracteristicasPersonaje2[0]['vidaMaxima']), parseInt(caracteristicasPersonaje2[0]['estaminaActual']), parseInt(caracteristicasPersonaje2[0]['estaminaMaxima']), parseInt(caracteristicasPersonaje2[0]['puntosExperiencia']), parseInt(caracteristicasPersonaje2[0]['quemado']), parseInt(caracteristicasPersonaje2[0]['envenenado']), parseInt(caracteristicasPersonaje2[0]['confundido']), parseInt(caracteristicasPersonaje2[0]['heridoLeve']), parseInt(caracteristicasPersonaje2[0]['heridoGrave']), parseInt(caracteristicasPersonaje2[0]['inteligencia']), parseInt(caracteristicasPersonaje2[0]['fuego']), parseInt(caracteristicasPersonaje2[0]['veneno']), parseInt(caracteristicasPersonaje2[0]['enigmatico']), parseInt(caracteristicasPersonaje2[0]['pinchos']), parseInt(caracteristicasPersonaje2[0]['sombra']));
-
-                        personaje2.asignarObjetos(parseInt(caracteristicasPersonaje2['arma']['vara']['desgaste']), parseInt(caracteristicasPersonaje2['curacion']['curacionSimple']['cantidad']), parseInt(caracteristicasPersonaje2['curacion']['superCuracion']['cantidad']), parseInt(caracteristicasPersonaje2['curacion']['curacionCompleta']['cantidad']), parseInt(caracteristicasPersonaje2['estamina']['restaurarEstamina']['cantidad']), parseInt(caracteristicasPersonaje2['estamina']['restaurarMuchaEstamina']['cantidad']), parseInt(caracteristicasPersonaje2['estamina']['restaurarTodaEstamina']['cantidad']));
-
+                        personaje2 = constructorHechicero(caracteristicasPersonaje2);
                         switch (true) {
                             case (personaje2.aura.get("fuego") == 1):
                                 imgPersonaje2.setAttribute("id", "imgPersonaje2");
@@ -849,10 +797,7 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                         }
                         break;
                     case "Druida":
-                        personaje2 = new Druida(caracteristicasPersonaje2[0]['nombre'], parseInt(caracteristicasPersonaje2[0]['fuerza']), parseInt(caracteristicasPersonaje2[0]['armadura']), parseInt(caracteristicasPersonaje2[0]['nivel']), parseInt(caracteristicasPersonaje2[0]['vidaActual']), parseInt(caracteristicasPersonaje2[0]['vidaMaxima']), parseInt(caracteristicasPersonaje2[0]['estaminaActual']), parseInt(caracteristicasPersonaje2[0]['estaminaMaxima']), parseInt(caracteristicasPersonaje2[0]['puntosExperiencia']), parseInt(caracteristicasPersonaje2[0]['quemado']), parseInt(caracteristicasPersonaje2[0]['envenenado']), parseInt(caracteristicasPersonaje2[0]['confundido']), parseInt(caracteristicasPersonaje2[0]['heridoLeve']), parseInt(caracteristicasPersonaje2[0]['heridoGrave']), parseInt(caracteristicasPersonaje2[0]['inteligencia']), parseInt(caracteristicasPersonaje2[0]['oso']), parseInt(caracteristicasPersonaje2[0]['serpiente']), parseInt(caracteristicasPersonaje2[0]['zorro']), parseInt(caracteristicasPersonaje2[0]['aguila']));
-
-                        personaje2.asignarObjetos(parseInt(caracteristicasPersonaje2['arma']['daga']['desgaste']), parseInt(caracteristicasPersonaje2['curacion']['curacionSimple']['cantidad']), parseInt(caracteristicasPersonaje2['curacion']['superCuracion']['cantidad']), parseInt(caracteristicasPersonaje2['curacion']['curacionCompleta']['cantidad']), parseInt(caracteristicasPersonaje2['estamina']['restaurarEstamina']['cantidad']), parseInt(caracteristicasPersonaje2['estamina']['restaurarMuchaEstamina']['cantidad']), parseInt(caracteristicasPersonaje2['estamina']['restaurarTodaEstamina']['cantidad']));
-
+                        personaje2 = constructorDruida(caracteristicasPersonaje2);
                         switch (true) {
                             case (personaje2.posiblesTransformaciones.get("oso") == 1):
                                 imgPersonaje2.setAttribute("id", "imgPersonaje2");
@@ -925,9 +870,11 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                                 let accion = personaje2.listaFunciones[i];
                                 if (i > 1) {
                                     boton.setAttribute("onclick", "personaje2." + accion + "()");
+                                    boton.setAttribute("disabled", "");
                                     botonesPersonaje2.appendChild(boton);
                                 } else {
                                     boton.setAttribute("onclick", "personaje2." + accion + "(personaje1)");
+                                    boton.setAttribute("disabled", "");
                                     botonesPersonaje2.appendChild(boton);
                                 }
                             }
@@ -942,9 +889,11 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                                 let accion = personaje2.listaFunciones[i];
                                 if (i == 2) {
                                     boton.setAttribute("onclick", "personaje2." + accion + "()");
+                                    boton.setAttribute("disabled", "");
                                     botonesPersonaje2.appendChild(boton);
                                 } else {
                                     boton.setAttribute("onclick", "personaje2." + accion + "(personaje1)");
+                                    boton.setAttribute("disabled", "");
                                     botonesPersonaje2.appendChild(boton);
                                 }
                             }
@@ -952,37 +901,6 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
 
                         case (personaje2 instanceof Druida):
                             console.log("Es un Druida");
-                            //Funcion que se llama al hacer la transformacion para cambiar la imagen segun la transformacion
-                            // function cambiarImagenDruida2() {
-                            //     let transformaciones;
-                            //     personaje2.transformacion();
-                            //     switch (true) {
-                            //         case (personaje2.posiblesTransformaciones.get("oso") == true):
-                            //             transformaciones = document.getElementById("imgPersonaje2");
-                            //             transformaciones.removeAttribute("src");
-                            //             transformaciones.setAttribute("src", "imgs/Transformaciones-druida/osoIzquierda.gif");
-                            //             break;
-                            //         case (personaje2.posiblesTransformaciones.get("serpiente") == true):
-                            //             transformaciones = document.getElementById("imgPersonaje2");
-                            //             transformaciones.removeAttribute("src");
-                            //             transformaciones.setAttribute("src", "imgs/Transformaciones-druida/serpienteIzquierda.gif");
-                            //             break;
-                            //         case (personaje2.posiblesTransformaciones.get("zorro") == true):
-                            //             transformaciones = document.getElementById("imgPersonaje2");
-                            //             transformaciones.removeAttribute("src");
-                            //             transformaciones.setAttribute("src", "imgs/Transformaciones-druida/zorroIzquierda.gif");
-                            //             break;
-                            //         case (personaje2.posiblesTransformaciones.get("águila") == true):
-                            //             transformaciones = document.getElementById("imgPersonaje2");
-                            //             transformaciones.removeAttribute("src");
-                            //             transformaciones.setAttribute("src", "imgs/Transformaciones-druida/aguilaIzquierda.gif");
-                            //             break;
-                            //         default:
-                            //             document.getElementById("imgPersonaje2").src = "imgs/druidaIzquierda.gif";
-                            //             break;
-                            //     }
-                            // }
-
                             for (let i = 0; i < 4; i++) {
                                 let boton = document.createElement("button");
                                 boton.textContent = personaje2.listaBotones[i];
@@ -990,12 +908,15 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                                 let accion = personaje2.listaFunciones[i];
                                 if (i == 1) {
                                     boton.setAttribute("onclick", "personaje2.transformacion()");
+                                    boton.setAttribute("disabled", "");
                                     botonesPersonaje2.appendChild(boton);
                                 } else if (i == 2) {
                                     boton.setAttribute("onclick", "personaje2." + accion + "()");
+                                    boton.setAttribute("disabled", "");
                                     botonesPersonaje2.appendChild(boton);
                                 } else {
                                     boton.setAttribute("onclick", "personaje2." + accion + "(personaje1)");
+                                    boton.setAttribute("disabled", "");
                                     botonesPersonaje2.appendChild(boton);
                                 }
                             }
@@ -1045,12 +966,15 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                                 let accion = personaje2.listaFunciones[i];
                                 if (i == 1) {
                                     boton.setAttribute("onclick", "cambiarImagenHechicero2()");
+                                    boton.setAttribute("disabled", "");
                                     botonesPersonaje2.appendChild(boton);
                                 } else if (i == 2) {
                                     boton.setAttribute("onclick", "personaje2." + accion + "()");
+                                    boton.setAttribute("disabled", "");
                                     botonesPersonaje2.appendChild(boton);
                                 } else {
                                     boton.setAttribute("onclick", "personaje2." + accion + "(personaje1)");
+                                    boton.setAttribute("disabled", "");
                                     botonesPersonaje2.appendChild(boton);
                                 }
                             }
@@ -1060,70 +984,52 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                             console.log("personaje2 no válido");
                             break;
                     }
+                    let clavesCuracionPersonaje2 = personaje2.inventario.get("curacion").keys();
+                    for (const element of clavesCuracionPersonaje2) {
+                        let boton = document.createElement("button");
+                        boton.textContent = element;
+                        boton.setAttribute("class", "botonesPersonaje2");
+                        boton.setAttribute("disabled", "");
+                        boton.onclick = function() {
+                            personaje2.curarVida(element);
+                        }
+                        botonesPersonaje2.appendChild(boton);
+                    }
+                    let clavesEstaminaPersonaje2 = personaje2.inventario.get("restaurarEstamina").keys();
+                    for (const element of clavesEstaminaPersonaje2) {
+                        let boton = document.createElement("button");
+                        boton.textContent = element;
+                        boton.setAttribute("class", "botonesPersonaje2");
+                        boton.setAttribute("disabled", "");
+                        boton.onclick = function() {
+                            personaje2.restaurarEstamina(element);
+                        }
+                        botonesPersonaje2.appendChild(boton);
+                    }
                 </script>
             </div>
-            <div class="menu">
-                <button id="mainBtn2" class="main-btn">⚔</button>
-                <div id="optionsPersonaje2">
-                    <script>
-                        let divBotonesObjetosPersonaje2 = document.getElementById("optionsPersonaje2");
-                        let clavesCuracionPersonaje2 = personaje2.inventario.get("curacion").keys();
-                        for (const element of clavesCuracionPersonaje2) {
-                            let boton = document.createElement("button");
-                            boton.textContent = element;
-                            boton.setAttribute("class", "option");
-                            boton.onclick = function() {
-                                personaje2.curarVida(element);
-                            }
-                            divBotonesObjetosPersonaje2.appendChild(boton);
+            <script>
+                divPersonaje2.addEventListener("click", function(event) {
+                    // Recalcular después de la acción
+                    let evento = event.target;
+                    if (evento instanceof HTMLButtonElement) {
+                        fetchUpdate(personaje2);
+                        fetchTurno(turno);
+                        fetchUpdate(personaje1);
+                        event.stopPropagation(); // Detener la propagación del evento para evitar conflictos con otros botones
+                    }
+                });
+
+                setInterval(function() {
+                    if (personaje2.estado.get("confundido") == true) {
+                        for (const element of claseBotonesPersonaje2) {
+                            element.textContent = "????"
                         }
-                        let clavesEstaminaPersonaje2 = personaje2.inventario.get("restaurarEstamina").keys();
-                        for (const element of clavesEstaminaPersonaje2) {
-                            let boton = document.createElement("button");
-                            boton.textContent = element;
-                            boton.setAttribute("class", "option");
-                            boton.onclick = function() {
-                                personaje2.restaurarEstamina(element);
-                            }
-                            divBotonesObjetosPersonaje2.appendChild(boton);
-                        }
-
-
-                        divPersonaje2.addEventListener("click", function(event) {
-                            // Recalcular después de la acción
-                            let evento = event.target;
-                            if (evento instanceof HTMLButtonElement) {
-                                fetchUpdate(personaje2);
-                                fetchTurno(turno);
-                                fetchUpdate(personaje1);
-
-                                event.stopPropagation(); // Detener la propagación del evento para evitar conflictos con otros botones
-                            }
-                        });
-
-                        setInterval(function() {
-                            if (personaje2.estado.get("confundido") == true) {
-                                for (const element of claseBotonesPersonaje2) {
-                                    element.textContent = "????"
-                                }
-                            }
-                        });
-                    </script>
-                </div>
-                <script>
-                    const mainBtn2 = document.getElementById("mainBtn2");
-                    const menu2 = document.querySelector(".menu");
-
-                    mainBtn2.addEventListener("click", () => {
-                        menu2.classList.toggle("active");
-                    });
-                </script>
-            </div>
-
+                    }
+                });
+            </script>
         </div>
     </div>
-
 </body>
-
 
 </html>

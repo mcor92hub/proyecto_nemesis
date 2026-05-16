@@ -19,9 +19,9 @@ img {
 button {
     font-family: fuenteParaBotones;
     font-size: large;
-    width: 50%;
-    height: 50%;
-    padding: 2.5%;
+    width: 30%;
+    height: 30%;
+    padding: 2%;
     background: linear-gradient(green, brown);
     /* border-radius: 15% 15%; */
 }
