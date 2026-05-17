@@ -183,3 +183,49 @@ function fetchConsultaTurno() {
             }
         });
 }
+
+function comprobarEstado(personaje1, personaje2) {
+
+        let confundidoPersonaje1 = document.getElementById("confundidoPersonaje1");
+        let quemadoPersonaje1 = document.getElementById("quemadoPersonaje1");
+        let heridoGravePersonaje1 = document.getElementById("heridoGravePersonaje1");
+        let heridoLevePersonaje1 = document.getElementById("heridoLevePersonaje1");
+        let envenenadoPersonaje1 = document.getElementById("envenenadoPersonaje1");
+        if (personaje1.estado.get("confundido")) {
+            confundidoPersonaje1.style.opacity = "1";
+        }
+        if (personaje1.estado.get("quemado")) {
+            quemadoPersonaje1.style.opacity = "1";
+        }
+        if (personaje1.estado.get("heridoGrave")) {
+            heridoGravePersonaje1.style.opacity = "1";
+        }
+        if (personaje1.estado.get("heridoLeve")) {
+            heridoLevePersonaje1.style.opacity = "1";
+        }
+        if (personaje1.estado.get("envenenado")) {
+            envenenadoPersonaje1.style.opacity = "1";
+        }
+
+        let confundidoPersonaje2 = document.getElementById("confundidoPersonaje2");
+        let quemadoPersonaje2 = document.getElementById("quemadoPersonaje2");
+        let heridoGravePersonaje2 = document.getElementById("heridoGravePersonaje2");
+        let heridoLevePersonaje2 = document.getElementById("heridoLevePersonaje2");
+        let envenenadoPersonaje2 = document.getElementById("envenenadoPersonaje2");
+        if (personaje2.estado.get("confundido")) {
+            confundidoPersonaje2.style.opacity = "1";
+        }
+        if (personaje2.estado.get("quemado")) {
+            quemadoPersonaje2.style.opacity = "1";
+        }
+        if (personaje2.estado.get("heridoGrave")) {
+            heridoGravePersonaje2.style.opacity = "1";
+        }
+        if (personaje2.estado.get("heridoLeve")) {
+            heridoLevePersonaje2.style.opacity = "1";
+        }
+        if (personaje2.estado.get("envenenado")) {
+            envenenadoPersonaje2.style.opacity = "1";
+        }
+    
+}

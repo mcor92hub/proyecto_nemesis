@@ -106,30 +106,7 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                 <img src="imgs/iconos-estado/heridoLeve.png" id="heridoLevePersonaje1">
                 <img src="imgs/iconos-estado/envenenado.gif" id="envenenadoPersonaje1">
                 <!-- El siguiente script mira los ids de los estados y cada segundo comprueba si el mapa de estado de personaje tiene algún elemento a true enseña el icono de estado  -->
-                <script>
-                    let confundidoPersonaje1 = document.getElementById("confundidoPersonaje1");
-                    let quemadoPersonaje1 = document.getElementById("quemadoPersonaje1");
-                    let heridoGravePersonaje1 = document.getElementById("heridoGravePersonaje1");
-                    let heridoLevePersonaje1 = document.getElementById("heridoLevePersonaje1");
-                    let envenenadoPersonaje1 = document.getElementById("envenenadoPersonaje1");
-                    setInterval(function() {
-                        if (personaje1.estado.get("confundido") == true) {
-                            confundidoPersonaje1.style.opacity = "1";
-                        }
-                        if (personaje1.estado.get("quemado")) {
-                            quemadoPersonaje1.style.opacity = "1";
-                        }
-                        if (personaje1.estado.get("heridoGrave")) {
-                            heridoGravePersonaje1.style.opacity = "1";
-                        }
-                        if (personaje1.estado.get("heridoLeve")) {
-                            heridoLevePersonaje1.style.opacity = "1";
-                        }
-                        if (personaje1.estado.get("envenenado") == true) {
-                            envenenadoPersonaje1.style.opacity = "1";
-                        }
-                    }, 1000);
-                </script>
+
             </div>
             <!-- Preparamos la consulta para sacar las características de los personajes que almacenamos en un array -->
             <?php
@@ -345,7 +322,7 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                                 break;
                             case (personaje1.aura.get("sombra") == 1):
                                 imgPersonaje1.setAttribute("id", "imgPersonaje1");
-                                imgPersonaje1.setAttribute("src", "imgs/Estados-hechicero/hechiceroSombrioDerecha.png");
+                                imgPersonaje1.setAttribute("src", "imgs/Estados-hechicero/hechiceroSombrioDerecha.gif");
                                 break;
                             default:
                                 imgPersonaje1.setAttribute("id", "imgPersonaje1");
@@ -415,7 +392,13 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
             </script>
 
 
-
+            <div id="nombrePersonaje1">
+                <script>
+                    let nombrePersonaje1 = document.createElement("p");
+                    nombrePersonaje1.textContent = personaje1.nombre;
+                    document.getElementById("nombrePersonaje1").appendChild(nombrePersonaje1);
+                </script>
+            </div>
             <div id="cuadroBotones1">
                 <script>
                     let botonesPersonaje1 = document.getElementById("cuadroBotones1");
@@ -425,7 +408,7 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                             for (let i = 0; i < 4; i++) {
                                 let boton = document.createElement("button");
                                 boton.textContent = personaje1.listaBotones[i];
-                                boton.setAttribute("class", "botonesPersonaje1");
+                                boton.setAttribute("class", "botonesPersonaje1 btn-demon");
                                 let accion = personaje1.listaFunciones[i];
                                 if (i > 1) {
                                     boton.setAttribute("onclick", "personaje1." + accion + "()");
@@ -444,7 +427,7 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                             for (let i = 0; i < 4; i++) {
                                 let boton = document.createElement("button");
                                 boton.textContent = personaje1.listaBotones[i];
-                                boton.setAttribute("class", "botonesPersonaje1");
+                                boton.setAttribute("class", "botonesPersonaje1 btn-demon");
                                 let accion = personaje1.listaFunciones[i];
                                 if (i == 2) {
                                     boton.setAttribute("onclick", "personaje1." + accion + "()");
@@ -465,7 +448,7 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                             for (let i = 0; i < 4; i++) {
                                 let boton = document.createElement("button");
                                 boton.textContent = personaje1.listaBotones[i];
-                                boton.setAttribute("class", "botonesPersonaje1");
+                                boton.setAttribute("class", "botonesPersonaje1 btn-demon");
                                 let accion = personaje1.listaFunciones[i];
                                 if (i == 1) {
                                     boton.setAttribute("onclick", "personaje1.transformacion()");
@@ -488,7 +471,7 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                             for (let i = 0; i < 4; i++) {
                                 let boton = document.createElement("button");
                                 boton.textContent = personaje1.listaBotones[i];
-                                boton.setAttribute("class", "botonesPersonaje1");
+                                boton.setAttribute("class", "botonesPersonaje1 btn-demon");
                                 let accion = personaje1.listaFunciones[i];
                                 if (i == 1) {
                                     boton.setAttribute("onclick", "personaje1.farmearAura()");
@@ -514,7 +497,7 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                     for (const element of clavesCuracionPersonaje1) {
                         let boton = document.createElement("button");
                         boton.textContent = element;
-                        boton.setAttribute("class", "botonesPersonaje1");
+                        boton.setAttribute("class", "botonesPersonaje1 btn-demon");
                         boton.setAttribute("disabled", "");
                         boton.setAttribute("onclick", "personaje1.curarVida('" + element + "')");
                         botonesPersonaje1.appendChild(boton);
@@ -523,22 +506,22 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                     for (const element of clavesEstaminaPersonaje1) {
                         let boton = document.createElement("button");
                         boton.textContent = element;
-                        boton.setAttribute("class", "botonesPersonaje1");
+                        boton.setAttribute("class", "botonesPersonaje1 btn-demon");
                         boton.setAttribute("disabled", "");
                         boton.setAttribute("onclick", "personaje1.restaurarEstamina('" + element + "')");
                         botonesPersonaje1.appendChild(boton);
                     }
 
                     divPersonaje1.addEventListener("click", function(event) {
-                    // Recalcular después de la acción
-                    let evento = event.target;
-                    if (evento instanceof HTMLButtonElement) {
-                        fetchUpdate(personaje1);
-                        fetchTurno(turno);
-                        fetchUpdate(personaje2);
-                        event.stopPropagation(); // Detener la propagación del evento para evitar conflictos con otros botones
-                    }
-                });
+                        // Recalcular después de la acción
+                        let evento = event.target;
+                        if (evento instanceof HTMLButtonElement) {
+                            fetchUpdate(personaje1);
+                            fetchTurno(turno);
+                            fetchUpdate(personaje2);
+                            event.stopPropagation(); // Detener la propagación del evento para evitar conflictos con otros botones
+                        }
+                    });
                 </script>
             </div>
         </div>
@@ -552,30 +535,7 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                 <img src="imgs/iconos-estado/heridoLeve.png" id="heridoLevePersonaje2">
                 <img src="imgs/iconos-estado/envenenado.gif" id="envenenadoPersonaje2">
                 <!-- El siguiente script mira los ids de los estados y cada segundo comprueba si el mapa de estado de personaje tiene algún elemento a true enseña el icono de estado -->
-                <script>
-                    let confundidoPersonaje2 = document.getElementById("confundidoPersonaje2");
-                    let quemadoPersonaje2 = document.getElementById("quemadoPersonaje2");
-                    let heridoGravePersonaje2 = document.getElementById("heridoGravePersonaje2");
-                    let heridoLevePersonaje2 = document.getElementById("heridoLevePersonaje2");
-                    let envenenadoPersonaje2 = document.getElementById("envenenadoPersonaje2");
-                    setInterval(function() {
-                        if (personaje2.estado.get("confundido") == true) {
-                            confundidoPersonaje2.style.opacity = "1";
-                        }
-                        if (personaje2.estado.get("quemado")) {
-                            quemadoPersonaje2.style.opacity = "1";
-                        }
-                        if (personaje2.estado.get("heridoGrave")) {
-                            heridoGravePersonaje2.style.opacity = "1";
-                        }
-                        if (personaje2.estado.get("heridoLeve")) {
-                            heridoLevePersonaje2.style.opacity = "1";
-                        }
-                        if (personaje2.estado.get("envenenado") == true) {
-                            envenenadoPersonaje2.style.opacity = "1";
-                        }
-                    }, 1000);
-                </script>
+
             </div>
             <?php
             unset($listaCaracteristicas);
@@ -746,7 +706,7 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                     $listaCaracteristicas["tipo"] = "Druida";
                     break;
                 default:
-                    echo 'No se ha creado bien el personaje 1, entró en el default del switch';
+                    echo 'No se ha creado bien el personaje 2, entró en el default del switch';
                     break;
             }
             ?>
@@ -788,7 +748,7 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                                 break;
                             case (personaje2.aura.get("sombra") == 1):
                                 imgPersonaje2.setAttribute("id", "imgPersonaje2");
-                                imgPersonaje2.setAttribute("src", "imgs/Estados-hechicero/hechiceroSombrioIzquierda.png");
+                                imgPersonaje2.setAttribute("src", "imgs/Estados-hechicero/hechiceroSombrioIzquierda.gif");
                                 break;
                             default:
                                 imgPersonaje2.setAttribute("id", "imgPersonaje2");
@@ -856,7 +816,13 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                     }, 100);
                 }
             </script>
-
+            <div id="nombrePersonaje2">
+                <script>
+                    let nombrePersonaje2 = document.createElement("p");
+                    nombrePersonaje2.textContent = personaje2.nombre;
+                    document.getElementById("nombrePersonaje2").appendChild(nombrePersonaje2);
+                </script>
+            </div>
             <div id="cuadroBotones2">
                 <script>
                     let botonesPersonaje2 = document.getElementById("cuadroBotones2");
@@ -866,10 +832,10 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                             for (let i = 0; i < 4; i++) {
                                 let boton = document.createElement("button");
                                 boton.textContent = personaje2.listaBotones[i];
-                                boton.setAttribute("class", "botonesPersonaje2");
+                                boton.setAttribute("class", "botonesPersonaje2 btn-demon");
                                 let accion = personaje2.listaFunciones[i];
                                 if (i > 1) {
-                                    boton.setAttribute("onclick", "personaje2." + accion + "()");
+                                boton.setAttribute("onclick", "personaje2." + accion + "()");
                                     boton.setAttribute("disabled", "");
                                     botonesPersonaje2.appendChild(boton);
                                 } else {
@@ -885,14 +851,14 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                             for (let i = 0; i < 4; i++) {
                                 let boton = document.createElement("button");
                                 boton.textContent = personaje2.listaBotones[i];
-                                boton.setAttribute("class", "botonesPersonaje2");
+                                boton.setAttribute("class", "botonesPersonaje2 btn-demon");
                                 let accion = personaje2.listaFunciones[i];
                                 if (i == 2) {
                                     boton.setAttribute("onclick", "personaje2." + accion + "()");
                                     boton.setAttribute("disabled", "");
                                     botonesPersonaje2.appendChild(boton);
                                 } else {
-                                    boton.setAttribute("onclick", "personaje2." + accion + "(personaje1)");
+                                    span.setAttribute("onclick", "personaje2." + accion + "(personaje1)");
                                     boton.setAttribute("disabled", "");
                                     botonesPersonaje2.appendChild(boton);
                                 }
@@ -904,7 +870,7 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                             for (let i = 0; i < 4; i++) {
                                 let boton = document.createElement("button");
                                 boton.textContent = personaje2.listaBotones[i];
-                                boton.setAttribute("class", "botonesPersonaje2");
+                                boton.setAttribute("class", "botonesPersonaje2 btn-demon");
                                 let accion = personaje2.listaFunciones[i];
                                 if (i == 1) {
                                     boton.setAttribute("onclick", "personaje2.transformacion()");
@@ -924,48 +890,13 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
 
                         case (personaje2 instanceof Hechicero):
                             console.log("Es un hechicero");
-
-                            function cambiarImagenHechicero2() {
-                                let manto;
-                                personaje2.farmearAura();
-                                switch (true) {
-                                    case (personaje2.aura.get("fuego")):
-                                        manto = document.getElementById("imgPersonaje2");
-                                        manto.removeAttribute("src");
-                                        manto.setAttribute("src", "imgs/Estados-hechicero/hechiceroFuegoIzquierda.png");
-                                        break;
-                                    case (personaje2.aura.get("veneno")):
-                                        manto = document.getElementById("imgPersonaje2");
-                                        manto.removeAttribute("src");
-                                        manto.setAttribute("src", "imgs/Estados-hechicero/hechiceroVenenoIzquierda.png");
-                                        break;
-                                    case (personaje2.aura.get("enigmatico")):
-                                        manto = document.getElementById("imgPersonaje2");
-                                        manto.removeAttribute("src");
-                                        manto.setAttribute("src", "imgs/Estados-hechicero/hechiceroEnigmaIzquierda.png");
-                                        break;
-                                    case (personaje2.aura.get("pinchos")):
-                                        manto = document.getElementById("imgPersonaje2");
-                                        manto.removeAttribute("src");
-                                        manto.setAttribute("src", "imgs/Estados-hechicero/hechiceroPinchosIzquierda.png");
-                                        break;
-                                    case (personaje2.aura.get("sombra")):
-                                        manto = document.getElementById("imgPersonaje2");
-                                        manto.removeAttribute("src");
-                                        manto.setAttribute("src", "imgs/Estados-hechicero/hechiceroSombrioIzquierda.png");
-                                        break;
-                                    default:
-                                        document.getElementById("imgPersonaje2").src = "imgs/hechiceroIzquierda.gif";
-                                        break;
-                                }
-                            }
                             for (let i = 0; i < 4; i++) {
                                 let boton = document.createElement("button");
                                 boton.textContent = personaje2.listaBotones[i];
-                                boton.setAttribute("class", "botonesPersonaje2");
+                                boton.setAttribute("class", "botonesPersonaje2 btn-demon");
                                 let accion = personaje2.listaFunciones[i];
                                 if (i == 1) {
-                                    boton.setAttribute("onclick", "cambiarImagenHechicero2()");
+                                    boton.setAttribute("onclick", "personaje2.farmearAura()");
                                     boton.setAttribute("disabled", "");
                                     botonesPersonaje2.appendChild(boton);
                                 } else if (i == 2) {
@@ -988,22 +919,18 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                     for (const element of clavesCuracionPersonaje2) {
                         let boton = document.createElement("button");
                         boton.textContent = element;
-                        boton.setAttribute("class", "botonesPersonaje2");
+                        boton.setAttribute("class", "botonesPersonaje2 btn-demon");
                         boton.setAttribute("disabled", "");
-                        boton.onclick = function() {
-                            personaje2.curarVida(element);
-                        }
+                        boton.setAttribute("onclick", `personaje2.curarVida(${element})`)
                         botonesPersonaje2.appendChild(boton);
                     }
                     let clavesEstaminaPersonaje2 = personaje2.inventario.get("restaurarEstamina").keys();
                     for (const element of clavesEstaminaPersonaje2) {
                         let boton = document.createElement("button");
                         boton.textContent = element;
-                        boton.setAttribute("class", "botonesPersonaje2");
+                        boton.setAttribute("class", "botonesPersonaje2 btn-demon");
                         boton.setAttribute("disabled", "");
-                        boton.onclick = function() {
-                            personaje2.restaurarEstamina(element);
-                        }
+                        boton.setAttribute("onclick", `personaje2.restaurarEstamina(${element})`)
                         botonesPersonaje2.appendChild(boton);
                     }
                 </script>
@@ -1029,6 +956,10 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                 });
             </script>
         </div>
+        <script>
+            // Compruebo el estado y le cambio la opacidad a los iconos de estado de los dos personajes
+            setInterval(comprobarEstado(personaje1, personaje2), 1000);
+        </script>
     </div>
 </body>
 

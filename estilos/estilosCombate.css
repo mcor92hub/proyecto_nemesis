@@ -3,6 +3,14 @@
     src: url(../fuentes/CaesarDressing-Regular.ttf);
 }
 
+:root {
+    --color-texto: #d9a441;
+    --color-header-footer: #1b1f3b;
+    --color-contenido: #2e6f40;
+    --color-campos-botones: #7a4bff;
+    --opacity-header-footer: 0.5;
+}
+
 body {
     background-image: url(../imgs/fondos-de-combate/fondo-castillo2.png);
     background-repeat: no-repeat;
@@ -16,14 +24,52 @@ img {
     height: 30vh;
 }
 
-button {
-    font-family: fuenteParaBotones;
-    font-size: large;
-    width: 30%;
-    height: 30%;
-    padding: 2%;
-    background: linear-gradient(green, brown);
-    /* border-radius: 15% 15%; */
+/* BOTÓN BASE */
+.btn-demon{
+  position:relative;
+  font-family:fuenteParaBotones;
+  font-size: large;
+  color:#eee;
+  border:none;
+  background:linear-gradient(
+      to bottom,
+      #ff4b4b 0%,
+      #b31212 50%,
+      #6e0000 100%
+  );
+  
+  /* Forma angular */
+  clip-path:polygon(
+    10% 0%, 90% 0%,
+    100% 50%,
+    90% 100%, 10% 100%,
+    0% 50%
+  );
+
+  box-shadow:
+    inset 0 3px 5px rgba(255,255,255,0.3),
+    inset 0 -5px 8px rgba(0,0,0,0.6),
+    0 10px 20px rgba(0,0,0,0.6);
+
+  transition:all .2s ease;
+}
+
+/* Borde metálico */
+.btn-demon::before{
+  content:"";
+  position:absolute;
+  inset:-4px;
+  clip-path:inherit;
+  z-index:-1;
+}
+
+/* Efecto hover */
+.btn-demon:hover{
+  transform:translateY(-4px);
+  box-shadow:
+    inset 0 3px 8px rgba(255,255,255,0.4),
+    inset 0 -6px 12px rgba(0,0,0,0.8),
+    0 15px 25px rgba(0,0,0,0.8);
 }
 
 #campoBatalla {
@@ -45,113 +91,121 @@ button {
     padding: 2.5%;
 }
 
+#nombrePersonaje1,
+#nombrePersonaje2 {
+    font-family: fuenteParaBotones;
+    color: var(--color-texto);
+    background-image: url(../imgs/fondoPantallaLadrillo.png);
+    background-size: cover;
+}
+
 /* ICONOS DE ESTADO PERSONAJE 1 */
-#confundidoPersonaje1{
+#confundidoPersonaje1 {
     width: 25%;
     height: 25%;
     opacity: 0;
 }
 
-#quemadoPersonaje1{
+#quemadoPersonaje1 {
     width: 25%;
     height: 25%;
     opacity: 0;
 }
 
-#heridoGravePersonaje1{
+#heridoGravePersonaje1 {
     width: 25%;
     height: 25%;
     opacity: 0;
 }
 
-#heridoLevePersonaje1{
+#heridoLevePersonaje1 {
     width: 25%;
     height: 25%;
     opacity: 0;
 }
 
-#envenenadoPersonaje1{
+#envenenadoPersonaje1 {
     width: 25%;
     height: 25%;
     opacity: 0;
 }
 
-#confundidoPersonaje2{
+#confundidoPersonaje2 {
     width: 25%;
     height: 25%;
     opacity: 0;
 }
 
-#quemadoPersonaje2{
+#quemadoPersonaje2 {
     width: 25%;
     height: 25%;
     opacity: 0;
 }
 
-#heridoGravePersonaje2{
+#heridoGravePersonaje2 {
     width: 25%;
     height: 25%;
     opacity: 0;
 }
 
-#heridoLevePersonaje2{
+#heridoLevePersonaje2 {
     width: 25%;
     height: 25%;
     opacity: 0;
 }
 
-#envenenadoPersonaje2{
+#envenenadoPersonaje2 {
     width: 25%;
     height: 25%;
     opacity: 0;
 }
 
 /* BARRA DE VIDA Y DE ESTAMINA DEL PERSONAJE 1 */
-#barraVidaPersonaje1{
+#barraVidaPersonaje1 {
     width: 70%;
     height: 2.5vh;
     background-color: red;
 }
 
-#vidaRealPersonaje1{
+#vidaRealPersonaje1 {
     width: 100%;
     height: 100%;
     background-color: greenyellow;
 }
 
-#barraEstaminaPersonaje1{
+#barraEstaminaPersonaje1 {
     width: 70%;
     height: 2.5vh;
     background-color: red;
     margin-top: 5px;
 }
 
-#estaminaRealPersonaje1{
+#estaminaRealPersonaje1 {
     width: 100%;
     height: 100%;
     background-color: greenyellow;
 }
 
-#barraVidaPersonaje2{
+#barraVidaPersonaje2 {
     width: 70%;
     height: 2.5vh;
     background-color: red;
 }
 
-#vidaRealPersonaje2{
+#vidaRealPersonaje2 {
     width: 100%;
     height: 100%;
     background-color: greenyellow;
 }
 
-#barraEstaminaPersonaje2{
+#barraEstaminaPersonaje2 {
     width: 70%;
     height: 2.5vh;
     background-color: red;
     margin-top: 5px;
 }
 
-#estaminaRealPersonaje2{
+#estaminaRealPersonaje2 {
     width: 100%;
     height: 100%;
     background-color: greenyellow;
