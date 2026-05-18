@@ -78,24 +78,33 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                 if (turno == 1) {
                     for (const element of claseBotonesPersonaje1) {
                         element.removeAttribute("disabled");
+                        element.removeAttribute("style");
                     }
                 } else if (turno == 2) {
                     for (const element of claseBotonesPersonaje1) {
                         element.setAttribute("disabled", "");
+                        element.setAttribute("style", "opacity: 0.5;")
                     }
                 }
             } else if (usuario2 == true) {
                 if (turno == 2) {
                     for (const element of claseBotonesPersonaje2) {
                         element.removeAttribute("disabled");
+                        element.removeAttribute("style");
                     }
                 } else if (turno == 1) {
                     for (const element of claseBotonesPersonaje2) {
                         element.setAttribute("disabled", "");
+                        element.setAttribute("style", "opacity: 0.5;")
                     }
                 }
             }
         }, 1000);
+    </script>
+    <h3 id="h3Turno"></h3>
+    <script>
+        let h3Turno = document.getElementById("h3Turno");
+        h3Turno.textContent = "Turno: " + turno;
     </script>
     <div id="campoBatalla">
         <div id="personaje1">
@@ -413,10 +422,12 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                                 if (i > 1) {
                                     boton.setAttribute("onclick", "personaje1." + accion + "()");
                                     boton.setAttribute("disabled", "");
+                                    boton.setAttribute("style", "opacity: 0.5;");
                                     botonesPersonaje1.appendChild(boton);
                                 } else {
                                     boton.setAttribute("onclick", "personaje1." + accion + "(personaje2)");
                                     boton.setAttribute("disabled", "");
+                                    boton.setAttribute("style", "opacity: 0.5;");
                                     botonesPersonaje1.appendChild(boton);
                                 }
                             }
@@ -432,10 +443,12 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                                 if (i == 2) {
                                     boton.setAttribute("onclick", "personaje1." + accion + "()");
                                     boton.setAttribute("disabled", "");
+                                    boton.setAttribute("style", "opacity: 0.5;");
                                     botonesPersonaje1.appendChild(boton);
                                 } else {
                                     boton.setAttribute("onclick", "personaje1." + accion + "(personaje2)");
                                     boton.setAttribute("disabled", "");
+                                    boton.setAttribute("style", "opacity: 0.5;");
                                     botonesPersonaje1.appendChild(boton);
                                 }
                             }
@@ -453,14 +466,17 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                                 if (i == 1) {
                                     boton.setAttribute("onclick", "personaje1.transformacion()");
                                     boton.setAttribute("disabled", "");
+                                    boton.setAttribute("style", "opacity: 0.5;");
                                     botonesPersonaje1.appendChild(boton);
                                 } else if (i == 2) {
                                     boton.setAttribute("onclick", "personaje1." + accion + "()");
                                     boton.setAttribute("disabled", "");
+                                    boton.setAttribute("style", "opacity: 0.5;");
                                     botonesPersonaje1.appendChild(boton);
                                 } else {
                                     boton.setAttribute("onclick", "personaje1." + accion + "(personaje2)");
                                     boton.setAttribute("disabled", "");
+                                    boton.setAttribute("style", "opacity: 0.5;");
                                     botonesPersonaje1.appendChild(boton);
                                 }
                             }
@@ -476,14 +492,17 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                                 if (i == 1) {
                                     boton.setAttribute("onclick", "personaje1.farmearAura()");
                                     boton.setAttribute("disabled", "");
+                                    boton.setAttribute("style", "opacity: 0.5;");
                                     botonesPersonaje1.appendChild(boton);
                                 } else if (i == 2) {
                                     boton.setAttribute("onclick", "personaje1." + accion + "()");
                                     boton.setAttribute("disabled", "");
+                                    boton.setAttribute("style", "opacity: 0.5;");
                                     botonesPersonaje1.appendChild(boton);
                                 } else {
                                     boton.setAttribute("onclick", "personaje1." + accion + "(personaje2)");
                                     boton.setAttribute("disabled", "");
+                                    boton.setAttribute("style", "opacity: 0.5;");
                                     botonesPersonaje1.appendChild(boton);
                                 }
                             }
@@ -499,6 +518,7 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                         boton.textContent = element;
                         boton.setAttribute("class", "botonesPersonaje1 btn-demon");
                         boton.setAttribute("disabled", "");
+                        boton.setAttribute("style", "opacity: 0.5;");
                         boton.setAttribute("onclick", "personaje1.curarVida('" + element + "')");
                         botonesPersonaje1.appendChild(boton);
                     }
@@ -508,6 +528,7 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                         boton.textContent = element;
                         boton.setAttribute("class", "botonesPersonaje1 btn-demon");
                         boton.setAttribute("disabled", "");
+                        boton.setAttribute("style", "opacity: 0.5;");
                         boton.setAttribute("onclick", "personaje1.restaurarEstamina('" + element + "')");
                         botonesPersonaje1.appendChild(boton);
                     }
@@ -835,12 +856,14 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                                 boton.setAttribute("class", "botonesPersonaje2 btn-demon");
                                 let accion = personaje2.listaFunciones[i];
                                 if (i > 1) {
-                                boton.setAttribute("onclick", "personaje2." + accion + "()");
+                                    boton.setAttribute("onclick", "personaje2." + accion + "()");
                                     boton.setAttribute("disabled", "");
+                                    boton.setAttribute("style", "opacity: 0.5;");
                                     botonesPersonaje2.appendChild(boton);
                                 } else {
                                     boton.setAttribute("onclick", "personaje2." + accion + "(personaje1)");
                                     boton.setAttribute("disabled", "");
+                                    boton.setAttribute("style", "opacity: 0.5;");
                                     botonesPersonaje2.appendChild(boton);
                                 }
                             }
@@ -856,10 +879,12 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                                 if (i == 2) {
                                     boton.setAttribute("onclick", "personaje2." + accion + "()");
                                     boton.setAttribute("disabled", "");
+                                    boton.setAttribute("style", "opacity: 0.5;");
                                     botonesPersonaje2.appendChild(boton);
                                 } else {
                                     span.setAttribute("onclick", "personaje2." + accion + "(personaje1)");
                                     boton.setAttribute("disabled", "");
+                                    boton.setAttribute("style", "opacity: 0.5;");
                                     botonesPersonaje2.appendChild(boton);
                                 }
                             }
@@ -875,14 +900,17 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                                 if (i == 1) {
                                     boton.setAttribute("onclick", "personaje2.transformacion()");
                                     boton.setAttribute("disabled", "");
+                                    boton.setAttribute("style", "opacity: 0.5;");
                                     botonesPersonaje2.appendChild(boton);
                                 } else if (i == 2) {
                                     boton.setAttribute("onclick", "personaje2." + accion + "()");
                                     boton.setAttribute("disabled", "");
+                                    boton.setAttribute("style", "opacity: 0.5;");
                                     botonesPersonaje2.appendChild(boton);
                                 } else {
                                     boton.setAttribute("onclick", "personaje2." + accion + "(personaje1)");
                                     boton.setAttribute("disabled", "");
+                                    boton.setAttribute("style", "opacity: 0.5;");
                                     botonesPersonaje2.appendChild(boton);
                                 }
                             }
@@ -898,19 +926,21 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                                 if (i == 1) {
                                     boton.setAttribute("onclick", "personaje2.farmearAura()");
                                     boton.setAttribute("disabled", "");
+                                    boton.setAttribute("style", "opacity: 0.5;");
                                     botonesPersonaje2.appendChild(boton);
                                 } else if (i == 2) {
                                     boton.setAttribute("onclick", "personaje2." + accion + "()");
                                     boton.setAttribute("disabled", "");
+                                    boton.setAttribute("style", "opacity: 0.5;");
                                     botonesPersonaje2.appendChild(boton);
                                 } else {
                                     boton.setAttribute("onclick", "personaje2." + accion + "(personaje1)");
                                     boton.setAttribute("disabled", "");
+                                    boton.setAttribute("style", "opacity: 0.5;");
                                     botonesPersonaje2.appendChild(boton);
                                 }
                             }
                             break;
-
                         default:
                             console.log("personaje2 no válido");
                             break;
@@ -921,6 +951,7 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                         boton.textContent = element;
                         boton.setAttribute("class", "botonesPersonaje2 btn-demon");
                         boton.setAttribute("disabled", "");
+                        boton.setAttribute("style", "opacity: 0.5;");
                         boton.setAttribute("onclick", `personaje2.curarVida(${element})`)
                         botonesPersonaje2.appendChild(boton);
                     }
@@ -930,6 +961,7 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                         boton.textContent = element;
                         boton.setAttribute("class", "botonesPersonaje2 btn-demon");
                         boton.setAttribute("disabled", "");
+                        boton.setAttribute("style", "opacity: 0.5;");
                         boton.setAttribute("onclick", `personaje2.restaurarEstamina(${element})`)
                         botonesPersonaje2.appendChild(boton);
                     }
