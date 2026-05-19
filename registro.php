@@ -269,10 +269,10 @@ if (isset($_POST['email'], $_POST['nick'], $_POST['passRegistro'], $_POST['passC
         <div id="logoFooter">
             <img src="imgs/favicon-nemesis.png" alt="">
             <div>
-                <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                <a href="#"><i class="fa-brands fa-discord"></i></a>
-                <a href="#"><i class="fa-brands fa-youtube"></i></a>
-                <a href="#"><i class="fa-brands fa-twitch"></i></a>
+                <a href="https://www.instagram.com/"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://discord.com/"><i class="fa-brands fa-discord"></i></a>
+                <a href="https://www.youtube.com/"><i class="fa-brands fa-youtube"></i></a>
+                <a href="https://www.twitch.tv/"><i class="fa-brands fa-twitch"></i></a>
             </div>
         </div>
         <div>

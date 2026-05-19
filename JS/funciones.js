@@ -33,6 +33,7 @@ function fetchUpdate(personaje) {
                     estadosPersonaje
                 })
             })
+            
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {

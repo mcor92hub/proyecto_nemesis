@@ -882,7 +882,7 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                                     boton.setAttribute("style", "opacity: 0.5;");
                                     botonesPersonaje2.appendChild(boton);
                                 } else {
-                                    span.setAttribute("onclick", "personaje2." + accion + "(personaje1)");
+                                    boton.setAttribute("onclick", "personaje2." + accion + "(personaje1)");
                                     boton.setAttribute("disabled", "");
                                     boton.setAttribute("style", "opacity: 0.5;");
                                     botonesPersonaje2.appendChild(boton);

@@ -41,12 +41,10 @@ img {
             100% 50%,
             90% 100%, 10% 100%,
             0% 50%);
-
     box-shadow:
         inset 0 3px 5px rgba(255, 255, 255, 0.3),
         inset 0 -5px 8px rgba(0, 0, 0, 0.6),
         0 10px 20px rgba(0, 0, 0, 0.6);
-
     transition: all .2s ease;
     padding: 5px;
 }
@@ -97,180 +95,33 @@ img {
 }
 
 /* ICONOS DE ESTADO PERSONAJE 1 */
-#confundidoPersonaje1 {
-    width: 25%;
-    height: 25%;
-    opacity: 0;
-}
-
-#quemadoPersonaje1 {
-    width: 25%;
-    height: 25%;
-    opacity: 0;
-}
-
-#heridoGravePersonaje1 {
-    width: 25%;
-    height: 25%;
-    opacity: 0;
-}
-
-#heridoLevePersonaje1 {
-    width: 25%;
-    height: 25%;
-    opacity: 0;
-}
-
-#envenenadoPersonaje1 {
-    width: 25%;
-    height: 25%;
-    opacity: 0;
-}
-
-#confundidoPersonaje2 {
-    width: 25%;
-    height: 25%;
-    opacity: 0;
-}
-
-#quemadoPersonaje2 {
-    width: 25%;
-    height: 25%;
-    opacity: 0;
-}
-
-#heridoGravePersonaje2 {
-    width: 25%;
-    height: 25%;
-    opacity: 0;
-}
-
-#heridoLevePersonaje2 {
-    width: 25%;
-    height: 25%;
-    opacity: 0;
-}
-
-#envenenadoPersonaje2 {
+#confundidoPersonaje1, #quemadoPersonaje1, #heridoGravePersonaje1, #heridoLevePersonaje1, #envenenadoPersonaje1, #confundidoPersonaje2, #quemadoPersonaje2, #heridoGravePersonaje2, #heridoLevePersonaje2, #envenenadoPersonaje2  {
     width: 25%;
     height: 25%;
     opacity: 0;
 }
 
 /* BARRA DE VIDA Y DE ESTAMINA DEL PERSONAJE 1 */
-#barraVidaPersonaje1 {
+#barraVidaPersonaje1, #barraVidaPersonaje2{
     width: 70%;
     height: 2.5vh;
     background-color: red;
 }
 
-#vidaRealPersonaje1 {
+#vidaRealPersonaje1, #estaminaRealPersonaje1, #vidaRealPersonaje2, #estaminaRealPersonaje2 {
     width: 100%;
     height: 100%;
     background-color: greenyellow;
 }
 
-#barraEstaminaPersonaje1 {
-    width: 70%;
-    height: 2.5vh;
-    background-color: red;
-    margin-top: 5px;
-}
-
-#estaminaRealPersonaje1 {
-    width: 100%;
-    height: 100%;
-    background-color: greenyellow;
-}
-
-#barraVidaPersonaje2 {
-    width: 70%;
-    height: 2.5vh;
-    background-color: red;
-}
-
-#vidaRealPersonaje2 {
-    width: 100%;
-    height: 100%;
-    background-color: greenyellow;
-}
-
-#barraEstaminaPersonaje2 {
+#barraEstaminaPersonaje1, #barraEstaminaPersonaje2 {
     width: 70%;
     height: 2.5vh;
     background-color: red;
     margin-top: 5px;
-}
-
-#estaminaRealPersonaje2 {
-    width: 100%;
-    height: 100%;
-    background-color: greenyellow;
 }
 
 #cuadroBotones1,
 #cuadroBotones2 {
     padding: 10%;
-}
-
-/* cuadro de botones de objetos IA */
-.menu {
-    position: relative;
-}
-
-.main-btn {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    border: none;
-    background: orange;
-    font-size: 24px;
-    cursor: pointer;
-}
-
-#options {
-    position: absolute;
-    top: 0;
-    left: 0;
-}
-
-.option {
-    position: absolute;
-    width: 100px;
-    height: 40px;
-    border: none;
-    opacity: 0;
-    transform: scale(0);
-    transition: 0.3s ease;
-}
-
-/* Posiciones cuando está activo */
-.menu.active .option:nth-child(2) {
-    transform: translate(-120px, -60px) scale(1);
-    opacity: 1;
-}
-
-.menu.active .option:nth-child(3) {
-    transform: translate(-120px, 0px) scale(1);
-    opacity: 1;
-}
-
-.menu.active .option:nth-child(4) {
-    transform: translate(-120px, 60px) scale(1);
-    opacity: 1;
-}
-
-.menu.active .option:nth-child(5) {
-    transform: translate(120px, -60px) scale(1);
-    opacity: 1;
-}
-
-.menu.active .option:nth-child(6) {
-    transform: translate(120px, 0px) scale(1);
-    opacity: 1;
-}
-
-.menu.active .option:nth-child(7) {
-    transform: translate(120px, 60px) scale(1);
-    opacity: 1;
 }

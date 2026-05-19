@@ -51,10 +51,6 @@ if (isset($_POST['usuario'], $_POST['pass'])) {
         <div id="headerDiv2">
             <p>PROYECTO NÉMESIS</p>
         </div>
-        <!-- <div>
-            <button id="botonInicioSesion">Iniciar Sesión</button>
-            <button id="botonRegistro"><a href="registro.php">Registrarse</a></button>
-        </div> -->
     </header>
     <main id="mainPrimeraPagina">
         <!-- INICIO SESIÓN -->
@@ -99,10 +95,10 @@ if (isset($_POST['usuario'], $_POST['pass'])) {
         <div id="logoFooter">
             <img src="imgs/favicon-nemesis.png" alt="">
             <div>
-                <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                <a href="#"><i class="fa-brands fa-discord"></i></a>
-                <a href="#"><i class="fa-brands fa-youtube"></i></a>
-                <a href="#"><i class="fa-brands fa-twitch"></i></a>
+                <a href="https://www.instagram.com/"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://discord.com/"><i class="fa-brands fa-discord"></i></a>
+                <a href="https://www.youtube.com/"><i class="fa-brands fa-youtube"></i></a>
+                <a href="https://www.twitch.tv/"><i class="fa-brands fa-twitch"></i></a>
             </div>
         </div>
         <div>

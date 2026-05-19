@@ -1,4 +1,9 @@
-Vamos a empezar a organizar un poco:
+- COSAS VARIAS:
+    - Poner el required en los campos de registro
+    - Poner un minimo de caracteres para la contraseña
+    - Página de te has olvidado la contraseña?
+    - Política de privacidad
+    - Redirigir a instagram, discord, youtube y twitch
 
 -IMAGENES:
 falta editar al hechicero para cambiar las transformaciones
@@ -16,12 +21,3 @@ Página de usuario: poner las estadísticas de partidas ganadas y perdidas exper
 
 MAIN.PHP
 - En la página de personajes incluir botones que curen vida y estamina con los objetos que tienen
-
-COMBATE.PHP
-- sistema de turnos por el que cada vez que cambie un turno recargue en los dos usuarios conectados
-
-- cambiar el personaje2 con el constructor nuevo y los botones nuevos de druida y de hechicero con la asignacion de funciones para transformacion y farmearAura, también falta el fetch cada vez que ataque
-
-UPDATEPERSONAJES.PHP
-- falta druida de personaje1 y todos los de personaje2
-
