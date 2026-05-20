@@ -343,37 +343,25 @@ a:hover {
         border-image-slice: 100;
         border-image-repeat: round;
         color: var(--color-texto);
-        /* background-image: url(../imgs/fondoPantallaLadrillo.png);
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position: center; */
-        /* PARA PONER SOLO EL FONDO CON OPACITY USAR EL SEUDOELEMENTO ::before */
-
 }
-
-/* .contenedor { 
-        position: relative;
-        /* Otros estilos como ancho/alto /
-      }
-      
-      .contenedor::before {
-        content: ""; no existe para el navegador a menos que tenga la propiedad content
-        background-image: url('imagen.jpg');
-        background-size: cover;
-        position: absolute;
-        top: 0; left: 0;
-        width: 100%; height: 100%;
-        opacity: 0.5; / Ajusta la opacidad aquí (0 a 1) /
-        z-index: -1; / Mantiene la imagen detrás del contenido */
-/* } */
 
 #mainSegundaPagina section img {
         width: 20vw;
         height: auto;
 }
+#imagenesPersonaje div{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+}
 
 #bloquePestañas {
-        width: 100%;
+        margin-bottom: 0;
+}
+
+#mainSegundaPagina section div{
+        margin-top: auto;
+        margin-bottom: auto;
 }
 
 .pestaña {
@@ -388,7 +376,7 @@ a:hover {
         align-items: center;
         text-align: center;
         background-image: url(../imgs/fondo-pueblo.jpg);
-        background-size: cover; 
+        background-size: cover;
         color: var(--color-texto);
         height: 55vh;
 }

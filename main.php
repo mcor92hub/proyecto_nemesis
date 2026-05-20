@@ -19,6 +19,7 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
     <script src="bootstrap-5.3.8-dist/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="estilos/estilos.css?v=<?php echo $cssVersion; ?>">
     <link rel="shortcut icon" href="imgs/favicon-nemesis.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <title>Inicio</title>
 </head>
 
@@ -37,10 +38,6 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
         </div>
     </header>
 
-
-    <!-- EN ESTE ENLACE ESTAN LOS BLOQUES POR PESTAÑAS PARA EL PLAN DE CELIA DE NAVEGAR POR PESATAÑAS -->
-    <!-- https://getbootstrap.com/docs/5.3/components/navs-tabs/#javascript-behavior -->
-
     <main id="mainSegundaPagina">
         <aside>
             <h4>Puta que ofertón</h4>
@@ -51,7 +48,7 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
         </aside>
 
         <section>
-            <ul class="nav nav-tabs w-100" id="myTab" role="tablist" id="bloquePestañas">
+            <ul class="nav nav-tabs w-100" id="bloquePestañas" role="tablist">
                 <li class="nav-item pestaña" role="presentation">
                     <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Combate</button>
                 </li>
@@ -62,26 +59,27 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                     <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">Usuario</button>
                 </li>
             </ul>
-            <div class="tab-content" id="myTabContent">
+            <div class="tab-content" id="bloquePestañasContent">
                 <div class="tab-pane fade show active slide-in-right" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
                     <a href="elegirPersonaje.php"><img src="imgs/combate.png" alt=""></a>
                 </div>
                 <div class="tab-pane fade slide-in-right" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
                     <h3>Mis personajes</h3>
-                    <?php
-                    $imgs = ["imgs/arqueroDerecha.gif", "imgs/caballeroDerecha.gif", "imgs/hechiceroDerecha.gif", "imgs/druidaDerecha.gif"];
-                    $consultaPersonajes = "SELECT * FROM personaje WHERE usuario_id=" . $_SESSION['id_usuario'] . "";
-                    $resultado = $bd->query($consultaPersonajes);
-                    $i = 0;
-                    while ($fila = $resultado->fetch_assoc()) {
-                        echo "<div>";
-                        echo "<img src='" . $imgs[$i] . "'>";
-                        echo "<p>" . $fila['nombre'] . "</p>";
-                        echo "</div>";
-                        $i++;
-                    }
-                    ?>
-
+                    <div id="imagenesPersonajes" class="row">
+                        <?php
+                        $imgs = ["imgs/arqueroDerecha.gif", "imgs/caballeroDerecha.gif", "imgs/hechiceroDerecha.gif", "imgs/druidaDerecha.gif"];
+                        $consultaPersonajes = "SELECT * FROM personaje WHERE usuario_id=" . $_SESSION['id_usuario'] . "";
+                        $resultado = $bd->query($consultaPersonajes);
+                        $i = 0;
+                        while ($fila = $resultado->fetch_assoc()) {
+                            echo "<div  class='col-lg-6 col-md-6 col-sm-12'>";
+                            echo "<img src='" . $imgs[$i] . "' class='ms-auto me-auto'>";
+                            echo "<p>" . $fila['nombre'] . "</p>";
+                            echo "</div>";
+                            $i++;
+                        }
+                        ?>
+                    </div>
                 </div>
                 <div class="tab-pane fade slide-in-right" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
                     <h3>
