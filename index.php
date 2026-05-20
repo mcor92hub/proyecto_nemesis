@@ -66,11 +66,11 @@ if (isset($_POST['usuario'], $_POST['pass'])) {
                                 <div>
                                     <div>
                                         <label for="usuario">Usuario: </label>
-                                        <input type="text" name="usuario" id="usuario">
+                                        <input type="text" name="usuario" id="usuario" required>
                                     </div>
                                     <div>
                                         <label for="pass">Contraseña: </label>
-                                        <input type="password" name="pass" id="pass">
+                                        <input type="password" name="pass" id="pass" required>
                                     </div>
                                 </div>
                                 <button type="submit">Enviar</button>

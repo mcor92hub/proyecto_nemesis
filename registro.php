@@ -213,11 +213,11 @@ if (isset($_POST['email'], $_POST['nick'], $_POST['passRegistro'], $_POST['passC
                                 <div>
                                     <div>
                                         <label for="email">e-mail: </label>
-                                        <input type="email" name="email" id="email">
+                                        <input type="email" name="email" id="email" required>
                                     </div>
                                     <div>
                                         <label for="nick">Nombre de usuario: </label>
-                                        <input type="text" name="nick" id="nick">
+                                        <input type="text" name="nick" id="nick" required>
                                     </div>
                                     <?php
                                     if (isset($errorContraseña)) {
@@ -228,27 +228,27 @@ if (isset($_POST['email'], $_POST['nick'], $_POST['passRegistro'], $_POST['passC
                                     ?>
                                     <div>
                                         <label for="pass">Contraseña: </label>
-                                        <input type="password" name="passRegistro" id="passRegistro">
+                                        <input type="password" name="passRegistro" id="passRegistro" required minlength="8">
                                     </div>
                                     <div>
                                         <label for="passConfirmacion">Confirmar contraseña: </label>
-                                        <input type="password" name="passConfirmacion" id="passConfirmacion">
+                                        <input type="password" name="passConfirmacion" id="passConfirmacion" required>
                                     </div>
                                     <div>
                                         <label for="arquero">Nombre de tu arquero: </label>
-                                        <input type="text" name="arquero" id="arquero">
+                                        <input type="text" name="arquero" id="arquero" required>
                                     </div>
                                     <div>
                                         <label for="caballero">Nombre de tu caballero: </label>
-                                        <input type="text" name="caballero" id="caballero">
+                                        <input type="text" name="caballero" id="caballero" required>
                                     </div>
                                     <div>
                                         <label for="hechicero">Nombre de tu hechicero: </label>
-                                        <input type="text" name="hechicero" id="hechicero">
+                                        <input type="text" name="hechicero" id="hechicero" required>
                                     </div>
                                     <div>
                                         <label for="druida">Nombre de tu druida: </label>
-                                        <input type="text" name="druida" id="druida">
+                                        <input type="text" name="druida" id="druida" required>
                                     </div>
                                 </div>
                                 <button type="submit">Enviar</button>
