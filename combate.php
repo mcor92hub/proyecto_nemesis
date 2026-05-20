@@ -952,7 +952,7 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                         boton.setAttribute("class", "botonesPersonaje2 btn-demon");
                         boton.setAttribute("disabled", "");
                         boton.setAttribute("style", "opacity: 0.5;");
-                        boton.setAttribute("onclick", `personaje2.curarVida(${element})`)
+                        boton.setAttribute("onclick", "personaje2.curarVida('" + element + "')")
                         botonesPersonaje2.appendChild(boton);
                     }
                     let clavesEstaminaPersonaje2 = personaje2.inventario.get("restaurarEstamina").keys();
@@ -962,7 +962,7 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
                         boton.setAttribute("class", "botonesPersonaje2 btn-demon");
                         boton.setAttribute("disabled", "");
                         boton.setAttribute("style", "opacity: 0.5;");
-                        boton.setAttribute("onclick", `personaje2.restaurarEstamina(${element})`)
+                        boton.setAttribute("onclick", "personaje2.restaurarEstamina('" + element + "')")
                         botonesPersonaje2.appendChild(boton);
                     }
                 </script>
@@ -991,6 +991,15 @@ $cssVersion = @filemtime(__DIR__ . "/estilos/estilos.css") ?: time();
         <script>
             // Compruebo el estado y le cambio la opacidad a los iconos de estado de los dos personajes
             setInterval(comprobarEstado(personaje1, personaje2), 1000);
+
+            // Cuando se actualiza el turno, aplica clase al personaje activo
+            if (turno == 1) {
+                document.getElementById("personaje1").classList.add("personaje-activo");
+                document.getElementById("personaje2").classList.remove("personaje-activo");
+            } else if (turno == 2) {
+                document.getElementById("personaje2").classList.add("personaje-activo");
+                document.getElementById("personaje1").classList.remove("personaje-activo");
+            }
         </script>
     </div>
 </body>

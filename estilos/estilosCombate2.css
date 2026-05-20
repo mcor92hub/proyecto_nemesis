@@ -1,0 +1,376 @@
+/* ============================================
+   DISEÑO 2: HIELO Y FUEGO
+   Personajes enfrentados con temática elemental
+   ============================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+body {
+    background: linear-gradient(135deg, #0a1628 0%, #1a1a2e 50%, #16213e 100%);
+    min-height: 100vh;
+    font-family: 'Cinema', 'Segoe UI', 'Arial', monospace;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    position: relative;
+}
+
+/* Partículas de hielo y fuego flotantes */
+body::before {
+    content: "❄️";
+    position: fixed;
+    bottom: 10%;
+    left: 5%;
+    font-size: 2rem;
+    opacity: 0.15;
+    animation: floatIce 8s infinite ease-in-out;
+    pointer-events: none;
+}
+
+body::after {
+    content: "🔥";
+    position: fixed;
+    top: 15%;
+    right: 8%;
+    font-size: 2.5rem;
+    opacity: 0.15;
+    animation: floatFire 7s infinite ease-in-out;
+    pointer-events: none;
+}
+
+@keyframes floatIce {
+    0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.15; }
+    50% { transform: translateY(-30px) rotate(20deg); opacity: 0.3; }
+}
+
+@keyframes floatFire {
+    0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.15; }
+    50% { transform: translateY(-25px) rotate(-15deg); opacity: 0.3; }
+}
+
+/* Título del turno */
+#h3Turno {
+    text-align: center;
+    font-size: 2rem;
+    margin: 0.5rem 0 1.5rem;
+    background: linear-gradient(135deg, #00d2ff, #ff6a00);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    text-shadow: 0 0 20px rgba(0, 210, 255, 0.3);
+    letter-spacing: 4px;
+    font-weight: bold;
+    padding: 0.5rem 2rem;
+    border-radius: 50px;
+    backdrop-filter: blur(5px);
+    z-index: 2;
+    animation: glowTurn 2s infinite alternate;
+}
+
+@keyframes glowTurn {
+    from { text-shadow: 0 0 10px rgba(0, 210, 255, 0.3); }
+    to { text-shadow: 0 0 30px rgba(255, 106, 0, 0.6); }
+}
+
+/* Contenedor de batalla */
+#campoBatalla {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    gap: 2rem;
+    width: 100%;
+    max-width: 1400px;
+    min-height: 70vh;
+    padding: 1rem;
+    position: relative;
+    z-index: 2;
+}
+
+/* Estilos para cada personaje - diferentes fondos según lado */
+#personaje1 {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(145deg, #0f3460, #0a1a3a);
+    border-radius: 20px;
+    padding: 1rem 1rem 1.5rem;
+    transition: all 0.3s ease;
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(100, 200, 255, 0.3);
+    border: 1px solid rgba(0, 200, 255, 0.4);
+    position: relative;
+    backdrop-filter: blur(3px);
+}
+
+#personaje2 {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(225deg, #4a1a1a, #2a0a0a);
+    border-radius: 20px;
+    padding: 1rem 1rem 1.5rem;
+    transition: all 0.3s ease;
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 100, 0, 0.3);
+    border: 1px solid rgba(255, 80, 0, 0.4);
+    position: relative;
+    backdrop-filter: blur(3px);
+}
+
+#personaje1:hover, #personaje2:hover {
+    transform: translateY(-5px);
+}
+
+/* Imagen del personaje */
+#imgPersonaje1, #imgPersonaje2 {
+    width: 250px;
+    height: auto;
+    max-height: 300px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 15px rgba(0, 200, 255, 0.4));
+    transition: all 0.3s;
+}
+
+#imgPersonaje2 {
+    filter: drop-shadow(0 0 15px rgba(255, 80, 0, 0.4));
+}
+
+/* Panel de estados */
+#estadosPersonaje1, #estadosPersonaje2 {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    gap: 5px;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 5px 10px;
+    border-radius: 25px;
+    z-index: 3;
+    backdrop-filter: blur(4px);
+}
+
+#estadosPersonaje1 img, #estadosPersonaje2 img {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: none;
+}
+
+/* Barras de estado */
+#barraVidaPersonaje1, #barraVidaPersonaje2 {
+    width: 85%;
+    height: 30px;
+    background-color: #1a0f0a;
+    border-radius: 15px;
+    margin: 10px 0 5px;
+    overflow: hidden;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
+    border: none;
+}
+
+#vidaRealPersonaje1 {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, #00b4d8, #0077b6);
+    color: white;
+    text-align: center;
+    line-height: 30px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    text-shadow: 1px 1px 0 #023e8a;
+    transition: width 0.2s ease-out;
+    border-radius: 15px;
+}
+
+#vidaRealPersonaje2 {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, #e63946, #c1121f);
+    color: white;
+    text-align: center;
+    line-height: 30px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    text-shadow: 1px 1px 0 #780000;
+    transition: width 0.2s ease-out;
+    border-radius: 15px;
+}
+
+#barraEstaminaPersonaje1, #barraEstaminaPersonaje2 {
+    width: 85%;
+    height: 24px;
+    background-color: #1a1a2e;
+    border-radius: 15px;
+    margin: 5px 0 10px;
+    overflow: hidden;
+    box-shadow: inset 0 1px 4px rgba(0,0,0,0.5);
+}
+
+#estaminaRealPersonaje1 {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, #48cae4, #0096c7);
+    color: white;
+    text-align: center;
+    line-height: 24px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    border-radius: 15px;
+    transition: width 0.2s ease-out;
+}
+
+#estaminaRealPersonaje2 {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, #f4a261, #e76f51);
+    color: white;
+    text-align: center;
+    line-height: 24px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    border-radius: 15px;
+    transition: width 0.2s ease-out;
+}
+
+/* Nombre del personaje */
+#nombrePersonaje1 p {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin: 10px 0 5px;
+    color: #90e0ef;
+    text-shadow: 2px 2px 4px #023e8a;
+    text-align: center;
+    letter-spacing: 2px;
+}
+
+#nombrePersonaje2 p {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin: 10px 0 5px;
+    color: #ffb4a2;
+    text-shadow: 2px 2px 4px #6b0000;
+    text-align: center;
+    letter-spacing: 2px;
+}
+
+/* Contenedor de botones */
+#cuadroBotones1, #cuadroBotones2 {
+    width: 95%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 12px;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 15px;
+    border-radius: 30px;
+    backdrop-filter: blur(5px);
+}
+
+/* Botones estilo elemental */
+.btn-demon {
+    background: linear-gradient(135deg, #2d2d44, #1a1a2e);
+    border: 1px solid;
+    border-radius: 25px;
+    color: #e0e0e0;
+    font-weight: bold;
+    padding: 8px 18px;
+    cursor: pointer;
+    font-family: monospace;
+    font-size: 0.85rem;
+    transition: all 0.2s;
+    box-shadow: 0 3px 0 #0a0a0a;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    min-width: 85px;
+}
+
+.btn-demon:hover:not([disabled]) {
+    transform: scale(1.03);
+    letter-spacing: 2px;
+}
+
+#cuadroBotones1 .btn-demon:hover:not([disabled]) {
+    background: linear-gradient(135deg, #3a6ea5, #1e3a5f);
+    border-color: #48cae4;
+    box-shadow: 0 0 10px rgba(72, 202, 228, 0.5);
+}
+
+#cuadroBotones2 .btn-demon:hover:not([disabled]) {
+    background: linear-gradient(135deg, #a54535, #6b2116);
+    border-color: #e76f51;
+    box-shadow: 0 0 10px rgba(231, 111, 81, 0.5);
+}
+
+.btn-demon[disabled] {
+    cursor: not-allowed;
+    opacity: 0.45;
+    filter: grayscale(0.2);
+}
+
+/* Separador central elemental */
+#campoBatalla::before {
+    content: "⚡";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 3rem;
+    color: rgba(255, 215, 0, 0.6);
+    text-shadow: 0 0 20px #ffaa00;
+    pointer-events: none;
+    z-index: 5;
+    animation: pulseLightning 1.5s infinite;
+}
+
+@keyframes pulseLightning {
+    0%, 100% { opacity: 0.5; text-shadow: 0 0 10px #ffaa00; }
+    50% { opacity: 1; text-shadow: 0 0 30px #ffdd44; }
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    #campoBatalla {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    #personaje1, #personaje2 {
+        width: 95%;
+        margin-bottom: 20px;
+    }
+    
+    #imgPersonaje1, #imgPersonaje2 {
+        width: 180px;
+    }
+    
+    .btn-demon {
+        padding: 6px 12px;
+        font-size: 0.7rem;
+        min-width: 70px;
+    }
+    
+    #h3Turno {
+        font-size: 1.5rem;
+    }
+    
+    #campoBatalla::before {
+        content: "⚡";
+        top: auto;
+        bottom: -15px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
+
+/* Personaje activo (resalte) */
+.personaje-activo {
+    box-shadow: 0 0 0 3px #ffd700, 0 0 30px #ffaa33;
+    transition: 0.1s;
+}

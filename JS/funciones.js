@@ -18,9 +18,6 @@ function fetchUpdate(personaje) {
         case (personaje instanceof Arquero):
             inventarioPersonaje = mapaParaObjeto(personaje.inventario);
             estadosPersonaje = mapaParaObjeto(personaje.estado);
-            console.log(JSON.stringify(inventarioPersonaje));
-            console.log(JSON.stringify(estadosPersonaje));
-            console.log(JSON.stringify(personaje));
             fetch("updatePersonaje.php", {
                 method: "POST",
                 credentials: "include",
@@ -33,25 +30,16 @@ function fetchUpdate(personaje) {
                     estadosPersonaje
                 })
             })
-            
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
                         window.location.href = "combate.php";
                     }
                 });
-        // .then(response => response.text())
-        // .then(data => location.reload(), console.log("recargo"))
-        // .catch(error => {
-        //     console.error("Error en fetch:", error);
-        // });
-        // break;
+        break;
         case (personaje instanceof Caballero):
             inventarioPersonaje = mapaParaObjeto(personaje.inventario);
             estadosPersonaje = mapaParaObjeto(personaje.estado);
-            console.log(JSON.stringify(inventarioPersonaje));
-            console.log(JSON.stringify(estadosPersonaje));
-            console.log(JSON.stringify(personaje));
             fetch("updatePersonaje.php", {
                 method: "POST",
                 credentials: "include",
@@ -70,20 +58,11 @@ function fetchUpdate(personaje) {
                         window.location.href = "combate.php";
                     }
                 });
-            // .then(response => response.text())
-            // .then(data => location.reload(), console.log("recargo"))
-            // .catch(error => {
-            //     console.error("Error en fetch:", error);
-            // });
             break;
         case (personaje instanceof Hechicero):
             inventarioPersonaje = mapaParaObjeto(personaje.inventario);
             estadosPersonaje = mapaParaObjeto(personaje.estado);
             auraPersonaje = mapaParaObjeto(personaje.aura);
-            console.log(JSON.stringify(inventarioPersonaje));
-            console.log(JSON.stringify(estadosPersonaje));
-            console.log(JSON.stringify(auraPersonaje));
-            console.log(JSON.stringify(personaje));
             fetch("updatePersonaje.php", {
                 method: "POST",
                 credentials: "include",
@@ -104,20 +83,11 @@ function fetchUpdate(personaje) {
                         console.log("fetch personaje1 actualizado correctamente");
                     }
                 });
-            // .then(response => response.text())
-            // .then(data => location.reload(), console.log("recargo"))
-            // .catch(error => {
-            //     console.error("Error en fetch:", error);
-            // });
             break;
         case (personaje instanceof Druida):
             inventarioPersonaje = mapaParaObjeto(personaje.inventario);
             estadosPersonaje = mapaParaObjeto(personaje.estado);
             transformacionesPersonaje = mapaParaObjeto(personaje.posiblesTransformaciones);
-            console.log(JSON.stringify(inventarioPersonaje));
-            console.log(JSON.stringify(estadosPersonaje));
-            console.log(JSON.stringify(transformacionesPersonaje));
-            console.log(JSON.stringify(personaje));
             fetch("updatePersonaje.php", {
                 method: "POST",
                 credentials: "include",
@@ -138,11 +108,6 @@ function fetchUpdate(personaje) {
                         console.log("fetch personaje1 actualizado correctamente");
                     }
                 });
-            // .then(response => response.text())
-            // .then(data => location.reload(), console.log("recargo"))
-            // .catch(error => {
-            //     console.error("Error en fetch:", error);
-            // });
             break;
         default:
             break;
@@ -158,14 +123,6 @@ function fetchTurno(turno) {
         },
         body: JSON.stringify({ turno })
     })
-    //alert("fetch turno "+ turno);
-    //alert("fetch turno", turno);
-    // .then(response => response.json())
-    // .then(data => {
-    //     if (data.success) {
-    //         window.location.href = "combate.php";
-    //     }
-    // });
 }
 
 function fetchConsultaTurno() {
@@ -186,7 +143,6 @@ function fetchConsultaTurno() {
 }
 
 function comprobarEstado(personaje1, personaje2) {
-
         let confundidoPersonaje1 = document.getElementById("confundidoPersonaje1");
         let quemadoPersonaje1 = document.getElementById("quemadoPersonaje1");
         let heridoGravePersonaje1 = document.getElementById("heridoGravePersonaje1");

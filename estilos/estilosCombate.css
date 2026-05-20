@@ -1,127 +1,294 @@
-@font-face {
-    font-family: fuenteParaBotones;
-    src: url(../fuentes/CaesarDressing-Regular.ttf);
-}
-
-:root {
-    --color-texto: #d9a441;
-    --color-header-footer: #1b1f3b;
-    --color-contenido: #2e6f40;
-    --color-campos-botones: #7a4bff;
-    --opacity-header-footer: 0.5;
+/* Reset y estilos base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
 }
 
 body {
-    background-image: url(../imgs/fondos-de-combate/fondo-castillo2.png);
+    background: linear-gradient(135deg, #1a0f0a 0%, #2c1810 50%, #1a0f0a 100%);
+    min-height: 100vh;
+    font-family: 'Segoe UI', 'MedievalSharp', 'Cinema', monospace;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    position: relative;
+    background-image: url(../imgs/fondos-de-combate/fondo-combate-bosque-oscuro.gif);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    /* height: 100vh; */
 }
 
-img {
-    width: 20vw;
-    height: 30vh;
-}
-
-/* BOTÓN BASE */
-.btn-demon {
-    color: var(--color-texto);
-    position: relative;
-    font-family: fuenteParaBotones;
-    font-size: large;
-    border: none;
-    background: linear-gradient(to bottom,
-            #b794fe 0%,
-            #8c53ff 50%,
-            #5500ff 100%);
-
-    /* Forma angular */
-    clip-path: polygon(10% 0%, 90% 0%,
-            100% 50%,
-            90% 100%, 10% 100%,
-            0% 50%);
-    box-shadow:
-        inset 0 3px 5px rgba(255, 255, 255, 0.3),
-        inset 0 -5px 8px rgba(0, 0, 0, 0.6),
-        0 10px 20px rgba(0, 0, 0, 0.6);
-    transition: all .2s ease;
-    padding: 5px;
-}
-
-/* Borde metálico */
-.btn-demon::before {
+/* Decoración de fondo medieval */
+body::before {
     content: "";
-    position: absolute;
-    inset: -4px;
-    clip-path: inherit;
-    z-index: -1;
-}
-
-/* Efecto hover */
-.btn-demon:hover {
-    transform: translateY(-4px);
-    box-shadow:
-        inset 0 3px 8px rgba(255, 255, 255, 0.4),
-        inset 0 -6px 12px rgba(0, 0, 0, 0.8),
-        0 15px 25px rgba(0, 0, 0, 0.8);
-}
-
-#campoBatalla {
-    /* position: relative;
-    top: 20vh; */
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    padding: 1.5%;
-}
-
-#personaje1,
-#personaje2 {
-    width: 30%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 2.5%;
-}
-
-#nombrePersonaje1,
-#nombrePersonaje2 {
-    font-family: fuenteParaBotones;
-    color: var(--color-texto);
-    background-image: url(../imgs/fondoPantallaLadrillo.png);
-    background-size: cover;
-}
-
-/* ICONOS DE ESTADO PERSONAJE 1 */
-#confundidoPersonaje1, #quemadoPersonaje1, #heridoGravePersonaje1, #heridoLevePersonaje1, #envenenadoPersonaje1, #confundidoPersonaje2, #quemadoPersonaje2, #heridoGravePersonaje2, #heridoLevePersonaje2, #envenenadoPersonaje2  {
-    width: 25%;
-    height: 25%;
-    opacity: 0;
-}
-
-/* BARRA DE VIDA Y DE ESTAMINA DEL PERSONAJE 1 */
-#barraVidaPersonaje1, #barraVidaPersonaje2{
-    width: 70%;
-    height: 2.5vh;
-    background-color: red;
-}
-
-#vidaRealPersonaje1, #estaminaRealPersonaje1, #vidaRealPersonaje2, #estaminaRealPersonaje2 {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    background-color: greenyellow;
+    background-image: radial-gradient(circle at 20% 50%, rgba(139, 69, 19, 0.15) 2px, transparent 2px);
+    background-size: 30px 30px;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Título del turno */
+#h3Turno {
+    text-align: center;
+    font-size: 2rem;
+    margin: 0.5rem 0 1.5rem;
+    color: #ffd700;
+    text-shadow: 3px 3px 0 #8b4513, 0 0 10px rgba(255, 215, 0, 0.5);
+    letter-spacing: 4px;
+    font-weight: bold;
+    background: rgba(0, 0, 0, 0.6);
+    display: inline-block;
+    padding: 0.5rem 2rem;
+    border-radius: 40px;
+    backdrop-filter: blur(5px);
+    border: 1px solid #ffd700;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    z-index: 2;
+}
+
+/* Contenedor de batalla */
+#campoBatalla {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    gap: 2rem;
+    width: 100%;
+    max-width: 1400px;
+    min-height: 70vh;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 30px;
+    backdrop-filter: blur(3px);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.6), inset 0 1px 2px rgba(255, 255, 255, 0.1);
+    z-index: 2;
+}
+
+/* Estilos comunes para ambos personajes */
+#personaje1, #personaje2 {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(20, 12, 8, 0.7);
+    border-radius: 30px;
+    padding: 1rem 1rem 1.5rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+    position: relative;
+    backdrop-filter: blur(4px);
+}
+
+#personaje1:hover, #personaje2:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+}
+
+/* Imagen del personaje */
+#imgPersonaje1, #imgPersonaje2 {
+    width: 250px;
+    height: auto;
+    max-height: 300px;
+    object-fit: contain;
+    filter: drop-shadow(5px 8px 12px rgba(0, 0, 0, 0.6));
+    transition: all 0.2s;
+}
+
+/* Panel de estados (iconos) */
+#estadosPersonaje1, #estadosPersonaje2 {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    gap: 5px;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 5px 8px;
+    border-radius: 20px;
+    z-index: 3;
+}
+
+#estadosPersonaje1 img, #estadosPersonaje2 img {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.3);
+    display: none;
+}
+
+/* Barras de estado */
+#barraVidaPersonaje1, #barraVidaPersonaje2 {
+    width: 80%;
+    height: 28px;
+    background-color: #3a1f0f;
+    border-radius: 30px;
+    margin: 10px 0 5px;
+    overflow: hidden;
+    box-shadow: inset 0 1px 5px rgba(0,0,0,0.6), 0 1px 0 rgba(255,255,255,0.1);
+    border: 1px solid #6b3e1c;
+}
+
+#vidaRealPersonaje1, #vidaRealPersonaje2 {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, #c2412e, #a11f1a);
+    color: white;
+    text-align: center;
+    line-height: 28px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    text-shadow: 1px 1px 0 #5a1a0a;
+    border-radius: 30px;
+    transition: width 0.2s ease-out;
 }
 
 #barraEstaminaPersonaje1, #barraEstaminaPersonaje2 {
-    width: 70%;
-    height: 2.5vh;
-    background-color: red;
-    margin-top: 5px;
+    width: 80%;
+    height: 22px;
+    background-color: #1c2a3a;
+    border-radius: 30px;
+    margin: 5px 0 10px;
+    overflow: hidden;
+    box-shadow: inset 0 1px 5px rgba(0,0,0,0.6);
+    border: 1px solid #2c5a6b;
 }
 
-#cuadroBotones1,
-#cuadroBotones2 {
-    padding: 10%;
+#estaminaRealPersonaje1, #estaminaRealPersonaje2 {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, #4c9fd0, #2c7eb6);
+    color: white;
+    text-align: center;
+    line-height: 22px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    border-radius: 30px;
+    transition: width 0.2s ease-out;
+}
+
+/* Nombre del personaje */
+#nombrePersonaje1 p, #nombrePersonaje2 p {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin: 10px 0 5px;
+    background: linear-gradient(135deg, #ffd966, #c29b3b);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    text-shadow: 2px 2px 4px black;
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+/* Contenedor de botones */
+#cuadroBotones1, #cuadroBotones2 {
+    width: 90%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 12px;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 12px;
+    border-radius: 30px;
+    backdrop-filter: blur(4px);
+}
+
+/* Botones estilo demoníaco / medieval */
+.btn-demon {
+    background: radial-gradient(circle at 30% 10%, #2b1b0f, #150c08);
+    border: 1px solid #b87c4f;
+    border-radius: 40px;
+    color: #f5e6d3;
+    font-weight: bold;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-family: 'MedievalSharp', monospace;
+    font-size: 0.85rem;
+    transition: all 0.2s;
+    box-shadow: 0 3px 0 #3a2416;
+    text-shadow: 1px 1px 0 black;
+    letter-spacing: 1px;
+    min-width: 80px;
+}
+
+.btn-demon:hover:not([disabled]) {
+    background: radial-gradient(circle at 30% 10%, #4f2e1a, #2c1a0f);
+    transform: scale(1.02);
+    box-shadow: 0 4px 0 #3a2416;
+    color: #ffecb3;
+    border-color: #dfa062;
+}
+
+.btn-demon[disabled] {
+    cursor: not-allowed;
+    filter: grayscale(0.3);
+    opacity: 0.5;
+}
+
+/* Efecto de división de batalla entre los dos lados */
+#campoBatalla::before {
+    content: "⚔️";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 3rem;
+    color: rgba(255, 200, 100, 0.5);
+    text-shadow: 0 0 10px red;
+    pointer-events: none;
+    z-index: 5;
+}
+
+/* Responsive para pantallas más pequeñas */
+@media (max-width: 900px) {
+    #campoBatalla {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    #personaje1, #personaje2 {
+        width: 95%;
+        margin-bottom: 20px;
+    }
+    
+    #imgPersonaje1, #imgPersonaje2 {
+        width: 180px;
+    }
+    
+    .btn-demon {
+        padding: 6px 12px;
+        font-size: 0.75rem;
+        min-width: 70px;
+    }
+    
+    #h3Turno {
+        font-size: 1.5rem;
+    }
+    
+    #campoBatalla::before {
+        content: "▼";
+        top: 48%;
+        left: 50%;
+        transform: rotate(90deg);
+    }
+}
+
+/* Animación suave de estado para botones */
+@keyframes pulseTurno {
+    0% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.4); }
+    70% { box-shadow: 0 0 0 8px rgba(255, 215, 0, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); }
+}
+
+/* Resalte del personaje activo */
+.personaje-activo {
+    box-shadow: 0 0 0 3px #ffd966, 0 0 20px #ffb347;
+    transition: 0.1s;
 }
